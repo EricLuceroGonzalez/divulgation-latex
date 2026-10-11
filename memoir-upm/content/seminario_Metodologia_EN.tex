@@ -1,0 +1,87 @@
+% seminario_Metodologia_EN.tex
+\begin{flushleft}
+    {\color{gray} Presentado por: Eric Lucero Gonzalez \hfill eric.lucero@alumnos.upm.es} \\
+    {\color{gray} Impartido por: Víctor Maojo \\Aula: A3202 - UPM}
+    \section{Seminario A1: Metodología de la Investigación}
+    Titulo presentado en el seminario:\\
+    {\normalsize Optimización Multi-objetivo en la Gestión del Tránsito Aéreo en Terminales Aéreas} \\
+\end{flushleft}
+\begin{minipage}{0.47\textwidth}
+    \section{Introduction}
+    The exponential growth of air traffic (4.5\% annually, ICAO 2023) has made Terminal Maneuvering Area (TMA) management a critical challenge for safety and operational efficiency. This work proposes an innovative methodological framework to optimize conflict-free routing and landing sequencing using multi-objective metaheuristic algorithms, addressing the limitations of traditional methods in high-demand scenarios.
+
+    \section{Air Traffic Flow Management (ATFM) Problem}
+    Congestion in TMAs may generate:
+    \begin{itemize}[itemsep=1mm]\small
+        \item \textbf{Safety Risks}: 23\% of incidents occur during the approach phase (Eurocontrol)
+        \item \textbf{Cumulative Delays}: Average cost of €74 per minute of delay (IATA)
+        \item \textbf{Air Traffic Controller (ATCO) Saturation}%: Cognitive load peaks during high traffic
+        \item \textbf{Energy Inefficiencies}: Suboptimal trajectories increase fuel consumption
+    \end{itemize}
+    Addressing the ATFM problem requires effective strategies such as:\\
+    % \begin{itemize}[itemsep=1mm]\small
+    \textbf{Aircraft sequencing and runway scheduling}: Optimizing arrival and departure sequences to maximize runway utilization and minimize delays.\\
+    \textbf{Congestion and conflict resolution}: Managing aircraft spacing, vectoring, and holding patterns to ensure safe and efficient airspace operations.
+    % \item \textbf{Dynamic airspace management}: Adapting sector configurations based on real-time traffic demands to balance controller workload and enhance capacity.
+    % \end{itemize}
+\end{minipage}
+\begin{minipage}{0.47\textwidth}
+
+    \section{Research Question}
+    \begin{questionBox}
+        {Central Question}{
+            How can traffic flows in TMAs be simultaneously modeled and optimized using metaheuristic algorithms to minimize conflicts, delays, and air traffic controllers' workload while maintaining operational and safety constraints in high-density scenarios?
+        }
+    \end{questionBox}
+
+    \section{Theoretical Framework}
+    Three existing approaches were analyzed:
+    \begin{itemize}[itemsep=1mm]\small
+        \item Mathematical Programming (MILP): Accuracy vs. scalability
+        \item Genetic Algorithms: Global exploration but slow convergence
+        \item Ant Colony Optimization: Adaptability to dynamic changes
+    \end{itemize}
+    The proposed approach integrates search space decomposition techniques and machine learning to guide metaheuristic exploration.
+    \section{Hypothesis}
+    \begin{questionBox}
+        {Main Hypothesis}{
+            A hybrid NSGA-III algorithm with adaptive pruning mechanisms will reduce average delays and potential conflicts by >8\% compared to conventional metaheuristic methods, while keeping ATCO workload below 70\% of maximum capacity.
+        }
+    \end{questionBox}
+\end{minipage}
+\begin{minipage}{0.47\textwidth}
+    \section{Experimental Methodology}
+    \begin{itemize}[itemsep=1mm]\small
+        \item \textbf{Data}: Months of radar records some Spain airport TMA. ADS data or available datasets.
+        \item \textbf{Primary Metric}: \textit{Total Delay Conflict Units} (TDCU)
+        \item \textbf{Comparisons}: [other metaheuristics] vs. NSGA-III  in some scenarios:
+              \begin{itemize}
+                  \item Low density (30-50 operations/hour)
+                  \item Medium density (50-70 operations/hour)
+                  \item High density (70-90 operations/hour)
+              \end{itemize}
+    \end{itemize}
+    \section{Practical Implications}
+    \begin{itemize}[itemsep=1mm]\small
+        \item Redesign of Standard Terminal Arrival Routes (STAR)
+        \item Decision support system for ATCOs
+        \item Predictive congestion model for TMAs
+    \end{itemize}
+
+
+    \begin{center}
+        \framebox{\parbox{0.9\textwidth}{\centering\small Key Contribution: Integration of multi-objective optimization and learning models for adaptive TMA management in near real-time}}
+    \end{center}
+    \vfill
+    \nocite{shirini_comprehensive_2024}
+    \nocite{shirini_comprehensive_2024}
+    \nocite{barea_integrated_2024}
+    \nocite{shirini_multi-objective_2024} \nocite{Guo_2024_CCDF}
+    \nocite{mateos_multiobjective_2016} \nocite{2024_Yi_Zhang}
+    \vspace{0.3\textheight}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \section{Related works}
+    \printbibliography[heading=none]
+\end{minipage}
+% \vspace{9em}

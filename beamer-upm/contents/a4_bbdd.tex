@@ -1,0 +1,807 @@
+
+% Sección 1: Introducción
+\section{Introducción}
+\begin{frame}{Contexto}
+    \begin{itemize}
+        \item \alerta{Auge de LLMs} (ChatGPT) en redacción científica.
+        \item \textbf{Problemas éticos:}
+              \begin{itemize}
+                  \item Generación de datos, gráficos, código o texto que argumente, o sustente una idea y/o hipótesis no sustentada con datos reales.
+                  \item Falta de transparencia en contenido generado con IA.
+                  \item Alucinaciones (datos/citas falsas, no intencionales).
+                  \item Artículos 100\% IA con ediciones mínimas.
+              \end{itemize}
+        \item \alerta{Artículo clave:} (\citeauthor{Kendall2024}, \citeyear{Kendall2024}) propone incluir \textbf{prompts y texto generado}\cite{Kendall2024}.
+    \end{itemize}
+    \begin{tikzpicture}
+        \node[aLabel, text width=0.90\textwidth, align=left] (origin)  at (0,0){\small \fullcite{Kendall2024}};
+    \end{tikzpicture}
+\end{frame}
+\begin{frame}{Introducción}
+    \begin{itemize}
+        \item Las revistas científicas requieren reconocer el uso de Modelos de Lenguaje Grande (LLMs).
+        \item El problema: \textbf{las directrices actuales son insuficientes} \cite{Kendall2024}.
+        \item Los revisores y lectores no saben:
+              \begin{itemize}
+                  \item Qué partes\footnote{Secciones,texto,imágenes, código, citas, etc.} fueron generadas con IA.
+                  \item Cómo se editó el texto generado.
+              \end{itemize}
+        \item Este artículo (\citeauthor{Kendall2024}, \citeyear{Kendall2024}) propone cambios significativos en las directrices actuales.
+    \end{itemize}
+\end{frame}
+
+% El problema de las directrices actuales
+\begin{frame}{El problema de las directrices actuales}
+    \begin{itemize}
+        \item Permiten reconocer el uso de IA sin especificar:
+              \begin{itemize}
+                  \item Qué partes del artículo fueron generadas con IA.
+                  \item Cuánto contenido fue asistido por IA (¿1\% o 100\%?).
+                  \item Qué ediciones se realizaron al texto generado.
+                  \item Qué herramienta de IA se ha utilizado, y en cuál de sus versiones.
+              \end{itemize}
+    \end{itemize}
+    \begin{boxA}{Ejemplo}
+        Hay artículos generados parcial o completamente por IA que cumplen con las directrices actuales de algunas revistas.\\[1em]
+        {\small Como veremos en los casos de los autores M. Majovský y S. Biswas.}
+    \end{boxA}
+\end{frame}
+
+% La cuestión de la autoría
+\begin{frame}{La cuestión de la autoría}
+    \begin{itemize}
+        \item \textbf{¿Hay un límite después del cual no se puede reclamar autoría?}
+              \begin{itemize}
+                  \item COPE, ICMJE no lo contemplan. La mayoría de las revistas lo prohíben.
+                  \item No es posible establecer un porcentaje fijo.
+                  \item Algunas secciones son más críticas (resultados, conclusiones).
+                  \item La IA no puede ser responsable.
+                  \item Los humanos deben asumir responsabilidad completa por el contenido generado con IA.
+                  \item ¿Dónde termina una simple corrección gramatical y comienza una reescritura semántica?.
+              \end{itemize}
+
+              %   \vspace{0.3cm}
+              % \item \textbf{Consideraciones importantes:}
+              %       \begin{itemize}
+              %           \item Los revisores deben juzgar si la contribución es significativa.
+              %           \item COPE debe fortalecer sus directrices sobre este tema.
+              %           \item La contribución del autor debe ir más allá de editar texto generado por IA.
+              %       \end{itemize}
+    \end{itemize}
+
+\end{frame}
+\begin{frame}{La cuestión de la autoría}{\citeauthor{Lund2024}, \citeyear{Lund2024}}
+    \citeauthor{Lund2024} en \cite{Lund2024} estudiaron las políticas de autoría de IA en \textit{300 journals}.
+    % \begin{itemize}
+    % \item 
+    % \item De 300 revistas top analizadas, 58.7\% ya tenían políticas específicas sobre IA (en abril 2023).
+    % \item Solo 3.4\% prohíben completamente el uso de IA (todas de la editorial Science)
+    % \end{itemize}
+
+    \begin{tikzpicture}
+        \def\colores{cLabel_Dark,aLabel_Dark,aLabel_Dark,aLabel_Dark,aLabel_Dark}
+        \def\words{300, 176,170,6,2}
+        \def\texts{
+            {revistas top analizadas},
+            {ya tenían políticas específicas sobre IA (abril 2023)},
+            {permiten usar IA para mejorar la calidad de manuscritos},
+            {prohíben completamente el uso de IA (ed. Science)},
+            {no prohíben explícitamente IA como autor (BioMed C.)}
+        }
+
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[cLabel_Dark, text width=0.1\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,-\index*1.1){\word};
+            \else
+                \node[aLabel_Dark, text width=0.1\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,-\index*1.1){\word};
+            \fi
+        }
+        \foreach [count=\index from 0] \text in \texts{
+            \ifnum\index=0
+                \node[cLabel, text width=0.78\textwidth, align=left, minimum height=1cm] (text\index)  at (5.3,-\index*1.1){\small \text};
+            \else
+                \node[aLabel, text width=0.78\textwidth, align=left, minimum height=1cm] (text\index)  at (5.3,-\index*1.1){\small \text};
+            \fi
+        }
+    \end{tikzpicture}
+
+\end{frame}
+\begin{frame}{La cuestión de la autoría}{\citeauthor{Kendall2024}, \citeyear{Kendall2024}}
+    \begin{itemize}
+        \item Un autor puede declarar el uso de LLMs pero esto no dice cuánto lo ha usado.
+        \item Tampoco que partes fueron hechas con la asistencia de LLMs.
+        \item  Tanto el revisor como lector deben estar informados.
+        \item \citeauthor{Kendall2024} \cite{Kendall2024} también hace una revisión de los \textit{guidelines} o directrices de seis revistas.
+    \end{itemize}
+
+
+\end{frame}
+% Sección 2: Propuestas de Kendall
+% \section{Propuestas de Kendall (2024)}
+% \begin{frame}{Artículo de Kendall}{\fullcite{Kendall2024}}
+%     \begin{itemize}
+%         \item \textbf{Objetivo:} Propuestas para mejorar la transparencia en publicaciones científicas.
+%         \item \textbf{Problema:} Directrices actuales no abordan el uso de IA, y son en algunos casos ambiguas.
+%         \item \textbf{Propuesta:} Incluir detalles sobre el uso de IA en artículos.
+%         \item \textbf{Importancia:} Mantener la integridad y confianza en la investigación científica.
+%     \end{itemize}
+%     \begin{boxA}{Cita clave}
+%         \textit{“Sin transparencia, el fraude es difícil de detectar.”}
+%     \end{boxA}
+% \end{frame}
+\section{Directrices de editoriales}
+% Análisis de directrices de editoriales
+\begin{frame}{Directrices de algunas editoriales}{En cuanto al uso de IA}
+    \begin{threeparttable}
+        \footnotesize
+        \def\arraystretch{1.55}
+        \begin{tabular}{lL{1.1cm}L{2.6cm}L{2.2cm}L{2.1cm}}
+            \toprule
+            {\footnotesize\textbf{Editorial}} & {\footnotesize Última versión} & \footnotesize\textbf{Reconocimiento obligatorio de uso} & \footnotesize\textbf{Especificar partes con IA}$^\red{1}$ & \footnotesize\textbf{Compartir prompts} \\
+            \midrule
+            BMJ$^\red{2}$ \cite{bmj_ai}       & 2024                           & \chekeYes                                               & \QuestionCircle                                           & \chekeYes                               \\
+            Elsevier\cite{elsevier_ai}        & 2024                           & \QuestionCircle                                         & \QuestionCircle                                           & \chekeNot                               \\
+            Sage$^\red{3}$\cite{sage_ai}      & 2023                           & \chekeYes                                               & \chekeYes                                                 & \chekeYes                               \\
+            Springer\cite{springer_ai}        & 2024                           & \chekeYes                                               & \QuestionCircle                                           & \QuestionCircle                         \\
+            Taylor \& F.\cite{taylor_ai}      & 2024                           & \chekeYes                                               & \chekeNot                                                 & \chekeNot                               \\
+            Wiley\cite{wiley_ai}              & 2023                           & \chekeYes                                               & \chekeYes                                                 & \chekeYes                               \\
+            \bottomrule
+        \end{tabular}
+    \end{threeparttable}
+    \begin{tablenotes}\footnotesize\color{colorC}
+        \item[] Directrices mencionadas por (\citeauthor{Kendall2024}, \citeyear{Kendall2024}) en \cite{Kendall2024}.
+        \item[] $^\red{1}$ Muchas no lo especifican, pero requieren el \textit{``Why and how''}.
+        \item[] $^\red{2}$ La más completa, según \cite{Kendall2024}
+        \item[] $^\red{3}$ La más estricta, según \cite{Kendall2024}
+        \item[] \QuestionCircle Recomienda o no especifica| \chekeYes Permite | \chekeNot No permite.
+    \end{tablenotes}
+\end{frame}
+% Análisis de directrices de editoriales
+\begin{frame}{Directrices de algunas editoriales}{En cuanto al uso de IA}
+    \begin{threeparttable}
+        \footnotesize
+        \def\arraystretch{1.55}
+        \begin{tabular}{lL{1.0cm}L{1.4cm}L{1.43cm}L{1.9cm}L{1.3cm}}
+            % \begin{tabular}{cC{1.0cm}C{1.45cm}C{1.5cm}C{1.4cm}C{1.4cm}~}
+            \toprule
+            \textbf{Editorial}                     & \scriptsize\textbf{Última versión} & \scriptsize\textbf{Reconocer uso} & \scriptsize\textbf{Especificar partes} & \scriptsize\textbf{Compartir input/output} & \scriptsize\textbf{Imágenes y figuras$^\red{1}$} \\
+            \midrule
+            BMJ\red{$^2$} \cite{bmj_ai}            & 2024                               & \chekeYes                         & \QuestionCircle                        & \QuestionCircle                            & \QuestionCircle                                  \\
+            Cambridge\red{$^2$}\cite{cambridge_ai} & 2023                               & \chekeYes                         & \chekeNot                              & \chekeNot                                  & \chekeYes                                        \\
+            Elsevier     \cite{elsevier_ai}        & 2024                               & \chekeYes                         & \chekeNot                              & \chekeNot                                  & \chekeYes                                        \\
+            IEEE\red{$^2$}    \cite{ieee_ai}       & 2023                               & \chekeYes                         & \chekeYes                              & \chekeYes                                  & \chekeYes                                        \\
+            Oxford\red{$^2$} \cite{oxford_ai}      & 2023                               & \chekeYes                         & \QuestionCircle                        & \chekeNot                                  & \chekeYes                                        \\
+            Sage            \cite{sage_ai}         & 2023                               & \chekeYes                         & \chekeYes                              & \chekeYes                                  & \chekeYes                                        \\
+            Springer    \cite{springer_ai}         & 2024                               & \chekeYes                         & \QuestionCircle                        & \chekeNot                                  & \QuestionCircle                                  \\
+            Taylor \& F. \cite{taylor_ai}          & 2024                               & \chekeYes                         & \QuestionCircle                        & \chekeNot                                  & \chekeNot                                        \\
+            Wiley            \cite{wiley_ai}       & 2023                               & \chekeYes                         & \chekeYes                              & \chekeYes                                  & \chekeYes                                        \\
+            \bottomrule
+        \end{tabular}
+    \end{threeparttable}
+    \begin{tablenotes}\scriptsize\color{colorC}
+        % \item[] Diferencias entre editoriales en sus políticas sobre el uso de IA.
+        \item[]\red{1} Imágenes con carácter ilustrativo, no evidenciales.
+        \item[]\red{2}Remite al \textit{Committee on Publication Ethics (COPE)}\cite{COPE_ai}.
+        \item[] \QuestionCircle Recomienda o no especifica| \chekeYes Permite | \chekeNot No permite.
+        % TF:  the full name of the tool used (with version number), how it was used, and the reason for use.
+        %Only for improving language readability Springer, Elsevier
+    \end{tablenotes}
+\end{frame}
+\begin{frame}{Directrices editoriales}{Declaración de uso de IA}
+    \begin{itemize}
+        \item Todas las editoriales permiten el uso de IA para mejorar la redacción (assistive AI).
+        \item No todas especifican las partes generadas por IA.
+    \end{itemize}
+    \begin{tikzpicture}
+        \def\words{Documented, How and Why, Prompts,Output, Autor}
+        \foreach [count=\index from 0] \word in \words{
+            \node[aLabel_Dark, text width=0.25\textwidth, align=left] (text\index)  at (0,-\index*0.95){\word};
+        }
+        \def\words{Springer-Wiley-Cambridge-IEEE-Sage, Taylor \& F. - Elsevier - Springer - Wiley, Sage - IEEE,Sage - IEEE, Ninguna}
+        \foreach [count=\index from 0] \word in \words{
+            \node[aLabel, text width=0.60\textwidth, align=left] (text\index)  at (5.15,-\index*0.95){\word};
+        }
+        \node[dLabel, text width=0.9\textwidth, align=left] (text\index)  (Bottom) at (3.5,-5){Sage Publishers provee un template obligatorio para autores que usan Generative AI \cite{sage_ai}.};
+    \end{tikzpicture}
+
+
+\end{frame}
+\begin{frame}{Directrices editoriales}{Distinción entre el carácter asistencial y la IA generativa}
+    \begin{itemize}
+        \item Cada vez más editoriales distinguen explícitamente entre el uso de IA asistencial (Assistive AI) y IA generativa (Generative AI).
+        \item Es importante declarar el uso asistido de LLM's
+    \end{itemize}
+    \begin{tikzpicture}
+        \node[cLabel_Dark, text width=0.41\textwidth, align=left] (base) at (0,0) {Assistive AI };
+        \def\words{Corrección de texto, Mejora de redacción, Revisión de estilo, Crear diagramas, No declarar}
+        \foreach [count=\index from 1] \word in \words{
+            \node[cLabel, text width=0.41\textwidth, align=left] (text\index)  at (0,-\index*1.0){{\color{GithubGreen}\faCheckCircle} \word};
+        }
+        \node[dLabel_Dark, text width=0.41\textwidth, align=left] (text0) at (6,0) {Generative AI };
+        \def\words{Crear contenido, Generar texto, Crear imágenes, Generar gráficos, Obligatorio declarar}
+        \foreach [count=\index from 1] \word in \words{
+            \node[dLabel, text width=0.41\textwidth, align=left] (text\index)  at (6,-\index*1.0){{\color{colorD}\faTimesCircle} \word};
+        }
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Directrices Propuestas}
+    \begin{enumerate}
+        \item \alerta{Declaración detallada:} Herramienta, versión y fechas de uso.
+        \item \alerta{Especificar las secciones fueron generadas por IA.}
+        \item \alerta{Incluir prompts y texto generado} en archivo suplementario.
+        \item \alerta{Incluir texto original} si se usó IA para editar.
+        \item \alerta{Archivo suplementario} con toda la información.
+        \item \alerta{Revisión por pares informada:} Comparar texto original vs. editado.
+        \item \alerta{Hacerlo accesible} a revisores y lectores.
+        \item \alerta{Directrices unificadas} (ej.: COPE + políticas editoriales).
+    \end{enumerate}
+    \begin{boxC}{Importante}
+        Se trata de \textbf{restaurar la confianza} en el proceso científico.
+    \end{boxC}
+\end{frame}
+
+% Propuesta: Nuevas directrices (1)
+\begin{frame}{Propuestas}{Nuevas directrices}
+    \begin{tikzpicture}
+        \def\words{
+            Reconocimiento completo,
+            Herramienta utilizada,
+            Versión específica,
+            Fechas de uso}
+
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[aLabel_Dark, text width=0.45\textwidth, align=center, minimum height=0.6cm] (text\index) at (0,-\index*0.9){\word};
+            \else
+                \node[aLabel, text width=0.45\textwidth, align=center, minimum height=0.6cm] (text\index) at (0,-\index*0.9){\word};
+            \fi
+        }
+        \begin{scope}[xshift=5.65cm]
+            \def\words{
+                Especificar secciones,
+                Partes generadas con IA
+            }
+
+            \foreach [count=\index from 0] \word in \words{
+                \ifnum\index=0
+                    \node[aLabel_Dark, text width=0.45\textwidth, align=center, minimum height=0.6cm] (text\index) at (0,-\index*0.9){\word};
+                \else
+                    \node[aLabel, text width=0.45\textwidth, align=center, minimum height=0.6cm] (text\index) at (0,-\index*0.9){\word};
+                \fi
+            }
+        \end{scope}
+        \begin{scope}[yshift=-3.85cm]
+            \def\words{
+                Transparencia en los prompts,
+                Incluir prompts utilizados,
+                Mostrar texto generado
+            }
+
+            \foreach [count=\index from 0] \word in \words{
+                \ifnum\index=0
+                    \node[cLabel_Dark, text width=0.48\textwidth, align=center, minimum height=0.6cm] (text\index) at (0,-\index*0.9){\word};
+                \else
+                    \node[cLabel, text width=0.48\textwidth, align=center, minimum height=0.6cm] (text\index) at (0,-\index*0.9){\word};
+                \fi
+            }
+        \end{scope}
+        % \item \textbf{Mejoras de lenguaje}:
+        % \begin{itemize}
+        %     \item Reconocer si la IA se utilizó para mejorar la redacción
+        %     \item Mostrar el texto original antes de la mejora
+        % \end{itemize}
+    \end{tikzpicture}
+\end{frame}
+
+% Propuesta: Nuevas directrices (2)
+\begin{frame}{Propuestas}{Nuevas directrices}
+    \begin{tikzpicture}
+        \def\words{
+            Mejoras de lenguaje,
+            Reconocer se utilizó para mejorar redacción,
+            Mostrar el texto antes de la mejora
+        }
+
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[aLabel_Dark, text width=0.8\textwidth, align=center, minimum height=0.45cm] (text\index) at (0,-\index*0.3){\word};
+            \else
+                \node[aLabel, text width=0.8\textwidth, align=left, minimum height=0.45cm] (text\index) at (0,-\index*1.1){\small \word};
+            \fi
+        }
+
+        \begin{scope}[yshift=-3.75cm]
+            \def\words{
+                Archivo suplementario,
+                Incluir todos los detalles anteriores,
+                El archivo debe estar disponible para revisores y lectores,
+                Permite evaluación informada del aporte real
+            }
+
+            \foreach [count=\index from 0] \word in \words{
+                \ifnum\index=0
+                    \node[cLabel_Dark, text width=0.8\textwidth, align=center, minimum height=0.45cm] (text\index) at (0,-\index*0.1){\small \word};
+                \else
+                    \node[cLabel, text width=0.8\textwidth, align=left, minimum height=0.45cm] (text\index) at (0,-\index*0.9){\small \word};
+                \fi
+            }
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+% Beneficios de la propuesta
+\begin{frame}{Beneficios de la propuesta}
+    \begin{itemize}
+        \item \textbf{Para revisores}:
+              \begin{itemize}
+                  \item Evaluación informada sobre el aporte real del autor
+                  \item Mejor criterio para juzgar la autoría
+              \end{itemize}
+              \vspace{0.3cm}
+        \item \textbf{Para lectores}:
+              \begin{itemize}
+                  \item Transparencia sobre el origen del contenido
+                  \item Confianza en la integridad de la publicación
+              \end{itemize}
+              \vspace{0.3cm}
+        \item \textbf{Para la ciencia}:
+              \begin{itemize}
+                  \item Integridad en la autoría y en el proceso de publicación
+                  \item Estándares más claros y consistentes
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+% Sección 3: Casos de Estudio
+\section{Casos de Estudio}
+\begin{frame}{Casos de Estudio}
+    \begin{tikzpicture}
+        \def\words{
+            Som Biswas,
+            {\href{https://orcid.org/0000-0002-4038-5844}{\color{GithubGreen}\faOrcid \hspace{1em}{\small https://orcid.org/0000-0002-4038-5844}}},
+            {Publica 10 artículos en 2023 donde declara haber usado inteligencia artificial, pero no dice cuánto.},
+            {\textit{``According to Chat GPT''}}
+        }
+
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[aLabel_Dark, text width=0.8\textwidth, align=left, minimum height=0.45cm] (text\index) at (0,-\index*0.3){\word};
+            \else
+                \node[aLabel, text width=0.8\textwidth, align=left, minimum height=0.45cm] (text\index) at (0,-\index*1.1){\small \word};
+            \fi
+        }
+
+        \begin{scope}[yshift=-5.05cm]
+            \def\words{
+                {M. Majovský},
+                Elabora un artículo médico fraudulento con ChatGPT que engaña a expertos
+            }
+            \foreach [count=\index from 0] \word in \words{
+                \ifnum\index=0
+                    \node[cLabel_Dark, text width=0.8\textwidth, align=left, minimum height=0.45cm] (text\index) at (0,-\index*0.1){\small \word};
+                \else
+                    \node[cLabel, text width=0.8\textwidth, align=left, minimum height=0.45cm] (text\index) at (0,-\index*1.1){\small \word};
+                \fi
+            }
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+\begin{frame}{Caso 1}{S. Biswas (2023)}
+    \begin{itemize}
+        \item \textbf{Experimento:} Generación de artículo médico fraudulento con ChatGPT.
+
+        \item Publicó 13 artículos con ``ChatGPT'' en el título durante 2023
+        \item Reconoció, sin especificar lo siguiente:
+              \begin{center}
+                  \begin{tikzpicture}
+                      \node[aLabel, text width=0.8\textwidth,align=left] (a) at (0,0) {\textit{``Este artículo fue parcialmente generado por ChatGPT... La edición fue realizada por el autor''}};
+                  \end{tikzpicture}
+              \end{center}
+        \item \textbf{Problemas identificados}:
+              \begin{itemize}
+                  \item No sabemos qué porcentaje del texto fue generado por IA
+                  \item No sabemos qué ediciones hizo el autor
+                  \item Los artículos cubren temas muy diversos (inusual para un solo autor)
+                  \item No cita sus propios trabajos (práctica común en publicaciones académicas)
+              \end{itemize}
+    \end{itemize}
+
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Caso 1}{S. Biswas (2023)}
+    \begin{threeparttable}
+        % \centering
+        \scriptsize
+        \def\arraystretch{1.75}
+        % \caption{\footnotesize Listados de artículos por S. Biswas}
+        \vspace{-1em}
+        \begin{tabular}{c|L{8.75cm}|C{0.55cm}} \toprule
+            \textbf{Año}            & \textbf{Título del artículo} & \textbf{Cita}       \\\hline
+            \citeyear{biswas_2023d} & \citetitle{biswas_2023d}     & \cite{biswas_2023d} \\
+            \citeyear{biswas_2023e} & \citetitle{biswas_2023e}     & \cite{biswas_2023e} \\
+            \citeyear{biswas_2023j} & \citetitle{biswas_2023j}     & \cite{biswas_2023j} \\
+            \citeyear{biswas_2023k} & \citetitle{biswas_2023k}     & \cite{biswas_2023k} \\
+            \citeyear{biswas_2023a} & \citetitle{biswas_2023a}     & \cite{biswas_2023a} \\
+            \citeyear{biswas_2023b} & \citetitle{biswas_2023b}     & \cite{biswas_2023b} \\
+            \citeyear{biswas_2023i} & \citetitle{biswas_2023i}     & \cite{biswas_2023i} \\
+            \citeyear{biswas_2023c} & \citetitle{biswas_2023c}     & \cite{biswas_2023c} \\
+            \citeyear{biswas_2023f} & \citetitle{biswas_2023f}     & \cite{biswas_2023f} \\
+            \citeyear{biswas_2023h} & \citetitle{biswas_2023h}     & \cite{biswas_2023h} \\
+            \bottomrule
+        \end{tabular}
+        \vspace{0.25em}
+        \begin{tablenotes}
+            \item[] {\color{colorD}Todos los artículos fueron publicados en 2023 y el autor reconoce la asistencia de ChatGPT.}
+        \end{tablenotes}
+    \end{threeparttable}
+\end{frame}
+
+\begin{frame}{Caso 2}{Májovský et al. (2023)}
+
+    \begin{itemize}
+        \item \textit{Proof-of-concept study}\cite{majovsky2023}:
+              El estudio logró generar un artículo completo (introducción, métodos, resultados, discusión, referencias y gráficos) con ChatGPT (GPT-3).
+        \item Usando 13 prompts, < 1 h de trabajo humano.
+        \item \alerta{Hallazgos:}
+              \begin{itemize}
+                  \item Estructura impecable (abstract, métodos, resultados).
+                  \item Citas falsas detectadas por expertos.
+                  \item Datos inconsistentes en tablas estadísticas.
+                  \item Ausencia de registros en ClinicalTrials.gov, debilidades metodológicas.
+              \end{itemize}
+        \item \alerta{Revisores:} Sometido a detectores de IA, evaluación experta, estadísticos y ChatGPT.
+        \item \alerta{Citas:} Hizo \alert{17 citas}, 9 de ellas correctas, 4 con errores menores y \alert{4 inexistentes}.
+        \item \alerta{Conclusión:} Sin transparencia, el fraude es difícil de detectar.
+    \end{itemize}
+    % \begin{center}
+    % \end{center}
+    % \begin{tikzpicture}
+    %     \node[aLabel, text width=0.99\textwidth,align=left] (a) at (0,0) {\footnotesize\fullcite{majovsky2023}};
+    % \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Otros ejemplos - \citeauthor{walters_fabrication_2023},\citeyear{walters_fabrication_2023}}
+
+    \begin{tikzpicture}
+        \def\colores{cLabel_Dark,aLabel_Dark,aLabel_Dark,aLabel_Dark,aLabel_Dark}
+        \def\words{Enfoque, 42,636,84}
+        \def\texts{
+            {Errores en citas bibliográficas falsas o incorrectas generadas por ChatGPT-3.5 y ChatGPT-4\cite{walters_fabrication_2023} \alerta{(haciendo lit. reviews)}.},
+            {Temas multidisciplinarios},
+            {citas encontradas},
+            {artículos en total}
+        }
+
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[cLabel_Dark, text width=0.15\textwidth, align=center, minimum height=0.85cm] (text\index) at (0,-\index*1.1){\word};
+            \else
+                \node[aLabel_Dark, text width=0.15\textwidth, align=center, minimum height=0.85cm] (text\index) at (0,-\index*1.1){\word};
+            \fi
+        }
+        \foreach [count=\index from 0] \text in \texts{
+            \ifnum\index=0
+                \node[cLabel, text width=0.8\textwidth, align=left, minimum height=0.85cm] (text\index)  at (5.4,-\index*1.1){\footnotesize \text};
+            \else
+                \node[aLabel, text width=0.8\textwidth, align=left, minimum height=0.85cm] (text\index)  at (5.4,-\index*1.1){\footnotesize \text};
+            \fi
+        }
+    \end{tikzpicture}
+
+
+    \begin{columns}
+        \column{0.65\textwidth}
+        \begin{itemize}
+            \item \alerta{ChatGPT-3.5:}
+                  \begin{itemize}
+                      \item 55\% citas fabricadas.
+                      \item 43\% con errores sustanciales.
+                  \end{itemize}
+            \item \alerta{ChatGPT-4:}
+                  \begin{itemize}
+                      \item 18\% citas fabricadas.
+                      \item 24\% con errores.
+                  \end{itemize}
+        \end{itemize}
+        \column{0.5\textwidth}
+        \begin{table}[ht]
+            \centering
+            \footnotesize
+            \begin{tabular}{@{}ll@{}}
+                \toprule
+                \textbf{Error}      & \textbf{Frecuencia} \\
+                \midrule
+                Autores incorrectos & 14\%                \\
+                Títulos falsos      & 6\%                 \\
+                Fechas erróneas     & 22\%                \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Errores de Citación}{\citeauthor{walters_fabrication_2023},\citeyear{walters_fabrication_2023}}
+    \resizebox{0.85\textwidth}{!}{%
+        \begin{tikzpicture}
+            \begin{axis}[
+                    ybar,
+                    symbolic x coords={
+                            Autores,
+                            Títulos,
+                            Fechas,
+                            Journals,
+                            Vol/Pags,
+                            Publisher
+                        },
+                    xtick=data,
+                    ymin=0, ymax=38,
+                    ylabel={Porcentaje (\%)},
+                    nodes near coords,
+                    bar width=10pt,
+                    enlarge x limits=0.1,
+                    legend style={
+                            at={(0.75,1.15)},
+                            anchor=north,
+                            legend columns=-1
+                        },
+                    xticklabel style={rotate=45, anchor=east},
+                    tick label style={font=\small},
+                    label style={font=\scriptsize},
+                ]
+                \addplot coordinates {
+                        (Autores, 14)
+                        (Títulos, 6)
+                        (Fechas, 22)
+                        (Journals, 14)
+                        (Vol/Pags, 34)
+                        (Publisher, 9)
+                    };
+                \addplot coordinates {
+                        (Autores, 6)
+                        (Títulos, 3)
+                        (Fechas, 16)
+                        (Journals, 4)
+                        (Vol/Pags, 13)
+                        (Publisher, 3)
+                    };
+                \legend{GPT-3.5, GPT-4}
+
+            \end{axis}
+
+
+            \node[dLabel, rotate=90, xshift=35mm] (ref) at (7.3, -2){\scriptsize Con los datos de \cite{walters_fabrication_2023}};
+        \end{tikzpicture}%
+    }
+\end{frame}
+% Sección 4: Recomendaciones
+\section{Recomendaciones}
+\begin{frame}{Implementando las Propuestas}
+    \begin{boxA}{Para Autores}
+        \begin{itemize}
+            \item Adjuntar \alerta{archivo suplementario} con prompts y texto generado.
+            \item Especificar secciones editadas (ej.: métodos, discusión).
+        \end{itemize}
+    \end{boxA}
+
+    \begin{boxA}{Para Revistas}
+        \begin{itemize}
+            \item Adoptar políticas como \alerta{Wiley} o \alerta{Sage}:
+                  \begin{itemize}
+                      \item Plantillas para declarar uso de IA.
+                      \item Verificación manual de citas clave.
+                  \end{itemize}
+            \item Capacitar revisores en detección de IA.
+        \end{itemize}
+    \end{boxA}
+\end{frame}
+
+% Sección 5: Conclusión
+\section{Conclusión}
+\begin{frame}{Conclusión}
+    \begin{itemize}
+        \item \alerta{Riesgos:} Fraude, pérdida de confianza, citas falsas.
+        \item \alerta{Oportunidades:} IA mejora eficiencia si se usa con transparencia.
+        \item \alerta{Llamado a la acción:}
+              \begin{itemize}
+                  \item Adoptar directrices unificadas \alerta{y explícitas}.
+                  \item[\color{colorD}\faArrowRight] ej.: %COPE + ICMJE + \citeauthor{Kendall2024},\citeyear{Kendall2024}
+
+                        \begin{center}
+                            \begin{tikzpicture}
+                                \node[dLabel, text width=0.1\textwidth, align=left] (origin)  at (0,0){\small\bfseries COPE};
+                                \node[text=colorA,font=\bfseries,right=1mm of origin] (a)  {+};
+                                \node[dLabel, text width=0.1\textwidth, align=left, right=1mm of a] (b)  {\small\bfseries ICMJE};
+                                \node[text=colorA,font=\bfseries,right=1mm of b] (c)  {+};
+                                \node[cLabel, text width=0.2\textwidth, align=left, right=1mm of c] (d)  {\small \citeauthor{Kendall2024}, \citeyear{Kendall2024}};
+                            \end{tikzpicture}
+                        \end{center}
+                  \item Fomentar cultura de responsabilidad académica.
+              \end{itemize}
+    \end{itemize}
+    \centering
+    % \includegraphics[width=0.3\textwidth]{transparency_icon.png} % Añade una imagen relevante
+\end{frame}
+
+% Conclusiones
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item Las directrices actuales son inconsistentes e insuficientes
+        \item Se necesita transparencia total sobre:
+              \begin{itemize}
+                  \item Qué partes fueron generadas con IA
+                  \item Los prompts utilizados
+                  \item El texto generado antes de la edición
+              \end{itemize}
+              \vspace{0.3cm}
+        \item La comunidad científica debe adoptar estándares más robustos
+        \item El objetivo: mantener la integridad y la confianza en las publicaciones científicas
+    \end{itemize}
+\end{frame}
+\begin{frame}[allowframebreaks]{Referencias}{}
+    \scriptsize
+    % \printbibliography[heading=none]
+    \printbibliography[keyword={ethics},title={Paginas web}]
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Referencias}{Directrices de editoriales}
+    \tiny
+    % \printbibliography[heading=none]
+    \printbibliography[keyword={online},title={Paginas web}]
+\end{frame}
+
+
+\setbeamertemplate{logo}{}
+\begin{frame}[allowframebreaks]
+    % {Artículos de Son Biswas de 2023}{Generados parcial o totalmente con ChatGPT}
+    \tiny
+    \defbibnote{nota3}{Artículos de S. Biswas, generados parcial o totalmente con ChatGPT:}
+
+    \printbibliography[title={}, prenote=nota3, keyword={example}, heading=subbibliography]
+
+
+\end{frame}
+% Referencias
+
+
+
+\begin{frame}
+    \begin{enumerate}\small
+        \item \fullcite{Kendall2024}
+        \item \fullcite{walters_fabrication_2023}
+        \item \fullcite{majovsky2023}
+    \end{enumerate}
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{Introduction: The Rise of AI in Research}
+%     \begin{itemize}
+%         \item Use of Large Language Models (LLMs) like ChatGPT in academic writing.
+%         \item Tools like ChatGPT are now used for:
+%               \begin{itemize}
+%                   \item Drafting papers
+%                   \item Editing language
+%                   \item Generating ideas
+%               \end{itemize}
+%         \item Central question: How do we ensure transparency and integrity when AI is involved in writing scientific papers?
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Kendall's Core Argument}
+%     \begin{itemize}
+%         \item Current journal guidelines are not sufficient to ensure transparency in AI-assisted writing.
+%         \item Key proposal:
+%               \begin{itemize}
+%                   \item Authors should disclose prompts, generated text, and edits.
+%                   \item This should be available to reviewers and readers.
+%               \end{itemize}
+%         \item Ethical concern: A paper could be 100\% AI-generated and still meet current disclosure standards.
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Case Study - Biswas}
+%     \begin{itemize}
+%         \item S. Biswas published over a dozen papers in 2023 with ChatGPT assistance.
+%         \item Issues:
+%               \begin{itemize}
+%                   \item Vague acknowledgments like “partially generated by ChatGPT.”
+%                   \item No clarity on which parts were AI-generated or how much editing was done.
+%                   \item Topics ranged widely (from gaming to public health), raising questions about authorship and originality.
+%               \end{itemize}
+%         \item Kendall's critique: This is exactly the kind of case where stronger guidelines are needed.
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Case Study - Majovský}
+%     \begin{itemize}
+%         \item Majovský et al. (2023) experiment:
+%               \begin{itemize}
+%                   \item Used ChatGPT to generate a completely fake medical article in 1 hour.
+%                   \item Included fabricated data, references, and even a chart.
+%                   \item Experts found it convincing, but flawed on closer inspection.
+%               \end{itemize}
+%         \item Key takeaway: AI can produce authentic-looking fraud. Detection is hard. Reviewers need more information.
+%     \end{itemize}
+
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Walters and Wilder: Citation Fabrication}
+%     \begin{itemize}
+%         \item Findings from Walters and Wilder (2023):
+%               \begin{itemize}
+%                   \item GPT-3.5: 55\% of citations were fake.
+%                   \item GPT-4: Improved, but still 18\% fabricated.
+%                   \item Even real citations had errors in 24-43\% of cases.
+%               \end{itemize}
+%         \item Implication: AI-generated references are unreliable. Without transparency, readers and reviewers are misled.
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Conclusion - A Call to Action}
+%     \begin{itemize}
+%         \item Reiterate the stakes: AI is here to stay. But without transparency, we risk eroding the credibility of science.
+%         \item End with a powerful quote or question: “Should we trust what we read, if we don't know who—or what—wrote it?”
+%     \end{itemize}
+% \end{frame}
+
+
+% \begin{frame}{Percentage of Fabricated Citations}
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%                 ybar,
+%                 symbolic x coords={GPT-3.5, GPT-4},
+%                 xtick=data,
+%                 ymin=0, ymax=60,
+%                 ylabel={Percentage (\%)},
+%                 nodes near coords,
+%                 bar width=20pt,
+%                 enlarge x limits=0.5
+%             ]
+%             \addplot coordinates {(GPT-3.5, 55) (GPT-4, 18)};
+%         \end{axis}
+%     \end{tikzpicture}
+% \end{frame}
+
+% \begin{frame}{Percentage of Citation Errors Among Real Citations}
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%                 ybar,
+%                 symbolic x coords={GPT-3.5, GPT-4},
+%                 xtick=data,
+%                 ymin=0, ymax=50,
+%                 ylabel={Percentage (\%)},
+%                 nodes near coords,
+%                 bar width=20pt,
+%                 enlarge x limits=0.5
+%             ]
+%             \addplot coordinates {(GPT-3.5, 43) (GPT-4, 24)};
+%         \end{axis}
+%     \end{tikzpicture}
+% \end{frame}
+
+% \begin{frame}{Types of Citation Errors}
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%                 ybar,
+%                 symbolic x coords={Incorrect Author Names, Incorrect Titles, Incorrect Dates, Incorrect Journal Titles, Incorrect Volume/Page Numbers, Incorrect Publisher Names},
+%                 xtick=data,
+%                 ymin=0, ymax=40,
+%                 ylabel={Percentage (\%)},
+%                 nodes near coords,
+%                 bar width=10pt,
+%                 enlarge x limits=0.2,
+%                 legend style={at={(0.5,0.15)}, anchor=north, legend columns=-1},
+%                 xticklabel style={rotate=45, anchor=east}
+%             ]
+%             \addplot coordinates {(Incorrect Author Names, 14) (Incorrect Titles, 6) (Incorrect Dates, 22) (Incorrect Journal Titles, 14) (Incorrect Volume/Page Numbers, 34) (Incorrect Publisher Names, 9)};
+%             \addplot coordinates {(Incorrect Author Names, 6) (Incorrect Titles, 3) (Incorrect Dates, 16) (Incorrect Journal Titles, 4) (Incorrect Volume/Page Numbers, 13) (Incorrect Publisher Names, 3)};
+%             \legend{GPT-3.5, GPT-4}
+%         \end{axis}
+%     \end{tikzpicture}
+% \end{frame}
+

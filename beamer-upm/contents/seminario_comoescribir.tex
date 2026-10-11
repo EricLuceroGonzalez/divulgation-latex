@@ -1,0 +1,487 @@
+% Image recreation using Genetic Algorithms and Color metrics
+\section{Introduction}
+\begin{frame}
+    \begin{center}
+        \begin{tikzpicture}
+            \node[aLabel, text width=0.9\textwidth] at ( 0,0){
+            \large
+            ``What if I told you that a computer could paint the Mona Lisa without ever being taught what art is? {\scriptsize(and without using an LLM)}''};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+\begin{frame}
+
+    \begin{tikzpicture}
+        \node[dLabel, minimum height=2cm, text width=3cm] at ( 0,0){
+            \includegraphics[width=0.5\textwidth]{monalisa/mona_lisa.png}};
+        \node[dLabel, minimum height=2cm, text width=3cm] at ( 6,0){
+            \includegraphics[width=0.55\textwidth]{monalisa/web_fittest_5500gen_200_pop.png}};
+    \end{tikzpicture}
+
+\end{frame}
+\begin{frame}
+
+    \begin{tikzpicture}
+        \def\words{Classic algorithms, Metaheuristics}
+        \def\texts{
+            {are like engineers—they plan everything, test everything, and need time.},
+            {They're like adventurers. One tries random paths, another imitates the best, another dives down a risky valley hoping for a better view.}
+        }
+
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[cLabel_Dark, text width=0.3\textwidth, align=center, minimum height=1.5cm] (text\index) at (0,-\index*1.1){\word};
+            \else
+                \node[aLabel_Dark, text width=0.3\textwidth, align=center, minimum height=1.5cm] (text\index) at (0,-\index*2.1){\word};
+            \fi
+        }
+        \foreach [count=\index from 0] \text in \texts{
+            \ifnum\index=0
+                \node[cLabel, text width=0.65\textwidth, align=left, minimum height=1.5cm] (text\index)  at (5.3,-\index*1.1){\small \text};
+            \else
+                \node[aLabel, text width=0.65\textwidth, align=left, minimum height=1.5cm] (text\index)  at (5.3,-\index*2.1){\small \text};
+            \fi
+        }
+    \end{tikzpicture}
+\end{frame}
+\begin{frame}
+    % This study uses a GA to evolve randomly generated triangular shapes, optimizing their color
+    % (via CIE Lab $\Delta E*94$)
+    % and structural alignment with an test image \cite{Mona_lisa_1}.
+    % The method balances exploration of geometric configurations with exploitation of high-fidelity solutions,
+    % demonstrating the potential of evolutionary computation to computationally approximate artistic masterpieces.
+    \vspace{3em}
+    \begin{tikzpicture}
+        \def\words{
+            {This study uses a GA to evolve randomly generated triangular shapes, optimizing their color (via CIE Lab $\Delta E*94$)},
+            {The method balances exploration of geometric configurations with exploitation of high-fidelity solutions,},
+            {It demonstrates the potential of evolutionary computation to computationally approximate artistic masterpieces.}
+        }
+
+        \foreach [count=\index from 0] \word in \words{
+            \node[aLabel, text width=0.9\textwidth, align=center, minimum height=1.5cm] (text\index) at (0,-\index*1.9){\word};
+        }
+    \end{tikzpicture}
+
+\end{frame}
+\begin{frame}
+    \begin{tikzpicture}
+        \node[aLabel, minimum height=2cm, text width=3cm] at ( 0,0){
+            \includegraphics[width=0.5\textwidth]{monalisa/fittest_1gen_50pop.png}};
+        \node[aLabel, minimum height=2cm, text width=3cm] at ( 6,0){
+            \includegraphics[width=0.55\textwidth]{monalisa/fittest_250gen_50_pop.png}
+        };
+        \node[aLabel, minimum height=2cm, text width=3cm] at ( 6,-3){
+            \includegraphics[width=0.55\textwidth]{monalisa/fittest_300gen_50_pop.png}
+        };
+        \node[aLabel, minimum height=2cm, text width=3cm] at ( 0,-3){
+            \includegraphics[width=0.55\textwidth]{monalisa/fittest_1000gen_50_pop.png}
+        };
+        \node[aLabel, minimum height=2cm, text width=3cm] at ( 0,-6){
+            \includegraphics[width=0.55\textwidth]{monalisa/web_fittest_5500gen_200_pop.png}
+        };
+        \draw[-Triangle, line width=1mm, colorC!50] (2,0) -- (4,0);
+        \draw[-Triangle, line width=1mm, colorC!50] (6,-1) -- (6,-2);
+        \draw[-Triangle, line width=1mm, colorC!50] (4,-3) -- (2,-3);
+        \draw[-Triangle, line width=1mm, colorC!50] (0,-4) -- (0,-5);
+    \end{tikzpicture}
+\end{frame}
+% Introducción
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item \alerta{Objective}: Recreate the Mona Lisa using a genetic algorithm that optimizes color and structural similarity.
+        \item \alerta{Motivation}: Explore the intersection of evolutionary computation and digital art.
+        \item \alerta{Approach}: Use CIE Lab color metrics and genetic algorithms to generate images iteratively.
+    \end{itemize}
+\end{frame}
+
+% Metodología
+\begin{frame}{Methodology}
+    \alerta{Genetic Algorithm}:
+    \begin{itemize}
+        \item \alerta{Initialization}: Randomly generate a population of images.
+        \item \alerta{Selection}: Choose the fittest individuals based on color similarity.
+        \item \alerta{Crossover}: Combine features of two parents to create offspring.
+        \item \alerta{Mutation}: Introduce small random changes to the offspring.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Method}
+
+    \begin{center}
+        \vspace{-1em}
+        \begin{tikzpicture}
+            \node[] (imageA) at (0,0){\includegraphics[width=0.25\textwidth]{monalisa/fittest_1gen_50pop.png}};
+            \node[aLabel,below=1pt of imageA](captionA){\small Example of a first individual.};
+            % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+        \end{tikzpicture}
+        \vspace{-1em}
+    \end{center}
+    \begin{enumerate}
+        % [partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+        \item Each \alerta{individual} represents an image composed of triangles.
+        \item Each image is evaluated using the CIE Lab $\Delta CIE1994$\cite{Melgosa2023} metric to measure
+              \alerta{color similarity} as the mean value.\\ Equation \eqref{eq:CIE1994} is used in each pixel.
+        \item The GA \alerta{selects} (tournament), \alerta{crossover}, and \alerta{mutates} the best solutions to improve the approximation.
+        \item The process is repeated over several \alerta{generations} until an optimal solution is reached.
+        \item A stop condition is applied when fitness is $< 0.01$ for 3 consecutive individuals.
+    \end{enumerate}
+\end{frame}
+
+\section{Measuring colors}
+\begin{frame}{Color metrics}{CIELAB-based color-difference $\Delta E$}
+    \begin{tikzpicture}
+        \def\pointA{(40,50,60)}        % lab(60, 40, 50) rgb(225, 113, 56)
+        \def\pointB{(25, 30,30)}        %  % lab(30, 25, 30) rgb(115, 53, 24)
+        \def\pointC{(40,-50,40)}        % lab(40, 40, -50)rgb(112, 72, 177)
+        % Espacio CIELAB
+        \begin{axis}[
+                % at={(5cm,0cm)},
+                width=14cm, height=11.35cm,
+                axis lines=middle,
+                xlabel={$a^*$}, ylabel={$b^*$}, zlabel={$L^*$ (luminosidad)},
+                xmin=-10, xmax=50,
+                ymin=-50, ymax=50,
+                zmin=0, zmax=60,
+                tick label style={font=\tiny}, % Tamaño de las etiquetas
+                label style={font=\tiny,gray}, % Tamaño de los nombres de los ejes
+                % xticklabels={-50,-35,-20,...,50},
+                % xtick={-50,-35,-20,...,50},
+                yticklabels={-50,-35,-20,...,50},
+                ytick={-50,-35,-20,...,50},
+                zticklabels={0,20,...,60},
+                ztick={0,20,...,60},
+                % enlargelimits=5.1,
+                % x label style={at={(axis description cs:70.5,-0.1)},anchor=north},
+                view={45}{30}
+            ]
+            % Puntos de los colores
+            \addplot3[only marks, color=colorTestA, mark=square*,mark options={scale=2.5}] coordinates {\pointA};
+            \addplot3[only marks, color=colorTestB, mark=square*,mark options={scale=2.5}] coordinates {\pointB};
+            \addplot3[only marks, color=colorTestC, mark=square*,mark options={scale=2.5}] coordinates {\pointC};
+            \addplot3[only marks, color=gray, mark=*] coordinates {(40, 50, 0)}node[above right]{\scriptsize $A$};
+            \addplot3[only marks, color=gray, mark=*] coordinates {(25, 30, 0)}node[above left]{\scriptsize $B$};
+            \addplot3[only marks, color=gray, mark=*] coordinates {(40,-50,0)}node[above left]{\scriptsize $C$};
+
+            % Points dashed on xy plane
+            \addplot3[thin,dashed,gray] coordinates {(0,50,0) (40,50,0)}; % A
+            \addplot3[thin,dashed,gray] coordinates {(40,0,0) (40,50,0)}; % A
+            \addplot3[thin,dashed,gray] coordinates {(40,50,0) (40,50,60)}; % A
+            \addplot3[thin,dashed,gray] coordinates {(0,30,0) (25,30,0)}; % B
+            \addplot3[thin,dashed,gray] coordinates {(25,0,0) (25,30,0)}; % B
+            \addplot3[thin,dashed,gray] coordinates {(25,30,30) (25,30,0)}; % B
+            \addplot3[thin,dashed,gray] coordinates {(0,-50,0) (40,-50,0)}; % C
+            \addplot3[thin,dashed,gray] coordinates {(40,0,0) (40,-50,0)}; % C
+            \addplot3[thin,dashed,gray] coordinates {(40,-50,0) (40,-50,40)}; % 
+            % Línea de distancia entre ellos
+            \addplot3[dashed] coordinates {\pointA \pointB}node[aLabel,below right,pos=0.55]{\small $\Delta E_{ab}^*=30.7$};; % 30.7
+            \addplot3[dashed] coordinates {\pointA \pointC}node[aLabel,above left,pos=0.5] {\small $\Delta E_{ab}^*=54.8$};; % 54.8
+        \end{axis}
+        % {$\Delta E_{ab}^*$}
+        \node[dLabel,align=left,above right,text width=2.95cm]at (0.45,7.0) {\bfseries How to measure color difference?};
+    \end{tikzpicture}
+\end{frame}
+\begin{frame}{Color metrics}{Color coordinates}
+    \begin{itemize}
+        \item Use $\Delta E_{CIE1994}$ to measure color difference:
+              \[
+                  \Delta E_{94}^* = \sqrt{\left(\frac{\Delta L^*}{k_L S_L}\right)^2 + \left(\frac{\Delta C^*}{k_C S_C}\right)^2 + \left(\frac{\Delta H^*}{k_H S_H}\right)^2}
+              \]
+              where:
+              \begin{itemize}
+                  \item \(\Delta L^* = L_1^* - L_2^*\) is luminosity difference.
+                  \item \(\Delta C^* = C_1^* - C_2^*\) is the color intensity difference.
+                  \item \(\Delta H^*\) is the tone difference, calculated as:
+                        \[
+                            \Delta H^* = \sqrt{ (\Delta a^*)^2 + (\Delta b^*)^2 - (\Delta C^*)^2 }
+                        \]
+                  \item \(k_L\), \(k_C\), \(k_H\): Weighting factors.
+                  \item \(S_L\), \(S_C\), \(S_H\): Scaling factors that depends on the observation conditions.
+              \end{itemize}
+    \end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{Color metrics}{Copmaring images to evaluate fitness}
+    \begin{tikzpicture}[scale=0.9]
+
+        \begin{scope}[
+                xshift=120,yshift=160, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {1} {
+                    \foreach \y in {0,1,2} {
+                            \fill[backgroundColor,fill opacity=0.35] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (1,0) grid (2,3);
+            \node[black] at(1.5,0.5){30};
+            \node[black] at(1.5,1.5){25};
+            \node[black] at(1.5,2.5){30};
+        \end{scope}
+        \begin{scope}[
+                xshift=120,yshift=70, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {1} {
+                    \foreach \y in {0,1,2} {
+                            \fill[backgroundColor,fill opacity=0.35] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (1,0) grid (2,3);
+            \node[black] at(1.5,0.5){40};
+            \node[black] at(1.5,1.5){40};
+            \node[black] at(1.5,2.5){-50};
+        \end{scope}
+        % Definir el plano en perspectiva
+        \begin{scope}[
+                yshift=0, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            \node[opacity=0.7] at (0,0){\includegraphics[width=3cm]{monalisa/mona_lisa.png}};
+            % Dibujar la malla de píxeles
+            \foreach \x in {0,1,2,3,4} {
+                    \foreach \y in {0,1,2,3,4} {
+                            \fill[backgroundColor,fill opacity=0.5] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+
+            % Dibujar la silueta (ejemplo: una "L") 
+            \foreach \x/\y in {1/1, 1/2, 1/3, 2/1, 3/1} {
+                    \fill[colorTestB] (\x,\y) rectangle (\x+1,\y+1);
+                }
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (0,0) grid (5,5);
+            \node[white] at (1.5,3.5){1};
+            \node[white] at(1.5,2.5){2};
+            \node[white] at(1.5,1.5){3};
+            \node[white] at(2.5,1.5){4};
+            \node[white] at(3.5,1.5){5};
+            \node[dLabel, right] at (0,5.5){Imagen original};
+        \end{scope}
+
+        % \begin{scope}[
+        %         yshift=0,yslant=-0.5, xslant=-1, every node/.append style={yslant=0.5, xslant=-1},
+        %     ]
+        %     \node[] at (0,4){\includegraphics[width=3cm]{monalisa/mona_lisa.png}};
+        % \end{scope}
+        % Lineas entre planos
+        % Dibujar líneas conectando puntos entre ambos planos
+        % \draw[step=1cm,red,thin] (0,0) grid (5,5);
+        % \draw[step=1cm,blue,thin] (-4,0) grid (0,5);
+        \draw[colorA, thick,Triangle-] (-1,2.2) -- (-1,5);
+
+        \begin{scope}[
+                yshift=90, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {0,1,2,3,4} {
+                    \foreach \y in {0,1,2,3,4} {
+                            \fill[backgroundColor,fill opacity=0.5] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+
+            % Dibujar la silueta (ejemplo: una "L")
+            \foreach \x/\y in {1/1, 1/2, 1/3, 2/1, 3/1} {
+                    \fill[colorTestC] (\x,\y) rectangle (\x+1,\y+1);
+                }
+
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (0,0) grid (5,5);
+            \node[white] at(1.5,3.5){1};
+            \node[white] at(1.5,2.5){2};
+            \node[white] at(1.5,1.5){3};
+            \node[white] at(2.5,1.5){4};
+            \node[white] at(3.5,1.5){5};
+
+            \node[bLabel] at (1.5,5.5){Imagen a comparar};
+        \end{scope}
+
+        \draw[Triangle-,thick,colorA](3.5,4.0)node[right]{%
+            % $\begin{aligned}
+            %         L^* & = 40 \\a^* & = 40 \\b^* & = -50\\
+            %     \end{aligned}
+            % $
+        }
+        to[out=180,in=90] (2.5,2.5);
+        \draw[Triangle-,thick,colorA](3.6,7.2)node[right]{%
+            % $\begin{aligned}
+            %         L^* & = 30 \\a^* & = 25 \\b^* & = 30\\
+            %     \end{aligned}
+            % $
+        }
+        to[out=180,in=90] (2.5,5.5);
+
+        % lab(30, 25, 30) rgb(115, 53, 24)
+        % lab(40, 40, -50)rgb(112, 72, 177)
+
+    \end{tikzpicture}
+\end{frame}
+
+% % Resultados
+\section{Results}
+\begin{frame}{Results}
+    % \begin{columns}
+    %     \begin{column}{0.5\textwidth}
+    %         \alerta{Generated Images}:
+    %         \begin{itemize}
+    %             \item Evolution of the Mona Lisa over generations.
+    %             \item Comparison between the original and the final generated image.
+    %         \end{itemize}
+    %         % \includegraphics[width=\textwidth]{mona_lisa_evolution.png}
+    %     \end{column}
+    %     \begin{column}{0.5\textwidth}
+    %         \alerta{Fitness Evolution}:
+    %         \begin{itemize}
+    %             \item Graph showing the improvement of fitness over generations.
+    %         \end{itemize}
+    %         % \includegraphics[width=\textwidth]{fitness_evolution.png}
+    %     \end{column}
+    % \end{columns}
+    \begin{tikzpicture}
+        \def\words{Generated Images,
+            {Evolution of the Mona Lisa over generations.},
+            {Comparison between the original and the final generated image.}
+        }
+        \foreach [count=\index from 0] \word in \words{
+            \ifnum\index=0
+                \node[cLabel_Dark, text width=0.99\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,\index*1.1){\word};
+            \else
+                \node[cLabel, text width=0.99\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,-\index*1.2){\word};
+            \fi
+        }
+        \begin{scope}[yshift=-4cm]
+            \def\words{Fitness Evolution,
+                {Graph showing the improvement of fitness over generations.}
+            }
+            \foreach [count=\index from 0] \word in \words{
+                \ifnum\index=0
+                    \node[dLabel_Dark, text width=0.99\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,-\index*1.1){\word};
+                \else
+                    \node[dLabel, text width=0.99\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,-\index*1.2){\word};
+                \fi
+            }
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+% Discusión
+\begin{frame}{Discussion}
+    \begin{itemize}
+        \item \alerta{Challenges}:
+              \begin{itemize}
+                  \item High computational cost.
+                  \item Sensitivity to outliers in color metrics.
+              \end{itemize}
+        \item \alerta{Advantages}:
+              \begin{itemize}
+                  \item Effective convergence towards the target image.
+                  \item Flexibility to use different color metrics.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{tikzpicture}
+        \node[] (imageA) at (0,0){\includegraphics[width=0.4\textwidth]{monalisa/web_fittest_2500gen_100_pop.png}};
+        \node[] (imageB) at (4.95,0){\includegraphics[width=0.4\textwidth]{monalisa/web_fittest_3500gen_100_pop.png}};
+        \node[aLabel](captionA) at (-0.55,-1.9){\scriptsize Triangles capture edges.};
+        \node[aLabel](captionB) at (4.63,-1.9){\scriptsize Operators improves details.};
+        % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+        \begin{scope}[yshift=-4.5cm]
+            \node[] (imageA) at (0,0){\includegraphics[width=0.4\textwidth]{monalisa/web_fittest_3000gen_300_pop.png}};
+            \node[] (imageB) at (4.85,0){\includegraphics[width=0.4\textwidth]{monalisa/web_fittest_5500gen_200_pop.png}};
+            \node[aLabel](captionA) at (-0.25,-1.88){\scriptsize Captures background colors.};
+            \node[aLabel](captionB) at (4.15,-1.88){\scriptsize At 5,000 generations.};
+            % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+        \end{scope}
+    \end{tikzpicture}
+
+    % \begin{tikzpicture}
+    %     \node[] (imageA) at (0,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_3000gen_300_pop.png}};
+    %     \node[] (imageB) at (4.85,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_5500gen_200_pop.png}};
+    %     \node[below=1pt of imageA](captionA){\scriptsize Captures background colors.};
+    %     \node[below=1pt of imageB](captionB){\scriptsize At 5,000 generations.};
+    %     % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+    % \end{tikzpicture}
+\end{frame}
+\begin{frame}{Fitness evolution through generations}
+    \vspace{-1em}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[trim left=-0.05cm]
+            \node[] (imageA) at (4,5){\includegraphics[width=0.8\textwidth]{monalisa/web_mona_lisa_fittest_5500_generations-200_pop.png}};
+            \node[below=1pt of imageA](captionA){\scriptsize Some caption.};
+        \end{tikzpicture}
+    \end{figure}
+
+\end{frame}
+
+\section{Limitations}
+\begin{frame}{Limitations}
+    % El algoritmo converge hacia una imagen similar a la Mona Lisa, pero se enfrenta a desafíos como el tiempo de ejecución y la sensibilidad a los valores extremos en las métricas de color.
+    % \begin{enumerate}\tiny
+    %     % [partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+    %     \item The algorithm showed rapid convergence in early generations ($\leq 50$), followed by stagnation, indicating a trade-off between exploration and exploitation.
+    %     \item Triangular shapes captured edges effectively but limited color blending. While $\Delta E\,\, CIE1994$ correlated well with human perception, it overlooked structural texture.
+    %     \item Larger populations ($\geq 100$) enhanced diversity at higher computational costs.
+    % \end{enumerate}
+
+    \begin{tikzpicture}
+        \vspace{3em}
+        \def\words{
+            % Limitations,
+            {The algorithm showed rapid convergence in early generations ($\leq 50$), followed by stagnation, indicating a trade-off between exploration and exploitation.},
+            {Triangular shapes captured edges effectively but limited color blending. While $\Delta E\,\, CIE1994$ correlated well with human perception, it overlooked structural texture.},
+            {Larger populations ($\geq 100$) enhanced diversity at higher computational costs.}
+        }
+        \foreach [count=\index from 0] \word in \words{
+            % \ifnum\index=0
+            %     \node[bLabel_Dark, text width=0.99\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,\index*0.1){\word};
+            % \else
+            \node[bLabel, text width=0.99\textwidth, align=left, minimum height=1.5cm] (text\index) at (0,-\index*1.7){\word};
+            % \fi
+        }
+    \end{tikzpicture}
+\end{frame}
+\section{Conclusions}
+\begin{frame}{Conclusions}
+    % Este proyecto demuestra la viabilidad de usar algoritmos genéticos para recrear obras de arte. Futuras mejoras incluyen el uso de métricas de color más robustas y técnicas de optimización avanzadas.
+    % \begin{enumerate}
+    %     % [partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+    %     \item The genetic algorithm successfully approximated the Mona Lisa using triangular shapes and the $\Delta CIE1994$ color metric\cite{Melgosa2023}, achieving a 68\%
+    %           reduction in color discrepancy over 100 generations.
+    %     \item While computationally intensive, the method demonstrated the potential of evolutionary strategies in artistic replication.
+    %     \item Future implementations could benefit from hybrid approaches (e.g., neural-guided mutations) and texture-aware metrics to overcome current limitations in smoothness and structural fidelity.
+    % \end{enumerate}
+
+    \begin{tikzpicture}
+        \vspace{3em}
+        \def\words{
+            {The genetic algorithm successfully approximated the Mona Lisa using triangular shapes and the $\Delta CIE1994$ color metric\cite{Melgosa2023}, achieving a 68\%
+                    reduction in color discrepancy over 100 generations.},
+            {While computationally intensive, the method demonstrated the potential of evolutionary strategies in artistic replication\cite{Mona_lisa_1}.},
+            {Future implementations could benefit from hybrid approaches (e.g., neural-guided mutations) and texture-aware metrics to overcome current limitations in smoothness and structural fidelity.}
+        }
+        \foreach [count=\index from 0] \word in \words{
+            % \ifnum\index=0
+            %     \node[cLabel_Dark, text width=0.99\textwidth, align=center, minimum height=0.95cm] (text\index) at (0,\index*0.1){\word};
+            % \else
+            \node[cLabel, text width=0.99\textwidth, align=left, minimum height=1.5cm] (text\index) at (0,-\index*1.7){\word};
+            % \fi
+        }
+    \end{tikzpicture}
+\end{frame}
+% \section{References}
+% \begin{frame}{References}
+%     \scriptsize
+%     \printbibliography[heading=none]
+% \end{frame}

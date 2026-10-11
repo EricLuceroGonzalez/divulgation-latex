@@ -1,0 +1,251 @@
+\scriptsize
+\thispagestyle{empty}
+\def\subs{\colorea{blue}{A,T,D}}
+\begin{frame}
+
+    \begin{align*}
+        G_{\subs} & =  \left(S,NT, T,P_\subs\right)        \\
+        NT        & = \left\{
+                  & C_{11}, C_{12},\ldots, C_{1T}, \ldots, \\
+                  & C_{21}, C_{22},\ldots, C_{1T}, \ldots, \\
+                  & C_{31}, C_{32},\ldots, C_{3T}, \ldots, \\
+        \right\}
+    \end{align*}
+
+\end{frame}
+
+% Frame 1: Gramática de Alto Nivel
+\begin{frame}\scriptsize
+    \begin{tikzpicture}[node distance=0.1cm, every node/.style={align=center}]
+        \node[minimum width=6cm] (Grammar)
+        {$G_{\subs} =  \left(S,NT, T,P_\subs\right)$};
+
+        % No terminales
+        \node[xshift=0.55cm,below=-0.35mm of Grammar, text width=5cm,inner sep=3mm,] (NonTerminalsA)
+        {$NT = \left\{
+                C_{11}, C_{12},\ldots, C_{1T}, \ldots,
+                % C_{21}, C_{22},\ldots, C_{1T}, \ldots,
+                % C_{31}, C_{32},\ldots, C_{3T}, \ldots,
+                \right. $};
+        \node[xshift=0.5cm,below=-0.5cm of NonTerminalsA, text width=5cm,inner sep=3mm,] (NonTerminalsB)
+        {$C_{21}, C_{22},\ldots, C_{1T}, \ldots,$};
+        \node[xshift=-0.27cm,below=-0.5cm of NonTerminalsB, text width=5cm,inner sep=3mm,] (NonTerminalsC)
+        {$C_{31}, C_{32},\ldots, C_{AT},$};
+        \node[xshift=-0.35cm,below=-0.5cm of NonTerminalsC, text width=5cm,inner sep=3mm,] (NonTerminalsD)
+        {$Z_3,\ldots, Z_A \left.\right\}$};
+
+        % Terminales
+        \node[xshift=0.15cm,below=0.5cm of NonTerminalsC, minimum width=6cm] (Terminals)
+        {$T = \left\{:, ;, 0, 1, 2,3,,4,5,6,7,8, 9\right\}$};
+
+        % % Encabezado
+        \node[xshift=-2.10cm,below =-0.35cm of Terminals, minimum width=6cm, minimum height=1cm] (Axiom)
+        {$P_{\subs} =  \left\{ \right.$};
+        % % Producciones
+        \node[draw, rectangle, below=0.5cm of Terminals, minimum width=6cm] (Productions)
+        {
+            $
+                \begin{aligned}
+                    S      & ::= C_{11}, C_{12}: \ldots : C_{1T};         \\
+                           & \qquad C_{21}, C_{22}: \ldots : C_{2T};      \\
+                           & \qquad C_{11}, C_{12}: \ldots : C_{1T};      \\
+                           & \qquad Z_3: C_{31}, C_{32}: \ldots : C_{3T}; \\
+                           & \qquad\qquad \vdots                          \\
+                           & \qquad Z_A: C_{A1}, C_{A2}: \ldots : C_{AT}; \\
+                    Z_3    & ::= 1 \mid 2                                 \\
+                           & \qquad\qquad \vdots                          \\
+                    Z_A    & ::= 1 \mid 2 \mid \ldots \mid  A-1           \\
+                    Z_A    & ::= 1 \mid 2 \mid \ldots \mid  A-1           \\
+                    C_{11} & ::= 0 \mid 1 \mid D_1                        \\
+                           & \qquad\qquad \vdots                          \\
+                    C_{1T} & ::= 0 \mid 1 \mid D_1                        \\
+                \end{aligned}
+            $
+            %     $Z3 \rightarrow 1 \mid 2 \mid 3$ \\
+            %     $C1 \rightarrow 0 \mid 1 \mid 2$ \\
+            %     $C2 \rightarrow 0 \mid 1 \mid 2 \mid 3 \mid 4$ \\
+            %     $C3 \rightarrow 0 \mid 1 \mid 2$
+        };
+
+    \end{tikzpicture}
+\end{frame}
+
+% \thispagestyle{empty}
+% % Frame 2: Gramática de Bajo Nivel
+% \begin{frame}{Gramática de Bajo Nivel}
+%     \begin{center}
+%         \begin{tikzpicture}[node distance=1cm, every node/.style={align=center}]
+
+%             % Encabezado
+%             \node[draw, rectangle, minimum width=6cm, minimum height=1cm] (AxiomLL)
+%             {\textbf{Axioma:} \\ $S$};
+
+%             % No terminales
+%             \node[draw, rectangle, below=0.5cm of AxiomLL, minimum width=6cm] (NonTerminalsLL)
+%             {\textbf{No Terminales:} \\ $S, R, Z, R3, R4$};
+
+%             % Terminales
+%             \node[draw, rectangle, below=0.5cm of NonTerminalsLL, minimum width=6cm] (TerminalsLL)
+%             {\textbf{Terminales:} \\ $:, ;, -, 0, 1, 2, \dots, 4$};
+
+%             % Producciones
+%             \node[draw, rectangle, below=0.5cm of TerminalsLL, minimum width=6cm] (ProductionsLL)
+%             {\textbf{Producciones:} \\
+%                 $S \rightarrow R ; Z ; treasures ; monsters$ \\
+%                 $R \rightarrow R3 : R4$ \\
+%                 $R3 \rightarrow 0 \mid 1$ \\
+%                 $R4 \rightarrow 0 \mid 1 \mid 2$ \\
+%                 $Z \rightarrow 1 \mid 2 \mid 3$ \\
+%                 $treasures \rightarrow gold \mid silver \mid gems$ \\
+%                 $monsters \rightarrow skeleton \mid zombie \mid goblin$
+%             };
+
+%         \end{tikzpicture}
+%     \end{center}
+% \end{frame}
+
+% \begin{frame}
+%     % 
+%     \begin{tikzpicture}
+%         \def\yMax{1.1}
+%         \begin{axis}[
+%                 width=\textwidth,
+%                 axis lines=left, % Coloca los ejes en el medio
+%                 xlabel=, % Etiqueta del eje x
+%                 ylabel=, % Etiqueta del eje y
+%                 y=2.5cm,
+%                 % x=0.5cm/3,
+%                 xmin=-10, xmax=50.9, % Limites del eje x
+%                 ymin=0, ymax=\yMax, % Limites del eje y
+%                 xtick={-10,0,10,20,...,50}, % Puntos de referencia en el eje x
+%                 ytick={0,0.2,...,\yMax}, % Puntos de referencia en el eje y
+%                 domain=-10:50, % Dominio de la función
+%                 samples=200, % Resolución de la curva
+%                 smooth % Curva suave
+%             ]
+%             \draw[gray, dashed] (axis cs: 0,0) -- (axis cs: 0,1);
+%             \draw[gray, dashed] (axis cs: 10,0) -- (axis cs: 10,1);
+%             \draw[gray, dashed] (axis cs: 20,0) -- (axis cs: 20,1);
+%             \draw[gray, dashed] (axis cs: 30,0) -- (axis cs: 30,1);
+%             \draw[gray, dashed] (axis cs: 40,0) -- (axis cs: 40,1);
+%             \draw[draw=blue, line width=1.1mm](axis cs: -10, 1) -- (axis cs: 0, 1) -- (axis cs: 10, 0);
+%             \draw[draw=green!90!black, line width=1.1mm](axis cs: 0, 0) -- (axis cs: 10, 1) -- (axis cs: 20,0);% -- (axis cs: 30, 0);
+%             \draw[draw=cyan!90!black, line width=1.1mm](axis cs: 10, 0) -- (axis cs: 20, 1) -- (axis cs: 30,0);
+%             \draw[draw=orange!90!white, line width=1.1mm](axis cs: 20, 0) -- (axis cs: 30, 1) -- (axis cs: 40,0);
+%             \draw[draw=red!90!white, line width=1.1mm](axis cs: 30, 0) -- (axis cs: 40, 1) -- (axis cs: 50,1);
+%         \end{axis}
+%         \node[above,blue] (a) at (1,3){\textbf{Frío}};
+%         \node[above,green!90!white] (b) at (2.9,2.93){\textbf{Templado}};
+%         \node[above,cyan!90!black] (c) at (4.5,3){\textbf{Fresco}};
+%         \node[above,orange!90!white] (d) at (6,3){\textbf{Cálido}};
+%         \node[above,red!90!white] (e) at (8,3){\textbf{Caliente}};
+%         \node[gray,below] (f) at (4.5,-0.45){\small Temperatura ($^\circ C$)};
+%         \node[gray,left,rotate=90] (g) at (-1.25,2){\small $\mu(x)$};
+%     \end{tikzpicture}
+% \end{frame}
+
+% \begin{frame}
+%     % 
+%     \begin{tikzpicture}
+%         \def\yMax{1.1}
+%         \begin{axis}[
+%                 width=\textwidth,
+%                 axis lines=middle, % Coloca los ejes en el medio
+%                 xlabel=, % Etiqueta del eje x
+%                 ylabel=, % Etiqueta del eje y
+%                 y=2.5cm,
+%                 % x=0.5cm/3,
+%                 xmin=36.6, xmax=38.4, % Limites del eje x
+%                 ymin=0, ymax=\yMax, % Limites del eje y
+%                 xtick={36.8,37.0,37.2,...,38.0}, % Puntos de referencia en el eje x
+%                 ytick={0,0.2,...,\yMax}, % Puntos de referencia en el eje y
+%                 domain=36.8:38, % Dominio de la función
+%                 samples=200, % Resolución de la curva
+%                 smooth % Curva suave
+%             ]
+%             \draw[fill=orange, opacity=0.45,draw=none] (axis cs: 37.21,0) rectangle (axis cs: 39,1);
+%             \draw[fill=blue!30!white,draw=none] (axis cs: 36.4,0) rectangle (axis cs: 37.19,1);
+%             % \draw[gray, dashed] (axis cs: 10,0) -- (axis cs: 10,1);
+%             \draw[gray, dashed, line width=0.6mm] (axis cs: 37.2,0) -- (axis cs: 37.2,1);
+%             \node[] (a) at (axis cs: 36.9,0.5){NO FIEBRE};
+%             \node[] (B) at (axis cs: 37.45,0.5){FIEBRE};
+
+%             % \draw[gray, dashed] (axis cs: 20,0) -- (axis cs: 20,1);
+%             % \draw[gray, dashed] (axis cs: 40,0) -- (axis cs: 40,1);
+%             % \draw[draw=blue, line width=1.1mm](axis cs: -10, 1) -- (axis cs: 0, 1) -- (axis cs: 10, 0);
+%             % \draw[draw=green!90!black, line width=1.1mm](axis cs: 0, 0) -- (axis cs: 10, 1) -- (axis cs: 20,0);% -- (axis cs: 30, 0);
+%             % \draw[draw=cyan!90!black, line width=1.1mm](axis cs: 10, 0) -- (axis cs: 20, 1) -- (axis cs: 30,0);
+%             % \draw[draw=orange!90!white, line width=1.1mm](axis cs: 20, 0) -- (axis cs: 30, 1) -- (axis cs: 40,0);
+%             % \draw[draw=red!90!white, line width=1.1mm](axis cs: 30, 0) -- (axis cs: 40, 1) -- (axis cs: 50,1);
+%         \end{axis}
+%         % \node[above,blue] (a) at (1,3){\textbf{Frío}};
+%         % \node[above,green!90!white] (b) at (2.9,2.93){\textbf{Templado}};
+%         % \node[above,cyan!90!black] (c) at (4.5,3){\textbf{Fresco}};
+%         % \node[above,orange!90!white] (d) at (6,3){\textbf{Cálido}};
+%         \draw[-Triangle,GithubRed, line width=0.9mm] (3,2.8) -- (3.1,2.0);
+%         \node[above,greenLabel] (e) at (3,2.8){Frontera nítida};
+%         \node[gray,below] (f) at (4.5,-0.45){\small Temperatura ($^\circ C$)};
+%         \draw[fill=white,draw=white] (-1,-0.3) rectangle (0.1,2.8);
+%     \end{tikzpicture}
+% \end{frame}
+
+% \begin{frame}
+%     % 
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%                 width=\textwidth,
+%                 axis lines=middle, % Coloca los ejes en el medio
+%                 xlabel=, % Etiqueta del eje x
+%                 ylabel=, % Etiqueta del eje y
+%                 y=2.5cm,
+%                 % x=0.5cm/3,
+%                 xmin=164.5, xmax=195.5, % Limites del eje x
+%                 ymin=0, ymax=1.1, % Limites del eje y
+%                 xtick={165,170,...,190.0}, % Puntos de referencia en el eje x
+%                 ytick={0,0.2,...,1.1}, % Puntos de referencia en el eje y
+%                 domain=165:190, % Dominio de la función
+%                 samples=200, % Resolución de la curva
+%                 smooth % Curva suave
+%             ]
+%             \draw[draw=none,opacity=0.45, left color=cyan,right color = blue,opacity=0.5] (axis cs: 170.1,0) rectangle (axis cs: 180,1);
+
+%             \draw[draw=blue, line width=1.1mm](axis cs: 170, 0) -- (axis cs: 180, 1) -- (axis cs: 190, 1);
+%             \draw[gray, dashed,very thick] (axis cs: 170,0) -- (axis cs: 170,1);
+%             % \draw[gray, dashed] (axis cs: 40,0) -- (axis cs: 40,1);
+%             % \draw[draw=green!90!black, line width=1.1mm](axis cs: 0, 0) -- (axis cs: 10, 1) -- (axis cs: 20,0);% -- (axis cs: 30, 0);
+%             % \draw[draw=cyan!90!black, line width=1.1mm](axis cs: 10, 0) -- (axis cs: 20, 1) -- (axis cs: 30,0);
+%             % \draw[draw=orange!90!white, line width=1.1mm](axis cs: 20, 0) -- (axis cs: 30, 1) -- (axis cs: 40,0);
+%             % \draw[draw=red!90!white, line width=1.1mm](axis cs: 30, 0) -- (axis cs: 40, 1) -- (axis cs: 50,1);
+%         \end{axis}
+%         \draw[Triangle-Triangle,GithubRed, line width=0.4mm] (1.6,2.7) -- (4.37,2.7);
+%         \node[above,greenLabel] (e) at (3,2.8){Frontera difusa};
+%         \node[gray,below] (f) at (4.5,-0.45){\small Estatura ($cm$)};
+%         \node[gray,left,rotate=90] (g) at (-1.0,2.3){\small Pertenencia};
+%     \end{tikzpicture}
+%     \begin{center}
+%         % $\mu_A(x)  =  \begin{cases}
+%         %     1 \text{ si, } x \in A,\\
+%         %     0 \text{ si, } x \notin A
+%         %   \end{cases}
+%         %   $
+%         $$
+%             \begin{aligned}
+%                 S & = \left\{\colorea{blue}{x} | x \in U\right\}                        \\
+%                 A & = \left\{\colorea{blue}{\left(x, \mu_A(x)\right)} | x \in U\right\}
+%             \end{aligned}
+%         $$
+
+
+%         % $$
+%         % \begin{aligned}
+%         %     \mu_A: \mathcal{F} &\rightarrow{} [0,1]\\
+%         %     x &\rightarrow{} \mu_A(x)\\
+%         % \end{aligned}
+%         % $$
+%     \end{center}
+%     \begin{tabular}{l}
+%         % \colorea{colorA}{\texttt{IF}} $X$ \texttt{IS} $A$ \colorea{colorA}{\texttt{THEN}} $Y$ es $B$\\
+%         % \colorea{colorA}{\texttt{IF}} $X_1$ \texttt{IS} $A_1$ \texttt{AND} ... $X_N$ \texttt{IS} $A_N$ \colorea{colorA}{\texttt{THEN}} $Y$ es $B$\\[2em]
+%         \colorea{colorA}{\texttt{IF}} \texttt{torMax} es alto y \texttt{angTorMin} es pequeño \colorea{colorA}{\texttt{THEN}} \texttt{lesión}
+%     \end{tabular}
+% \end{frame}

@@ -1,0 +1,81 @@
+% aditionalInfo.tex
+\begin{block}{Tikz \& PGF}
+    \begin{tikzpicture}[scale=2.6]
+        % Gráfica 3D
+        \begin{axis}[
+                view={60}{30},
+                % xlabel={$x$},
+                % ylabel={$y$},
+                % zlabel={\( z \)},
+                colormap/viridis,
+                label style={font=\tiny},
+                tick label style={font=\tiny},
+                mesh/interior colormap={blueblack}{color=(colorC) color=(colorA)},
+            ]
+
+            \addplot3[
+                surf,
+                domain=-2:2,
+                domain y=-2:2,
+                samples=30,
+            ] {sin(deg(x^2 + y^2)) / (x^2 + y^2 + 1)};
+
+            % Gráfica de la función en 2D (y = 0)
+            \addplot[
+                domain=-2:2,
+                ultra thick,
+                colorD
+            ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+        \end{axis}
+        \node[] (caption) at (3, -1.65) {\textbf{Figura 1}. \boxi{Tikzpicture} con \texttt{addplot3}.};
+    \end{tikzpicture}
+    % Gráfica usando \boxi{tikz} y \boxi{pgfplots} con:
+
+    % \begin{verbatim}
+    %     \addplot3[
+    %             surf,
+    %             domain=-2:2,
+    %             domain y=-2:2,
+    %             samples=30,
+    %         ] {sin(deg(x^2+y^2))/(x^2+y^2+1)}
+    % \end{verbatim}
+
+    \begin{center}
+        \begin{tikzpicture}[scale=2.35]
+            % Gráfica 2D
+            \begin{axis}[
+                    % width=8cm, % Ancho del gráfico
+                    % height=7cm, % Alto del gráfico
+                    % xlabel={\( x \)},
+                    % ylabel={\( z \)},
+                    xmin=-2, xmax=2,
+                    ymin=-0.5, ymax=1,
+                    grid=both,
+                    axis lines=left,
+                    enlargelimits=false,
+                    tick label style={font=\tiny}, % Tamaño de las etiquetas
+                    label style={font=\tiny}, % Tamaño de los nombres de los ejes
+                    % title={Figura/},
+                    % title style={font=\small, yshift=5pt}, % Estilo del título
+                ]
+
+                % Gráfica de la función en 2D (y = 0)
+                \addplot[
+                    domain=-2:2,
+                    samples=100,
+                    smooth,
+                    very thick,
+                    colorD,
+                ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+                % Leyenda
+                \addlegendentry{\tiny\( z = \frac{\sin(x^2)}{x^2 + 1} \)}
+
+            \end{axis}
+
+            % Título de la gráfica
+            \node[] (caption) at (3, -1.85) {\textbf{Figura 2}. \boxi{Tikzpicture} con \texttt{addplot}};
+        \end{tikzpicture}
+    \end{center}
+\end{block}

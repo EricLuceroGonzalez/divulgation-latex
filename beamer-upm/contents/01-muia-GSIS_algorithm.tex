@@ -1,0 +1,134 @@
+% 01-muia-GSIS_algorithm.tex
+
+\begin{frame}
+  \begin{tikzpicture}
+    \coordinate (Hole) at (4,4);
+    \coordinate (Ball) at (4.5,1.5);
+    \coordinate (Refl) at (1.5,4.5);
+    \draw[-Triangle,black] (0,0) -- ++(5,0)node[right]{$p_1$};
+    \draw[-Triangle,black] (0,0) -- ++(0,5)node[above]{$p_2$};
+    \draw[-Triangle,red,line width=0.8mm] (0,0) --
+    node[below,pos=0.6]{$\vec{P^t_i}$}
+    (Ball);
+    \draw[-Triangle,black,line width=0.8mm] (0,0) -- node[below]{$
+        \vec{P^t_j}$}(Hole);
+    \draw[-Triangle,blue,line width=0.8mm] (0,0) --
+    node[above right,pos=0.4,rotate=70]{$\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)$}
+    (1.5,4.5);
+    \draw[-Triangle,magenta,line width=0.8mm] (Ball) -- node[right,pos=0.4,rotate=0]
+    {$\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\vec{P^t_j}
+        -\vec{P^t_i}}{\norm{\vec{P^t_j}-\vec{P^t_i}}
+      }+r_B\epsilon_N$}(Hole);
+    \draw[-Triangle,gray,line width=0.6mm] (Refl) -- (Hole);
+    \draw[-Triangle,green!50!black,line width=0.6mm] (Ball) -- node[above,pos=0.6]
+    {$\vec{L^t_i}$}++(-11.3:2.55);
+    \draw[-Triangle,cyan,line width=0.8mm] (Ball) -- node
+    [right,pos=0.8,rotate=0]{$\vec{L^t_i}$}(Refl);
+    \draw[-Triangle,blue,line width=0.8mm] (0,0) -- ++(71.565:4.7434);
+    https://www.wolframalpha.com/input?i=%282%28%7B4%2C4%7D.%7B4.5%2C1.5%7D%29%2F%28%7B4%2C4%7D.%7B4%2C4%7D%29%29%7B4%2C4%7D+-+%7B4.5%2C1.5%7D
+    \node[red,yshift=2mm] (hole) at (Hole){\faFlag};
+    \node[orange,yshift=2mm] (ball) at (Ball){\faGolfBall};
+    \node[right,magenta] (legend) at (5,3){
+    $\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\vec{P^t_j}
+        -\vec{P^t_i}}{\norm{\vec{P^t_j}-\vec{P^t_i}}
+      }+r_B\epsilon_N$
+    };
+    \node[right,cyan] (legendB) at (1,-1){
+    $\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\text{Refl}_{\vec{P^t_j}}
+      -\vec{P^t_i}}{\norm{\text{Refl}_{\vec{P^t_j}}-\vec{P^t_i}}
+      }+(1-r_b)\epsilon_L+r_b\epsilon_N$ß
+    };
+    \node[right,green!50!black] (legendC) at (1,-2.5){
+    $\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}
+      \frac{
+      \vec{P^t_j}-\text{Refl}_{\vec{P^t_j}}}
+      {\norm{\vec{P^t_j}-\text{Refl}_{\vec{P^t_j}}}}
+      +r_b\epsilon_N$
+    };
+  \end{tikzpicture}
+\end{frame}
+% 
+\thispagestyle{plain}
+\begin{frame}
+  \begin{tikzpicture}
+    \coordinate (Hole) at (4,4);
+    \coordinate (Ball) at (4.5,1.5);
+    \coordinate (Refl) at (1.5,4.5);
+    \draw[-Triangle,black] (0,0) -- ++(5,0)node[right]{$p_1$};;
+    \draw[-Triangle,black] (0,0) -- ++(0,5)node[above]{$p_2$};;
+    \draw[-Triangle,red,line width=0.8mm] (0,0) --
+    node[below,pos=0.6]{$\vec{P^t_i}$}
+    (Ball);
+    \draw[-Triangle,black,line width=0.8mm] (0,0) -- node[below]{$
+        \vec{P^t_j}$}(Hole);
+    \draw[-Triangle,blue,line width=0.8mm] (0,0) --
+    node[above right,pos=0.4,rotate=70]{$\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)$}
+    (1.5,4.5);
+    \draw[-Triangle,magenta,line width=0.7mm,opacity=.25] (Ball) -- node[right,pos=0.4,rotate=0]
+    {}(Hole);
+    % {$\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\vec{P^t_j}
+    %     -\vec{P^t_i}}{\norm{\vec{P^t_j}-\vec{P^t_i}}
+    %   }+r_B\epsilon_N$}(Hole);
+    \node[red,yshift=2mm] (hole) at (Hole){\faFlag};
+    \node[orange,yshift=2mm] (ball) at (Ball){\faGolfBall};
+    % \node[right,blue] (legendC) at (1,5.5){
+    % $\displaystyle \text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)=
+    %   2 \frac{
+    %     \vec{P^t_i} \vec{P^t_j}
+    %   }{\norm{\vec{P^t_j}}^2}
+    %   \vec{P^t_j}-
+    %   \vec{P^t_i}
+    % $
+    % };
+  \end{tikzpicture}
+\end{frame}
+% 
+% 
+\thispagestyle{plain}
+% \begin{frame}
+%   \begin{tikzpicture}
+%     \coordinate (Hole) at (4,4);
+%     \coordinate (Ball) at (4.5,1.5);
+%     \coordinate (Refl) at (1.5,4.5);
+%     \draw[-Triangle,black] (0,0) -- ++(5,0)node[right]{$p_1$};;
+%     \draw[-Triangle,black] (0,0) -- ++(0,5)node[above]{$p_2$};;
+%     \draw[-Triangle,red,line width=0.8mm] (0,0) --
+%     node[below,pos=0.6]{$\vec{P^t_i}$}
+%     (Ball);
+%     \draw[-Triangle,black,line width=0.8mm] (0,0) -- node[below]{$
+%         \vec{P^t_j}$}(Hole);
+%     \draw[-Triangle,blue,line width=0.8mm,opacity=.25] (0,0) --
+%     node[above right,pos=0.4,rotate=70]{$\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)$}
+%     (1.5,4.5);
+%     \draw[-Triangle,magenta,line width=0.7mm,opacity=.25] (Ball) -- node[right,pos=0.4,rotate=0]
+%     {$\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\vec{P^t_j}
+%         -\vec{P^t_i}}{\norm{\vec{P^t_j}-\vec{P^t_i}}
+%       }+r_B\epsilon_N$}(Hole);
+%     \draw[-Triangle,gray,line width=0.6mm] (Refl) -- (Hole);
+%     \draw[-Triangle,green!50!black,line width=0.6mm] (Ball) -- node[below,pos=0.6]
+%     {$\vec{L^t_i}$}++(-11.3:2.55);
+%     \draw[-Triangle,cyan,line width=0.8mm] (Ball) -- node
+%     [below,pos=0.8,rotate=0]{$\vec{L^t_i}$}(Refl);
+%     % \draw[-Triangle,blue,line width=0.8mm] (0,0) -- ++(71.565:4.7434);
+%     % https://www.wolframalpha.com/input?i=%282%28%7B4%2C4%7D.%7B4.5%2C1.5%7D%29%2F%28%7B4%2C4%7D.%7B4%2C4%7D%29%29%7B4%2C4%7D+-+%7B4.5%2C1.5%7D
+%     \node[red,yshift=2mm] (hole) at (Hole){\faFlag};
+%     \node[orange,yshift=2mm] (ball) at (Ball){\faGolfBall};
+%     % \node[right,magenta] (legend) at (5,3){
+%     % $\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\vec{P^t_j}
+%     %  -\vec{P^t_i}}{\norm{\vec{P^t_j}-\vec{P^t_i}}
+%     %  }+r_B\epsilon_N$
+%     %};
+%     %   \node[right,cyan] (legendB) at (1,-1){
+%     %     $\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}\frac{\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)
+%     %         -\vec{P^t_i}}{\norm{\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)-\vec{P^t_i}}
+%     %       }+(1-r_b)\epsilon_L+r_b\epsilon_N$
+%     %     };
+%     %     \node[right,green!50!black] (legendC) at (1,-2.75){
+%     % $\vec{L^t_i} = \vec{P^t_i} + x^t_{ij}
+%     % \frac{
+%     % \vec{P^t_j}-\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)}
+%     %     {\norm{\vec{P^t_j}-\text{Refl}_{\vec{P^t_j}}\left(\vec{P^t_i}\right)}}
+%     %     +r_b\epsilon_N$
+%     % };
+%   \end{tikzpicture}
+% \end{frame}

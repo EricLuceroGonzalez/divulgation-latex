@@ -1,0 +1,100 @@
+\documentclass[12pt]{article}
+\usepackage[a3paper,landscape]{geometry}
+\usepackage{ericluceroPoster}
+\usepackage{lipsum}
+\usepackage{lmodern}
+% \usepackage{enumerate}
+% \tcbuselibrary{minted} % <- replace by \tcbuselibrary{listings}, if minted does not work for you
+\pagestyle{empty}
+\begin{document}
+\begin{tcbposter}[
+        coverage = {
+                spread,
+                interior style={top color=white,bottom color=white},
+                watermark text={\LaTeX\ Poster},
+                watermark color=yellow,
+            },
+        poster = {columns=4,rows=5,spacing=2mm},
+        boxes = {sharp corners=downhill,arc=3mm,boxrule=1mm,
+                colframe=colorA,colback=white,colupper=colorA,
+                title style={left color=colorA,right color=colorA},fonttitle=\bfseries},
+        fontsize = 15pt,
+    ]
+    % Here, we insert the poster content later
+    % %...
+    % \begin{tikzpicture}[remember picture, overlay]
+    %     \node[anchor=north east] at (current page.north east){
+    %         \includegraphics[width=0.2\textwidth]{UPM_logo.png}
+    %     };
+    % \end{tikzpicture}
+    \posterbox{name=title,column=1,span=4,below=top}{
+        % \hspace{1cm} % Espacio izquierdo
+        % \begin{minipage}{3cm}
+        %     \includegraphics[width=2\linewidth]{UPM_logo.png}
+        % \end{minipage}
+        % \hfill
+        % Left logo (UPM logo)
+        \begin{tikzpicture}[remember picture, overlay]
+            \node[anchor=north west,yshift=-1cm] at (current page.north west) {
+                \includegraphics[width=0.2\textwidth]{UPM_logo.png}
+            };
+        \end{tikzpicture}
+        \begin{center}
+            \begin{minipage}{27cm}
+                \centering
+                % \parbox{26cm}{\centering
+                \fontsize{34}{40}\selectfont\bfseries
+                Image recreation using Genetic Algorithms and Color metrics\\
+                % }
+                \normalfont\Large
+                \texttt{eric.lucero@alumnos.upm.es}
+            \end{minipage}
+        \end{center}
+        % Right logo (ETSI logo)
+        \begin{tikzpicture}[remember picture, overlay]
+            \node[anchor=north east,yshift=-1cm] at (current page.north east) {
+                \includegraphics[width=0.2\textwidth]{etsi_leyenda.png}
+            };
+        \end{tikzpicture}
+    }
+    \posterbox[adjusted title=References]{
+        name=references,column=2,span=2.0,above=bottom}{
+        \input{content/mona_lisa/references.tex}
+    }
+
+    \posterbox[adjusted title=Description]{name=project,
+        below= title,column=1}{
+        \input{content/mona_lisa/description.tex}
+    }
+
+    \posterbox[adjusted title=Methodology]{
+        name=process,column=1,span=1,between=project and bottom}{
+        \input{content/mona_lisa/methods.tex}
+    }
+    \posterbox[adjusted title=Acknowledgments]
+    {name=contact,column=4,span=1.0,above=bottom}{
+        \input{content/mona_lisa/aknowledgment.tex}
+    }
+
+    \posterbox[adjusted title=Conclusion,colframe=colorD,
+        title style={left color=colorD,right color=colorD}]{
+        name=conclusion,column=4,span=1,above=contact}{
+        \input{content/mona_lisa/conclusion.tex}
+    }
+
+    \posterbox[adjusted title=,boxrule=0pt,sharp corners=west]
+    {name=Right,column=3,between=title and references}{
+        \input{content/mona_lisa/right_picture.tex}
+    }
+
+    \posterbox[adjusted title=Results,boxrule=0pt,sharp corners=east]
+    {name=pictureLeft,column=2,between=title and references}{
+        \input{content/mona_lisa/left_picture.tex}
+    }
+
+    \posterbox[adjusted title=Discussion]
+    {name=algorithm,column=4,between=title and conclusion}{
+        \input{content/mona_lisa/limitations.tex}
+    }
+\end{tcbposter}
+\end{document}

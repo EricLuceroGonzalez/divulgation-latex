@@ -1,0 +1,99 @@
+% reunion_6_mar.tex
+
+\begin{frame}
+    \begin{itemize}
+        \item \fullcite{shirini_multi-objective_2024}
+        \item \fullcite{barea_integrated_2024}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{shirini_multi-objective_2024}}
+
+    \begin{itemize}
+        \item Planificación de tiempo y orden de aterrizaje, de un numero dado de aviones en una sola posta de aterrizaje. Utilizando un esquema Multi-Población y Multi-Objetivo (MPMO).
+        \item Dos objetivos:
+              \begin{itemize}
+                  \item Minimizar el consumo de combustible (reduciendo el tiempo de espera).
+                  \item Minimizar los costos operativos (penalizaciones por desviaciones del tiempo objetivo de aterrizaje).
+              \end{itemize}
+        \item \textbf{Funciones objetivo:}
+              \begin{itemize}
+                  \item \textit{Costo operativo:} Penaliza los aterrizajes tempranos o tardíos (Min).\\ \red{Aterrizar cerca del Target Landing Time (TLT)}
+                  \item \textit{Tiempo de espera:} Minimiza el tiempo que los aviones pasan en el aire antes de aterrizar (Min).\\ \red{Aterrizar cerca del EArly Landing Time (ELT)}
+              \end{itemize}
+    \end{itemize}
+
+\end{frame}
+\begin{frame}{\parencite{shirini_multi-objective_2024}}
+
+    \begin{itemize}
+        \item No es en tiempo real. Es una planificación estratégica para secuenciar aterrizajes.
+        \item No se modela una ruta de aterrizaje como en \parencite{barea_integrated_2024}. Se enfoca en el tiempo de aterrizaje y la secuencia.
+        \item \textbf{Método:} Algoritmo genético (NSGA-II) con poblaciones múltiples y estrategias de archivo para mejorar la diversidad de soluciones.
+              \begin{itemize}
+                  \item MPNSGA-II
+                  \item Archive Sharing Strategy (ASS)
+              \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{\parencite{barea_integrated_2024}}
+    \begin{itemize}
+
+        \item \textbf{Problema:} Asignación de pistas y Optimización de trayectorias de descenso.
+        \item Es un problema multiobjetivo, pero formulado como uni-objetivo ($\alpha$).
+        \item \textbf{Funciones objetivo:}
+              \begin{itemize}
+                  \item \textit{Retrasos:} Minimiza el tiempo de espera de los aviones.
+                  \item \textit{Combustible:} Minimiza el consumo de combustible durante el descenso.
+              \end{itemize}
+        \item Puede usarse en tiempo real gracias al enfoque de \textit{horizonte rodante}, que divide el problema en intervalos de tiempo más pequeños.
+        \item \textbf{Ruta de aterrizaje:} Se modela mediante WPTs. Se optimiza la trayectoria de descenso para cada avión, respetando restricciones de altura y separación.
+        \item \textbf{Método:} Modelo matemático no lineal descomponiendo el problema en dos problemas con \textit{descomposición de Benders} y horizonte rodante.
+    \end{itemize}
+
+
+
+\end{frame}
+
+
+
+
+% \section*{Conceptos Clave}
+
+% \begin{itemize}[leftmargin=*]
+%     \item \textbf{Descomposición de Benders:}
+%     \begin{itemize}
+%         \item Es una técnica para resolver problemas complejos dividiéndolos en partes más pequeñas.
+%         \item Se usa cuando el problema tiene dos tipos de variables: unas fáciles de resolver (enteras) y otras difíciles (continuas).
+%         \item En este caso, se divide en:
+%         \begin{itemize}
+%             \item Un problema maestro (asignación de pistas, con variables enteras).
+%             \item Subproblemas (optimización de trayectorias, con variables continuas).
+%         \end{itemize}
+%     \end{itemize}
+
+%     \item \textbf{Horizonte Rodante:}
+%     \begin{itemize}
+%         \item Es una estrategia para resolver problemas en tiempo real o dinámicos.
+%         \item Divide el tiempo en intervalos pequeños (ej. 30 minutos) y optimiza cada intervalo por separado.
+%         \item Se usa para adaptarse a cambios en tiempo real, como nuevos aviones que llegan al aeropuerto.
+%     \end{itemize}
+
+%     \item \textbf{Ruta de Aterrizaje:}
+%     \begin{itemize}
+%         \item En el primer paper, no se modela explícitamente. Solo se considera el tiempo de aterrizaje.
+%         \item En el segundo paper, sí se modela. Se optimiza la trayectoria de descenso, respetando restricciones de altura y separación entre aviones.
+%     \end{itemize}
+% \end{itemize}
+
+% \section*{Conclusión}
+
+% Ambos papers abordan problemas clave en la gestión del tráfico aéreo, pero con enfoques diferentes:
+% \begin{itemize}
+%     \item El primero se centra en la secuencia de aterrizajes y es más estratégico.
+%     \item El segundo integra asignación de pistas y trayectorias, con capacidad para operar en tiempo real.
+% \end{itemize}
+

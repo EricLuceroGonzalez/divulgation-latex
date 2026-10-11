@@ -1,0 +1,111 @@
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[final]{beamer}
+\usepackage[scale=1.5]{beamerposter} % Use the beamerposter package for laying out the poster
+\usetheme{confposter} % Use the confposter theme supplied with this template
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\title{Comparación de posters entre \texttt{beamerposter} y \texttt{tcolorbox}} % Poster title
+\author{Eric Lucero González; John Doe, Jane Doe} % Author(s)
+\institute{elcronopio.com/latex} % Institution(s)
+
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+    \begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
+        \begin{column}{\sepwid}\end{column} % Empty spacer column
+        \begin{column}{\onecolwid} % The first column
+            %----------------------------------------------------------------------------------------
+            %	OBJECTIVES
+            %----------------------------------------------------------------------------------------
+            \input{content/objective.tex}
+            %----------------------------------------------------------------------------------------
+            %	INTRODUCTION
+            %----------------------------------------------------------------------------------------
+            \input{content/intro.tex}
+            %----------------------------------------------------------------------------------------
+        \end{column} % End of the first column
+        \begin{column}{\sepwid}\end{column} % Empty spacer column
+
+        \begin{column}{\twocolwid} % Begin a column which is two columns wide (column 2)
+
+            \begin{columns}[t,totalwidth=\twocolwid] % Split up the two columns wide column
+                \begin{column}{\onecolwid}\vspace{-.6in} % The first column within column 2 (column 2.1)
+                    %----------------------------------------------------------------------------------------
+                    %	METHODS
+                    %----------------------------------------------------------------------------------------
+                    \input{content/method.tex}
+                    %----------------------------------------------------------------------------------------
+                \end{column} % End of column 2.1
+
+                \begin{column}{\onecolwid}\vspace{-.6in} % The second column within column 2 (column 2.2)
+                    %----------------------------------------------------------------------------------------
+                    %	METHODS
+                    %----------------------------------------------------------------------------------------
+                    \input{content/materials.tex}
+                    %----------------------------------------------------------------------------------------
+                \end{column} % End of column 2.2
+            \end{columns} % End of the split of column 2 - any content after this will now take up 2 columns width
+            %----------------------------------------------------------------------------------------
+            %	IMPORTANT RESULT
+            %----------------------------------------------------------------------------------------
+            \input{content/important.tex}
+            \input{content/conclusion.tex}
+            %----------------------------------------------------------------------------------------
+            % ! NO SE USA POR LA EXTENSION DE LA METODOLOGÍA 
+            % \begin{columns}[t,totalwidth=\twocolwid] % Split up the two columns wide column again
+            %     % \begin{columnBox}
+            %     \begin{column}{\onecolwid} % The first column within column 2 (column 2.1)
+            %         %----------------------------------------------------------------------------------------
+            %         %	MATHEMATICAL SECTION
+            %         %----------------------------------------------------------------------------------------
+            %         % \input{content/algorithm.tex}
+            %         % \vspace{0.35\textheight}
+            %         %----------------------------------------------------------------------------------------
+            %     \end{column} % End of column 2.1
+            %     \begin{column}{\onecolwid} % The second column within column 2 (column 2.2)
+            %         %----------------------------------------------------------------------------------------
+            %         %	RESULTS
+            %         %----------------------------------------------------------------------------------------
+            %         \input{content/results.tex}
+            %         %----------------------------------------------------------------------------------------
+            %     \end{column} % End of column 2.2
+            %     % \end{columnBox}
+            % \end{columns} % End of the split of column 2
+
+        \end{column} % End of the second column
+        \begin{column}{\sepwid}\end{column} % Empty spacer column
+        \begin{column}{\onecolwid} % The third column
+            % \begin{columnBox}
+            %----------------------------------------------------------------------------------------
+            %	ADDITIONAL INFORMATION
+            %----------------------------------------------------------------------------------------
+            \input{content/aditionalInfo.tex}
+            %----------------------------------------------------------------------------------------
+            %	CONCLUSION
+            %----------------------------------------------------------------------------------------
+            % \input{content/conclusion.tex}
+            %----------------------------------------------------------------------------------------
+            %	REFERENCES
+            %----------------------------------------------------------------------------------------
+            % \input{content/references.tex}
+            %----------------------------------------------------------------------------------------
+            %	ACKNOWLEDGEMENTS
+            %----------------------------------------------------------------------------------------
+            \input{content/acknowledgment.tex}
+            %----------------------------------------------------------------------------------------
+            %	CONTACT INFORMATION
+            %----------------------------------------------------------------------------------------
+            \input{content/contact.tex}
+            %----------------------------------------------------------------------------------------
+            % \end{columnBox}
+        \end{column} % End of the third column
+    \end{columns} % End of all the columns in the poster
+\end{frame} % End of the enclosing frame
+
+\end{document}

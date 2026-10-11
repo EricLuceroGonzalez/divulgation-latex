@@ -1,0 +1,188 @@
+% reunion_12_feb.tex
+
+\begin{frame}
+    \frametitle{Etapas de diseño de la trayectoria}
+    \begin{enumerate}
+        \item \textbf{Strategic planning}: Varios días antes.
+        \item \textbf{Prediction planning}: Horas antes. Se incluyen las condiciones meteorológicas y posibles conflictos.
+        \item \textbf{On route planning}: Durante el vuelo. Detección de conflictos y emergencias.
+    \end{enumerate}
+\end{frame}
+
+
+% Frame 1: Introducción a ATFM\
+\section{Introducción a ATFM}
+\begin{frame}
+    \frametitle{Air Traffic Flow Management (ATFM)}
+    \subsection{Air Traffic Flow Management (ATFM)}
+    \begin{itemize}
+        \item Consiste en encontrar horarios y rutas óptimas para \textbf{un conjunto de vuelos} de manera que,
+              cuando se ejecuten los planes de vuelo, ninguna región del espacio aéreo tenga más
+              aeronaves volando sobre ella que las permitidas por las restricciones de seguridad.
+        \item Asimismo, ningún aeropuerto debería tener asignadas más salidas o llegadas de las que puede manejar.
+        \item Resuelve el problema de optimizar las salidas y llegadas de un aeropuerto y del espacio aéreo.
+        \item Busca garantizar que se cumplan las restricciones de capacidad de salida y
+              llegada de cada aeropuerto y que se cumplan las restricciones de capacidad del espacio aéreo.
+    \end{itemize}
+\end{frame}
+
+% Frame 2: Objetivos de ATFM
+\begin{frame}
+    \frametitle{Reducción de conflictos}
+    \begin{itemize}
+        \item Usualmente se busca minimizar el retraso total, en tierra y en aire, imputado a los vuelos.
+        \item En este caso, la variable es de tipo binaria.
+        \item En \cite{DALSASSO2019} se resuelve un problema multi-objetivo que busca:
+              \begin{itemize}
+                  \item Minimizar los retrasos.
+                  \item Minimizar la desviación de las rutas pre-establecidas.
+                  \item Minimizar las tarifas totales de ruta.
+              \end{itemize}
+              Incluye ponderaciones para ser sometido a las prioridades de las partes interesadas.
+    \end{itemize}
+\end{frame}
+
+% Frame 3: Problema multi-objetivo en Zhou (2024)
+\begin{frame}
+    \frametitle{Reducción de conflictos y congestión}
+    \begin{itemize}\small
+        \item En \cite{Zhou_2024} se resuelve un problema multi-objetivo que busca:
+              \begin{itemize}
+                  \item Reducir la congestión del espacio aéreo.
+                  \item Reducir el consumo de combustible.
+                  \item Reducir las posibilidades de conflicto.
+              \end{itemize}
+        \item Las funciones objetivo a minimizar son:
+              \begin{enumerate}
+                  \item Minimizar el alcance total horizontal del vuelo (range).
+                  \item Minimizar el consumo de combustible.
+                  \item Minimizar potenciales conflictos.
+                  \item Minimizar la congestión.
+                  \item Minimizar la diferencia entre RTA y CTA.
+              \end{enumerate}
+        \item Para lograr esto, se usan:
+              \begin{itemize}
+                  \item Variables discretas de posición y altitud.
+                  \item Variables continuas de velocidad.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{ng_review_phases}
+    \end{figure}
+
+
+
+\end{frame}
+% Frame 1: Reducción del número de interacciones entre trayectorias
+\begin{frame}
+    \frametitle{Reducción del número de interacciones entre trayectorias}
+    \subsection{Reducción del número de interacciones entre trayectorias}
+    \begin{itemize}\small
+        \item Como en \cite{Chaimatanan_2014}, se busca minimizar las interacciones de trayectorias de vuelo en todos los puntos de cada trayectoria.
+        \item Usualmente se produce en la fase de planificación, y se aplica para las trayectorias en la fase crucero (\textit{En-route}), y ocurre cuando más de una trayectoria compite por el mismo espacio en el mismo periodo de tiempo.
+        \item En \cite{Chaimatanan_2014} se hace con datos discretos, y al final se obtiene una ruta óptima y un tiempo de salida (departure) para cada vuelo (30,000 vuelos).
+        \item En el caso de \cite{chaimatanan_aircraft_2015}, \cite{Juntama2024} y \cite{alam_metaheuristic_2018}, la metodología propuesta asigna una hora de salida alternativa, una trayectoria de vuelo horizontal y un nivel de vuelo a cada vuelo a escala de país y continente.
+    \end{itemize}
+\end{frame}
+
+% Frame 2: Estrategias para evitar interacciones
+\begin{frame}
+    \frametitle{Estrategias para evitar interacciones}
+    \begin{table}[h!]
+        \centering
+        \def\arraystretch{1.5}
+        \caption*{\textbf{Estrategias para evitar interacciones}}
+        \begin{tabular}{|llc|}
+            \hline
+            Tiempo de salida alternativo & $t_i = t_{i,0} + \delta_i$                          & \\ \hline
+            Trayectoria alternativa      & $w_i = \left(w_i^{1},w_i^{2},\ldots,w_i^{M}\right)$ & \\ \hline
+            Nivel de vuelo alternativo   & $FL_i = FL_{i,0} + l_i$                             & \\ \hline
+        \end{tabular}
+    \end{table}
+    \begin{itemize}
+        \item \cite{courchelle_simulated_2019} incluye la reducción de conflictos bajo incertidumbre en los parámetros de viento y temperatura.
+    \end{itemize}
+\end{frame}
+
+% Frame 3: Optimización del perfil vertical y horizontal de las trayectorias
+\begin{frame}
+    \frametitle{Optimización del perfil vertical y horizontal de las trayectorias}
+    Buscan optimizar las trayectorias de referencia en la planificación del vuelo, sobretodo en la etapa crucero. Buscan hacer que el avión vuele a la altura y velocidad óptima, evitando en algunos casos condiciones atmosféricas no favorables.\\
+    $$\text{Costo de vuelo} = \text{Combustible} + \text{Cost Index} \times \text{Tiempo de vuelo}$$
+    Generalmente se asume que el perfil lateral (LNAV) y vertical (VNAV) se puede modificar durante el vuelo y se adopta el paradigma \textit{``free flight''}, es decir que el piloto puede decidir la ruta sin importar los bloques del espacio aéreo y sus restricciones.
+\end{frame}
+
+% Frame 4: Parámetros de configuración y motor
+\begin{frame}
+    \frametitle{Parámetros de configuración y motor}
+    \begin{itemize}
+        \item \textbf{Parámetros de configuración de la aeronave}: masa de la aeronave, posición del centro de gravedad, posición del tren de aterrizaje, posición de los flaps/slats, posición de los spoilers/frenos aerodinámicos, etc.;
+        \item \textbf{Parámetros del motor}: Estos parámetros son específicos del tipo de motor. Para un motor de reacción, pueden ser el ángulo de palanca de empuje (TLA), velocidades del ventilador del motor, etc.;
+        \item \textbf{Condiciones atmosféricas}: temperatura del aire y viento; y
+        \item \textbf{Parámetros de la trayectoria de vuelo}: altitud, velocidad, aceleración/desaceleración, ángulo de alabeo, factor de carga, ángulo de ascenso/descenso, tasa de ascenso/descenso, etc.
+    \end{itemize}
+\end{frame}
+
+% Frame 5: Optimización de trayectorias con WPT
+\begin{frame}
+    \frametitle{Optimización de trayectorias con WPT}
+    \begin{itemize}
+        \item En \cite{murrieta-mendoza_particle_2020} se busca encontrar la ruta más económica, tomando en cuenta las restricciones RTA y las condiciones del tiempo. En el caso del tiempo, las condiciones se actualizan en cada WPT a lo largo de la trayectoria.
+              \begin{figure}[ht!]
+                  \centering
+                  \includegraphics[width=0.8\textwidth]{murrieta_WPT_VNAV}
+                  \caption*{Waypoints en el perfil vertical (VNAV) \cite{murrieta-mendoza_particle_2020}}
+              \end{figure}
+    \end{itemize}
+\end{frame}
+
+% Frame 6: Malla 2D y prevención de estelas de vapor
+\begin{frame}
+    \frametitle{Malla 2D y prevención de estelas de vapor}
+    \begin{itemize}
+        \item En \cite{dancila_botez_2021} se crea una malla en 2D, sobre la que se va a trazar la trayectoria. Además, toma en cuenta las etapas de ascenso y descenso.
+              \begin{figure}[ht!]
+                  \centering
+                  \includegraphics[width=0.6\textwidth]{dancila_grid}
+                  \caption*{Ejemplo de una malla \cite{dancila_botez_2021}}
+              \end{figure}
+        \item Otro enfoque es la prevención de generar estelas de vapor (contrails) a lo largo de la trayectoria.
+    \end{itemize}
+\end{frame}
+
+% Frame 7: Optimización de trayectoria en condiciones climáticas adversas
+\begin{frame}{Optimización de trayectoria en condiciones climáticas adversas}{Sub serf}
+    La predicción del mal tiempo y la optimización de trayectorias alternativas se pueden hacer a nivel de uno o varios aviones. En la literatura revisada, se utiliza en gran medida modelos de control predictivo.
+    \begin{itemize}
+        \item En trabajos como \cite{girardet_generating_2012} y \cite{gonzalez-arribas_robust_2019} se generan trayectorias que evitan condiciones del tiempo de tipo convectivas.
+        \item En ambos casos se hace una discretización del espacio. Para las ecuaciones del movimiento y parámetros de los aviones se utilizan datos de BADA.
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \begin{figure}[ht!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{gonzalez_arribas_storm}
+        \caption*{\cite{gonzalez-arribas_robust_2019}}
+    \end{figure}
+
+
+
+
+\end{frame}
+
+
+
+
+\begin{frame}
+    \scriptsize
+    \printbibliography
+
+
+\end{frame}
+
+
+

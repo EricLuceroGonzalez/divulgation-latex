@@ -1,0 +1,268 @@
+% % \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.2cm]
+% %     \item \boxi{beamerposter} demostró ser más rápido en la creación inicial del póster, con un tiempo promedio de \boxi{1.5 horas} para usuarios principiantes.
+% %     \item \boxi[colorD]{tcolorbox} requirió un tiempo promedio de \boxi{3 horas} para usuarios principiantes, debido a su mayor complejidad y necesidad de personalización.
+% % \end{itemize}
+% \begin{tikzpicture}
+%         \tikzstyle{every node}=[font=\small]
+%         \begin{axis} [xbar,
+%                         bar width = 20pt,
+%                         height=5cm,
+%                         width=8cm,
+%                         xmin = 0,
+%                         xmax = 3,
+%                         enlarge y limits={abs=0.8cm},
+%                         enlarge x limits = {value = .05, upper},
+%                         title={\bfseries Tiempo de creación}{\large},
+%                         xlabel = {tiempo [horas]},
+%                         symbolic y coords = {tcolorbox,beamerposter},
+%                         label style={font=\small},
+%                         ytick=data, % Mostrar todas las etiquetas del eje Y
+%                         tick label style={font=\small},
+%                         legend style={at={(0.5,-0.35)}, anchor=north, legend columns=-1} % Posición de la leyenda
+%                 ]
+%                 \addplot[fill=colorD,draw=colorD] coordinates{
+%                                 (1.0,tcolorbox) (1.0,beamerposter)};
+%                 \addplot[fill=colorA,draw=colorA] coordinates{
+%                                 (3.0,tcolorbox) (1.5,beamerposter)};
+%                 \legend{principiante,avanzado}
+%         \end{axis}
+% \end{tikzpicture}
+% El tiempo de creación de poster, para un principiante puede ser considerablemente mayor en
+% \boxi[colorD]{tcolorbox}, debido a la gran cantidad de detalle y complejidad.\\
+% Para usuarios avanzados \boxi[colorD]{tcolorbox} es preferido por su nivel de adaptabilidad a cualquier configuración.\\
+% Compilar el poster con gráficos complejos usando \boxi{tikz} toma de 4.2 s, mientras que 1.2 sin ellos.
+% Sin embargo, toma menos tiempo con \boxi{PGF} para \boxi[colorD]{tcolorbox}.
+% Ver sección Tikz \& PGF. \\
+% \begin{tikzpicture}
+%         \tikzstyle{every node}=[font=\small]
+%         \begin{axis} [xbar,
+%                         bar width = 20pt,
+%                         height=5.05cm,
+%                         width=8.5cm,
+%                         xmin = 0,
+%                         xmax = 4,
+%                         enlarge y limits={abs=0.8cm},
+%                         enlarge x limits = {value = .15, upper},
+%                         title={\bfseries Tiempo de ejecución}{\large},
+%                         xlabel = {time[s]},
+%                         symbolic y coords = {pgf,no-pgf},
+%                         label style={font=\tiny},
+%                         ytick=data, % Mostrar todas las etiquetas del eje Y
+%                         tick label style={font=\scriptsize},
+%                         legend style={at={(0.5,-0.3)}, anchor=north, legend columns=-1} % Posición de la leyenda
+%                 ]
+%                 \addplot[fill=colorD,draw=colorD] coordinates{
+%                                 (3.7,pgf) (1.31,no-pgf) };
+%                 \addplot[fill=colorA,draw=colorA] coordinates{
+%                                 (4.21,pgf) (1.21,no-pgf)};
+%                 \legend{tcolorbox,beamerposter}
+%         \end{axis}
+%         \node[text=white, fill=colorA] (a) at (1.25, 3.1){1.2 s};
+%         \node[text=white, fill=colorD] (b) at (1.25, 2.3){1.3 s};
+%         \node[text=white, fill=colorA] (c) at (4.75, 1.2){4.2 s};
+%         \node[text=white, fill=colorD] (d) at (4.75, 0.4){3.7 s};
+% \end{tikzpicture}
+
+% \boxi{beamerposter} tiene menos dependencias y es más fácil de integrar con paquetes básicos de \LaTeX.
+% \begin{enumerate}[partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+
+%     \item \textbf{Flexibilidad de Diseño}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.2cm]
+%               \item \boxi{beamerposter} ofrece opciones de personalización limitadas, lo que resulta en diseños más estándar pero consistentes.
+%               \item \boxi[colorD]{tcolorbox} permite un control total sobre el diseño, lo que facilita la creación de pósteres altamente personalizados y complejos.
+%           \end{itemize}
+
+%     \item \textbf{Calidad del Resultado Final}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.2cm]
+%               \item Ambos paquetes produjeron pósteres de alta calidad visual, con una calificación promedio de \boxi{4.2/5} para \boxi{beamerposter} y \boxi{4.5/5} para \boxi[colorD]{tcolorbox}.
+%               \item \boxi[colorD]{tcolorbox} destacó en la creación de diseños más innovadores y visualmente impactantes.
+%           \end{itemize}
+
+%     \item \textbf{Compatibilidad y Dependencias}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.2cm]
+%               \item \boxi{beamerposter} tiene menos dependencias y es más fácil de integrar con paquetes básicos de \LaTeX.
+%               \item \boxi[colorD]{tcolorbox} requiere más dependencias, como \boxi{tikz}, pero ofrece una integración más potente para diseños avanzados.
+%           \end{itemize}
+
+%     \item \textbf{Documentación y Soporte}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.2cm]
+%               \item \boxi{beamerposter} cuenta con una documentación clara y tutoriales accesibles, ideal para usuarios principiantes.
+%               \item \boxi[colorD]{tcolorbox} tiene una documentación extensa pero más técnica, lo que puede ser abrumador para principiantes.
+%           \end{itemize}
+
+%     \item \textbf{Rendimiento y Tiempo de Compilación}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.2cm]
+%               \item \boxi{beamerposter} tuvo un tiempo de compilación promedio de \boxi{2.3 segundos}.
+%               \item \boxi[colorD]{tcolorbox} tuvo un tiempo de compilación promedio de \boxi{4.7 segundos}, debido a su mayor complejidad.
+%           \end{itemize}
+% \end{enumerate}
+
+% En resumen, \boxi{beamerposter} es ideal para usuarios que buscan una solución rápida y fácil, mientras que \boxi[colorD]{tcolorbox} ofrece mayor flexibilidad y control, aunque con una curva de aprendizaje más pronunciada.
+
+% % central_picture.tex
+% \begin{multicols}{2}
+%     \begin{tcolorbox}[title=Caja con \texttt{tcolorbox},width=10.85cm]\small
+%         Este es un ejemplo de una caja creada con \texttt{tcolorbox}:
+%         \begin{verbatim}
+%     \begin{tcolorbox}[title=Caja con tcolorbox]
+%         Este es un ejemplo de una caja creada con
+%         \texttt{tcolorbox}:
+%     \end{tcolorbox}
+%         \end{verbatim}
+%     \end{tcolorbox}
+%     \hfill
+%     \begin{tikzpicture}[scale=0.8]
+%         \begin{axis}[title  = Contributions
+%                 at LaTeX-Community.org,
+%                 xbar,
+%                 y axis line style = { opacity = 0 },
+%                 axis x line       = none,
+%                 tickwidth         = 0pt,
+%                 enlarge y limits  = 0.2,
+%                 enlarge x limits  = 0.02,
+%                 symbolic y coords = {LaTeX, Tools, Distributions, Editors},
+%                 nodes near coords,
+%                 ytick=data, % Muestra todas las etiquetas en el eje Y
+%                 yticklabel style={text width=2cm, align=right}, % Ajusta el estilo de las etiquetas del eje Y
+%                 % legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1}, % Posición de la leyenda
+%             ]
+%             \addplot[fill=colorD,draw=colorD] coordinates { (35727,LaTeX)         (5672,Tools)
+%                     (2193,Distributions)  (11106,Editors) };
+%             \addplot[fill=colorA,draw=colorA] coordinates { (14320,LaTeX)         (1615,Tools)
+%                     (560,Distributions)   (3075,Editors)  };
+%             \legend{Topics, Posts}
+%         \end{axis}
+%     \end{tikzpicture}
+% \end{multicols}
+
+
+% \begin{center}
+%     \begin{tikzpicture}[scale=1.15]
+%         % Gráfica 3D
+%         \begin{axis}[
+%                 view={60}{30},
+%                 xlabel={\( x \)},
+%                 ylabel={\( y \)},
+%                 zlabel={\( z \)},
+%                 colormap/viridis,
+%                 mesh/interior colormap={blueblack}{color=(colorC) color=(colorA)},
+%             ]
+
+%             \addplot3[
+%                 surf,
+%                 domain=-2:2,
+%                 domain y=-2:2,
+%                 samples=30,
+%             ] {sin(deg(x^2 + y^2)) / (x^2 + y^2 + 1)};
+
+%             % Gráfica de la función en 2D (y = 0)
+%             \addplot[
+%                 domain=-2:2,
+%                 thick,
+%                 colorD
+%             ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+%         \end{axis}
+%         \node[] (caption) at (3, -1.5) {\textbf{Figura 1}. Trayectoria sobre el plano $xy$ con \( y = 0 \)};
+%     \end{tikzpicture}
+%     \hspace{0.5cm} % Espacio entre las gráficas
+%     \begin{tikzpicture}[scale=1]
+%         % Gráfica 2D
+%         \begin{axis}[
+%                 width=8cm, % Ancho del gráfico
+%                 height=7cm, % Alto del gráfico
+%                 xlabel={\( x \)},
+%                 ylabel={\( z \)},
+%                 xmin=-2, xmax=2,
+%                 ymin=-0.5, ymax=1,
+%                 grid=both,
+%                 axis lines=left,
+%                 enlargelimits=true,
+%                 tick label style={font=\small}, % Tamaño de las etiquetas
+%                 label style={font=\small}, % Tamaño de los nombres de los ejes
+%                 % title={Figura/},
+%                 title style={font=\small, yshift=5pt}, % Estilo del título
+%             ]
+
+%             % Gráfica de la función en 2D (y = 0)
+%             \addplot[
+%                 domain=-2:2,
+%                 samples=100,
+%                 smooth,
+%                 thick,
+%                 colorD,
+%             ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+%             % Leyenda
+%             \addlegendentry{\( z = \frac{\sin(x^2)}{x^2 + 1} \)}
+
+%         \end{axis}
+
+%         % Título de la gráfica
+%         \node[] (caption) at (3, -1.5) {\textbf{Figura 2}. Corte en \( xy \) con \( y = 0 \)};
+%     \end{tikzpicture}
+% \end{center}
+
+% \begin{center}
+%     \begin{tikzpicture}[scale=1.5]
+%         \begin{axis}[
+%                 view={60}{30},
+%                 xlabel={\( x \)},
+%                 ylabel={\( y \)},
+%                 zlabel={\( z \)},
+%                 colormap/viridis,
+%                 mesh/interior colormap={blueblack}{color=(colorC) color=(colorA)},
+%             ]
+
+%             \addplot3[
+%                 surf,
+%                 domain=-2:2,
+%                 domain y=-2:2,
+%                 samples=30,
+%             ] {sin(deg(x^2 + y^2)) / (x^2 + y^2 + 1)};
+
+%             % Gráfica de la función en 2D (y = 0)
+%             \addplot[
+%                 domain=-2:2,
+%                 thick,
+%                 colorD
+%             ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+%             % Título de la gráfica
+
+%         \end{axis}
+%         \node[] (caption) at (3, -1.1) {\textbf{Figura 1}. Trayectoria sobre el plano $xy$ con \( y = 0 \)};
+%     \end{tikzpicture}
+% \end{center}
+
+
+% \begin{tikzpicture}[thick, framed]
+%     \filldraw[fill=green!20] (2,0) rectangle (5,1);% draw the box
+%     \draw (3,0) -- (3,1) node[above]{$\textsc{M}$};% draw the median
+%     \draw (5,0.5) -- (7,0.5);% draw right whisker
+%     \draw (2,0.5) -- (1,0.5);% draw left whisker
+%     \draw (7,0.39) -- (7,0.61);% draw vertical tab
+%     \draw (1,0.39) -- (1,0.61);% draw vertical tab
+%     \node[below] at (2,0) {$\textsc{Q1}$};% label the hinge
+%     \node[below] at (5,0) {$\textsc{Q3}$};% label the hinge
+%     \filldraw[ball color=red!80,shading=ball] (4,0.5) circle
+%     (0.06cm) node[above]{$\bar{x}$};% the mean
+%     \draw[<->] (2.3, -0.3) -- (4.7, -0.3)
+%     node[pos=0.5,below]{$\textsc{IQR}$}; % mark the IQR fences
+%     \draw[<->] (2, -0.8) -- (0,-0.8)
+%     node[pos=0.5,below]{$\textsc{1.5*IQR}$}; % left inner fence
+%     \draw[<->] (2,-1.4) -- (-2, -1.4)
+%     node[pos=0.5,below]{$\textsc{3*IQR}$};% left outer fence
+%     \draw[<->] (5, -0.8) -- (8,-0.8)
+%     node[midway,below]{$\textsc{1.5*IQR}$}; % right inner fence
+%     \draw[<->] (5,-1.4) -- (10, -1.4)
+%     node[pos=0.5,below]{$\textsc{3*IQR}$};% right outer fence
+%     %
+%     \node[below] at (9,0.7) {$\textbf{*}$}; % mild outlier on the right
+%     \node[below] at (-2.4,0.7) {$o$}; % extreme outlier on the left
+%     % Axis
+%     \draw (-3,-2) -- (10,-2);
+%     % Note that the snaked line is drawn to 11.1 to force
+%     % TikZ to draw the final tick.
+%     \draw[snake=ticks,segment length=1cm] (-3,-2) -- (10.1,-2);
+% \end{tikzpicture}

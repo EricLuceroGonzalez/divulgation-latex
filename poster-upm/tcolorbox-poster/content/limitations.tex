@@ -1,0 +1,107 @@
+% limitations.tex
+\begin{center}
+    \begin{tikzpicture}[scale=1.0]
+        % Gráfica 3D
+        \begin{axis}[
+                view={60}{30},
+                % xlabel={$x$},
+                % ylabel={$y$},
+                % zlabel={\( z \)},
+                title={Some title},
+                colormap/viridis,
+                label style={font=\small},
+                tick label style={font=\small},
+                mesh/interior colormap={blueblack}{color=(colorC) color=(colorA)},
+            ]
+
+            \addplot3[
+                surf,
+                domain=-2:2,
+                domain y=-2:2,
+                samples=30,
+            ] {sin(deg(x^2 + y^2)) / (x^2 + y^2 + 1)};
+
+            % Gráfica de la función en 2D (y = 0)
+            \addplot[
+                domain=-2:2,
+                ultra thick,
+                colorD
+            ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+        \end{axis}
+        \node[] (caption) at (3, -1.05) {\textbf{Figura 1}. \boxi{Tikzpicture} con \texttt{addplot3}.};
+    \end{tikzpicture}
+\end{center}
+% Gráfica usando \boxi{tikz} y \boxi{pgfplots} con:
+
+% \begin{verbatim}
+%     \addplot3[
+%             surf,
+%             domain=-2:2,
+%             domain y=-2:2,
+%             samples=30,
+%         ] {sin(deg(x^2+y^2))/(x^2+y^2+1)}
+% \end{verbatim}
+\begin{center}
+    \begin{tikzpicture}[scale=0.8]
+        % Gráfica 2D
+        \begin{axis}[
+                % width=8cm, % Ancho del gráfico
+                % height=7cm, % Alto del gráfico
+                % xlabel={\( x \)},
+                % ylabel={\( z \)},
+                % title={Some title},
+                xmin=-2, xmax=2,
+                ymin=-0.5, ymax=1,
+                grid=both,
+                axis lines=left,
+                enlargelimits=false,
+                tick label style={font=\small}, % Tamaño de las etiquetas
+                label style={font=\small}, % Tamaño de los nombres de los ejes
+                % title={Figura/},
+                % title style={font=\small, yshift=5pt}, % Estilo del título
+            ]
+
+            % Gráfica de la función en 2D (y = 0)
+            \addplot[
+                domain=-2:2,
+                samples=100,
+                smooth,
+                very thick,
+                colorD,
+            ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+            % Leyenda
+            \addlegendentry{\tiny\( z = \frac{\sin(x^2)}{x^2 + 1} \)}
+
+        \end{axis}
+
+        % Título de la gráfica
+        \node[] (caption) at (3, -1.25) {\textbf{Figura 2}. \boxi{Tikzpicture} con \texttt{addplot}};
+    \end{tikzpicture}
+\end{center}
+% \begin{itemize}
+%     \item Curva de aprendizaje inicial para \texttt{tikz} y \texttt{tcolorbox} puede ser mas pronunciada que con \texttt{beamerposter}.
+%     \item Requiere tiempo para personalizar diseños complejos.
+%     \item No es tan intuitivo como herramientas gráficas como PowerPoint.
+% \end{itemize}
+
+% \begin{tikzpicture}[node distance=2cm]
+%     \node[text=colorA] (o) at (0,1.0){\large\bfseries Diagrama de flujo con \texttt{tikz}};
+%     % Nodos
+%     \node (start) [startstop] {Inicio};
+%     \node (pro1) [process, below of=start] {Proceso 1};
+%     \node (dec1) [decision, below of=pro1, yshift=-0.5cm] {¿Condición?};
+%     \node (pro2a) [process, below of=dec1, yshift=-0.5cm, xshift=-3cm] {Proceso 2a};
+%     \node (pro2b) [process, below of=dec1, yshift=-0.5cm, xshift=3cm] {Proceso 2b};
+%     \node (stop) [startstop, below of=pro2a, yshift=-0.5cm] {Fin};
+
+%     % Flechas
+%     \draw [arrow] (start) -- (pro1);
+%     \draw [arrow] (pro1) -- (dec1);
+%     \draw [arrow] (dec1) -- node[anchor=east] {Sí} (pro2a);
+%     \draw [arrow] (dec1) -- node[anchor=west] {No} (pro2b);
+%     \draw [arrow] (pro2a) -- (stop);
+%     \draw [arrow] (pro2b) |- (stop);
+
+% \end{tikzpicture}

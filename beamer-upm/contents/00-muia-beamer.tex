@@ -1,0 +1,263 @@
+\newcommand{\bMedio}{1.253314}
+\def\bInversa{0.3989422804014327}
+\def\aIntercept{1.177410} % $\ln(4)$
+\def\sAB{0.8857913124365199} % $\frac{a}{b-1}$
+\def\b{2.50662}
+% \section{Gaussiana}
+
+\begin{frame}{Monty Python}{\cite{Marsaglia-MontyPython}}
+% 
+  \begin{tikzpicture}
+    % b -----> sqrt(2*pi)=2.50662
+    % b/2 ---> 1.253314
+    % 1/b ---> 0.39894
+    \begin{axis}[
+        domain=0:4, % Rango de los valores en el eje x
+        samples=100, % Cantidad de puntos a graficar
+        axis lines=middle, % Coloca los ejes en el medio
+        xlabel=$x$, % Etiqueta del eje x
+        ylabel={$f(x)$}, % Etiqueta del eje y
+        xmin=0, xmax=3.5, % Limites del eje x
+        ymin=-0.2, ymax=0.9, % Limites del eje y
+        xtick={0,1,2,3}, % Puntos de referencia en el eje x
+        ytick={0,0.1,0.2,...,0.8}, % Puntos de referencia en el eje y
+        domain=0:4, % Dominio de la función
+        samples=200, % Resolución de la curva
+        smooth % Curva suave
+      ]
+      \addplot[blue, thick] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+% 
+% 
+      % Área bajo la curva (relleno)
+      \addplot [
+        fill=blue!30, % Color de relleno (30% de azul)
+        domain=0:4,
+      ]
+      {2*(1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle; % Relleno bajo la curva  
+% 
+      % Segunda gaussiana rotada 45 grados
+      \begin{scope}[rotate around={90:(\aIntercept,0.3989422)}] % Rotar alrededor del origen 45 grados
+        % Curva Gaussiana rotada
+        \addplot [
+          thick, % Grosor de la línea
+          green!30, % Color de la línea
+          domain=0:\aIntercept, % Dominio en el eje x
+        ]
+        {2 * (1/sqrt(2*pi)) * exp(-0.5*x^2)}; % Ecuación de la curva Gaussiana multiplicada por 2
+% 
+        % Área bajo la curva rotada (relleno)
+        \addplot [
+          fill=green!30, % Color de relleno (30% de verde)
+          domain=0:\aIntercept,
+        ]
+        {2 * (1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle;
+      \end{scope}
+% 
+      % Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+      \draw[fill=red!30, draw=red, opacity=0.5]
+      (0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+      % (0, 0) rectangle ({sqrt(2*pi)}, 0.363792);
+% 
+      %       % Derecha del rectángulo
+      %       \addplot [
+      %         fill=cyan!50, % Color amarillo para las áreas fuera del rectángulo
+      %         domain={sqrt(2*pi)/2}:4,
+      %       ]
+      %       {2 * (1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle;
+      %       % Cola
+      %       \addplot [
+      %         fill=green!50, % Color amarillo para las áreas fuera del rectángulo
+      %         domain={sqrt(2*pi)}:4,
+      %       ]
+      %       {2 * (1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle;
+      % %   Rectángulo corrector (blanco)
+      %       \draw[fill=white, draw=white] 
+      %       (\bMedio, 0.405) rectangle (3,0.8);
+      \draw [-Triangle,red] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+      \draw [-Triangle,red] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+    \end{axis}
+  \end{tikzpicture}
+% 
+\end{frame}
+% 
+\begin{frame}{Traslados}{Transformaciones}
+
+%   \begin{tikzpicture}
+%     % b -----> sqrt(2*pi)=\b
+%     % b/2 ---> 1.253314
+%     % 1/b ---> 0.39894
+%     \def\yMax{1.0}
+%     \begin{axis}[
+%         domain=0:4, % Rango de los valores en el eje x
+%         samples=100, % Cantidad de puntos a graficar
+%         axis lines=middle, % Coloca los ejes en el medio
+%         xlabel=$x$, % Etiqueta del eje x
+%         ylabel={$f(x)$}, % Etiqueta del eje y
+%         xmin=0, xmax=3.5, % Limites del eje x
+%         ymin=-0.2, ymax=\yMax, % Limites del eje y
+%         xtick={0,1,2,3}, % Puntos de referencia en el eje x
+%         ytick={0,0.1,0.2,...,\yMax}, % Puntos de referencia en el eje y
+%         domain=0:4, % Dominio de la función
+%         samples=200, % Resolución de la curva
+%         smooth % Curva suave
+%       ]
+%       \addplot[blue, thick] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+
+
+%       % % ! Área bajo la curva (relleno)
+%       \addplot [
+%         fill=blue!30, % Color de relleno (30% de azul)
+%         domain=0:4,
+%       ]
+%       {2*(1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle; % Relleno bajo la curva
+%       % % ! Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+%       \draw[fill=orange!30, draw=orange, opacity=0.5]
+%       (0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+
+%       \begin{scope}[shift={(0.58870,-\bInversa)}] % Trasladar en ejes x,y
+%         % % ! Área bajo la curva rotada (relleno)
+%         \addplot [
+%           fill=blue!70, % Color de relleno (30% de verde)
+%           domain=0:\aIntercept
+%         ]
+%         {(2/sqrt(2*pi)) * exp(-0.5*(x)^2)} \closedcycle;
+%       \end{scope}
+%       \begin{scope}[shift={(0.58870,-0.20)}] % Trasladar en ejes x,y
+%         % % ! Área bajo la curva rotada (relleno)
+%         \addplot [
+%           fill=green!70, % Color de relleno (30% de verde)
+%           domain=0:\aIntercept
+%         ]
+%         {(2/sqrt(2*pi)) * exp(-0.5*(x)^2)} \closedcycle;
+%       \end{scope}
+
+%       \draw[-,red,dashed] (0,0.8)--(2,0.8);
+%     \end{axis}
+%   \end{tikzpicture}
+\end{frame}
+% 
+% 
+\begin{frame}{Traslados}{Transformaciones}
+% 
+  \begin{tikzpicture}
+    % b -----> sqrt(2*pi)=\b
+    % b/2 ---> 1.253314
+    % 1/b ---> 0.39894
+    \def\yMax{1.0}
+    \begin{axis}[
+        domain=0:4, % Rango de los valores en el eje x
+        samples=100, % Cantidad de puntos a graficar
+        axis lines=middle, % Coloca los ejes en el medio
+        xlabel=$x$, % Etiqueta del eje x
+        ylabel={$f(x)$}, % Etiqueta del eje y
+        xmin=0, xmax=3.5, % Limites del eje x
+        ymin=-0.2, ymax=\yMax, % Limites del eje y
+        xtick={0,1,2,3}, % Puntos de referencia en el eje x
+        ytick={0,0.1,0.2,...,\yMax}, % Puntos de referencia en el eje y
+        domain=0:4, % Dominio de la función
+        samples=200, % Resolución de la curva
+        smooth % Curva suave
+      ]
+      % % ! Área bajo la curva (relleno)
+      \addplot [
+        fill=blue!30, % Color de relleno (30% de azul)
+        draw=none,
+        domain=0:4,
+      ]
+      {2*(1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle; % Relleno bajo la curva
+      % % ! Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+      \draw[fill=orange!30, draw=none, opacity=0.5]
+      (0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+% 
+      % \begin{scope}[shift={(0.58870,-\bInversa)}] % Trasladar en ejes x,y
+      %   % % ! Área bajo la curva rotada (relleno)
+      %   \addplot [
+      %     fill=blue!70, % Color de relleno (30% de verde)
+      %     domain=0:\aIntercept
+      %   ]
+      %   {(2/sqrt(2*pi)) * exp(-0.5*(x)^2)} \closedcycle;
+      % \end{scope}
+      % % ! Rotada respecto al eje x
+      \begin{scope}[shift={(0.58870,-0.20)}, rotate around={90:(0.958,0.3)}] % Trasladar en ejes x,y
+        \addplot [
+          fill=green!40, % Color de relleno (30% de verde)
+          draw=none,
+          domain=0:\aIntercept
+        ]
+        % {(2/sqrt(2*pi)) * exp(-0.5*(x)^2)} \closedcycle;
+        {(2/sqrt(2*pi)) * exp(-0.4428956*(x)^2)} \closedcycle; % ! Estiramiento horizontal
+      \end{scope}
+      \filldraw (axis cs: \aIntercept,\bInversa) circle (2pt);
+% 
+      \draw[-,red,dashed] (0,0.8)--(2,0.8);
+      \draw [-Triangle,red] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+      \draw [-Triangle,red] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+    \end{axis}
+  \end{tikzpicture}
+\end{frame}
+% \def\b{2.50662} % \def\bMedio{1.253314}
+% % \def\bInversa{0.3989422804014327}
+% % \def\aIntercept{1.177410} % $\ln(4)$
+% % \def\sAB{0.8857913124365199} % $\frac{a}{b-1}$
+
+
+% \section{von Mises}
+% \begin{frame}{Traslados}{Transformaciones}
+%   \def\BesselK{1.5}
+%   \def\BesselI{0.5118}
+%   \begin{tikzpicture}
+%     % b -----> sqrt(2*pi)=\b
+%     % b/2 ---> 1.253314
+%     % 1/b ---> 0.39894 
+%     \def\yMax{1.0}
+%     \begin{axis}[
+%         domain=0:4, % Rango de los valores en el eje x
+%         samples=100, % Cantidad de puntos a graficar
+%         axis lines=middle, % Coloca los ejes en el medio
+%         xlabel=$x$, % Etiqueta del eje x
+%         ylabel={$f(x)$}, % Etiqueta del eje y
+%         xmin=0, xmax=3.5, % Limites del eje x
+%         ymin=-0.2, ymax=\yMax, % Limites del eje y
+%         xtick={0,1,2,3}, % Puntos de referencia en el eje x
+%         ytick={0,0.1,0.2,...,\yMax}, % Puntos de referencia en el eje y
+%         domain=0:4, % Dominio de la función
+%         samples=200, % Resolución de la curva
+%         smooth % Curva suave
+%       ]
+%       % % ! Área bajo la curva (relleno)
+%       \addplot [
+%         fill=orange!30, % Color de relleno (30% de azul)
+%         draw=none,
+%         domain=0:3.1415,
+%       ]
+%       {(1/\BesselI*pi) * exp(\BesselK*cos(deg(x)))} \closedcycle; % Relleno bajo la curva
+%       % % ! Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+%       \draw[fill=orange!30, draw=none, opacity=0.5]
+%       (0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+%       % % % ! Rotada respecto al eje x
+%       % \begin{scope}[shift={(0.58870,-0.20)}, rotate around={90:(0.958,0.3)}] % Trasladar en ejes x,y
+%       %   \addplot [
+%       %     fill=green!40, % Color de relleno (30% de verde)
+%       %     draw=none,
+%       %     domain=0:\aIntercept
+%       %   ]
+%       %   % {(2/sqrt(2*pi)) * exp(-0.5*(x)^2)} \closedcycle;
+%       %   {(2/sqrt(2*pi)) * exp(-0.4428956*(x)^2)} \closedcycle; % ! Estiramiento horizontal
+%       % \end{scope}
+%       \filldraw (axis cs: \aIntercept,\bInversa) circle (2pt);
+%       \draw [-Triangle,red] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+%       \draw [-Triangle,red] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+%     \end{axis}
+%     \node (A) at (8.2,5){$f(x) = \left(\frac{1}{\pi I_0(z)}\right)e^{z\,\cos(x)}$};
+%   \end{tikzpicture}
+% \end{frame}
+
+% \section{Monty Python}
+
+% \subsection{Algoritmo Monty Python}
+% \begin{frame}{Monty Python}{Algoritmo}
+%   \begin{itemize}
+%     \item Cita de \parencite{Marsaglia-MontyPython}\footfullcite{Marsaglia-MontyPython}
+%   \end{itemize}
+% \end{frame}
+

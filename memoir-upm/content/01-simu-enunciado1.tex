@@ -1,0 +1,648 @@
+\maketitle{}
+
+\section{Introducción}
+La generación rápida de números aleatorios gaussianos de alta calidad es una capacidad clave para las simulaciones en una amplia gama de disciplinas.
+Los generadores de números aleatorios gaussianos (GRNG) se pueden clasificar en cuatro categorías básicas \parencite{Thomas_Random_Generators}:
+Inversión de la función de distribución acumulada, transformación, rechazo y generadores recursivos. De entre estas categorías,
+el método de Monty Python es considerado un método de transformación más  que un método de rechazo \parencite{Thomas_Random_Generators},
+sin embargo otros autores lo proponen como un método de rechazo \parencite{Umeda_Normal_generators}.
+\def\bMedio{1.253314}
+\def\bInversa{0.3989422804014327}
+\def\aIntercept{1.177410} % $\ln(4)$
+\def\sAB{0.8857913124365199} % $\frac{a}{b-1}$
+\def\b{2.50662}
+\section{Método Monty Python}
+El método de Monty Python es descrito por \parencite{Marsaglia-MontyPython} como un método rápido para la generación de valores de las distribuciones normal, exponencial y von Mises.
+En general, puede generar valores para cualquier función de densidad, estrictamente monótona y decreciente para $x>0$.
+En este caso, vamos a describir el procedimiento para obtener variables de la distribución normal, de acuerdo a la ecuación \eqref{eqn:half-normal}, conocida como semi-normal (o \textit{Half-Normal}), que se podría interpretar como la mitad derecha ($x>0$)
+de la normal, conservando el valor del área. En nuestro caso ajustamos el valor $\sigma = 1$.
+\begin{equation}
+    f(x) = \frac{2}{\sqrt{2\pi}}e^{-0.5x^2}
+    \label{eqn:half-normal}
+\end{equation}
+Se utiliza la función de densidad absoluta (escalada por 2) ya que la distribución normal estándar es simétrica en torno al $0$,
+garantizando que el área bajo la función para el intervalo sea igual a 1.
+\begin{equation}
+    \displaystyle A = \int_0^\infty \frac{2}{\sqrt{2\pi}}e^{-0.5x^2} \, dx = 1
+    \label{eqn:normal-area}
+\end{equation}
+Esta función es \textit{cortada en trozos}, y mediante algunas transformaciones de $f(x)$ acoplamos estos trozos de la función dentro de un rectángulo
+cuya área también es unitaria.
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                y=5cm,
+                x=1.75cm,
+                axis lines=middle, % Coloca los ejes en el medio
+                xlabel=$x$, % Etiqueta del eje x
+                ylabel={$f(x)$}, % Etiqueta del eje y
+                xmin=-3.5, xmax=3.5, % Limites del eje x
+                ymin=-0.05, ymax=0.9, % Limites del eje y
+                xtick={-3,-2,...,3}, % Puntos de referencia en el eje x
+                ytick={0,0.1,0.2,...,0.8}, % Puntos de referencia en el eje y
+                domain=-4:4, % Dominio de la función
+                samples=200, % Resolución de la curva
+                smooth % Curva suave
+            ]
+            \addplot[colorD, ultra thick,domain=0:4] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+            \addplot[colorD, ultra thick,domain=-4:0] {0};
+            \addplot[colorA, ultra thick] {1/(sqrt(2*pi)) * exp(-0.5*x^2)};
+        \end{axis}
+        \draw[-,ultra thick,colorD] (9,4) -- ++(0.5,0)node[right]{Función semi-normal};
+        \draw[-,ultra thick,colorA] (9,3.5) -- ++(0.5,0)node[right]{Función normal};
+    \end{tikzpicture}
+    \caption{Funciones de densidad de probabilidad. En el caso de la función semi-normal, el valor de área esta dado por \eqref{eqn:normal-area}.}
+    \label{fig:normal-1}
+\end{figure}
+% 
+La idea principal es tomar la función seminormal \eqref{eqn:half-normal} y acoplarla completamente dentro de un rectángulo de área 1.
+Luego, se generan valores aleatorios $(x,y)$ del rectángulo, y verificar en que región se encuentra este punto, según las mostradas en la figura \ref{fig:rectangle}.
+% 
+\subsection{Descripción}
+El primer paso es seleccionar la base del rectángulo $b$, y garantizar el valor del área seleccionando la altura como $1/b$.
+La idea principal es seleccionar un valor de $b$ tal que la parte de la normal que queda por encima del rectángulo, $f(x)>1/b$ como se muestra en la figura \ref{fig:f-rotada-a}, se asemeje
+a la región del rectángulo que esta por encima de $f(x)$.
+En la figura \ref{fig:rectangle} podemos destacar tres partes.
+La primera, la región de $f(x)$ que queda por encima del rectángulo, mediante una serie de transformaciones quedará dentro del rectángulo.
+La segunda, la región que queda sobre el rectángulo, y por ultimo: la cola.
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                axis lines=middle, % Coloca los ejes en el medio
+                xlabel=$x$, % Etiqueta del eje x
+                ylabel={$f(x)$}, % Etiqueta del eje y
+                y=5cm,
+                x=2.75cm,
+                xmin=-0.05, xmax=3.5, % Limites del eje x
+                ymin=-0.15, ymax=1, % Limites del eje y
+                xtick={0,1,...,3}, % Puntos de referencia en el eje x
+                ytick={0,0.2,...,0.8}, % Puntos de referencia en el eje y
+                domain=0:4, % Dominio de la función
+                samples=200, % Resolución de la curva
+                smooth % Curva suave
+            ]
+            % ! Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+            \draw[fill=colorE, draw=none, opacity=0.5]
+            (0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+            \addplot[colorD, ultra thick,domain=0:4] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+            % Área bajo la curva (relleno)
+            % \addplot [
+            % fill=colorA,
+            % draw=none,
+            % domain=0:4,
+            % ]
+            % {2*(1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle; % Relleno bajo la curva  % 
+            \draw [-Triangle,colorA] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+            % \draw [-Triangle,colorA] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+        \end{axis};
+    \end{tikzpicture}
+    \caption{Rectángulo para aplicar el método Monty Python}
+    \label{fig:rectangle}
+\end{figure}
+% 
+Es relativamente sencillo encontrar valores $(x,y)$ uniformemente dentro del rectángulo, por esta razón se busca, primeramente acoplar $f(x)$ dentro de un rectángulo.
+En \parencite{Marsaglia-MontyPython} se proponen dos formas de hacer esto:
+\begin{itemize}
+    \item \textit{Cortando} la parte superior de $f(x)$ y colocándole de forma invertida dentro del rectángulo. Lo cual es lo más simple pero no lo más eficiente. Ver figura \ref{fig:f-rotada}.
+    \item Haciendo lo mismo que hemos descrito, pero \textit{expandiendo} $f(x)$ para que pueda ocupar el máximo espacio posible dentro del rectángulo.
+\end{itemize}
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \begin{tikzpicture}
+            % b -----> sqrt(2*pi)=2.50662
+            % b/2 ---> 1.253314
+            % 1/b ---> 0.39894
+            \begin{axis}[
+                    axis lines=middle, % Coloca los ejes en el medio
+                    xlabel=$x$, % Etiqueta del eje x
+                    ylabel={$f(x)$}, % Etiqueta del eje y
+                    % y=5cm,
+                    % x=2.75cm,
+                    xmin=-0.05, xmax=3.5, % Limites del eje x
+                    ymin=-0.15, ymax=1, % Limites del eje y
+                    xtick={0,1,...,3}, % Puntos de referencia en el eje x
+                    ytick={0,0.2,...,0.8}, % Puntos de referencia en el eje y
+                    domain=0:4, % Dominio de la función
+                    samples=200, % Resolución de la curva
+                    smooth % Curva suave
+                ]
+                % 
+                \addplot [
+                    fill=green!30, % Color de relleno (30% de verde)
+                    draw=none,
+                    domain=0:\aIntercept,
+                ]
+                {2 * (1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle;
+                % 
+                \draw[fill=white, draw=none](0, 0) rectangle (\aIntercept, \bInversa);
+                \draw[fill=colorE, draw=none, opacity=0.5](0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+                \addplot[colorD, ultra thick,domain=0:4] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+                \draw[fill=none, draw=black,dashed](0, 0) rectangle (\aIntercept, \bInversa);
+                \draw[fill=none, draw=black,dashed](\aIntercept, 0) rectangle (\b, \bInversa);
+                \node[] (labelA) at (axis cs: 0.3,0.1){$F$};
+                \node[right] (labelB) at (axis cs: \aIntercept,0.1){$G$};
+                \node[] (labelC) at (axis cs: 0.3,0.5){$H$};
+                \filldraw[fill=colorA,draw=colorA] (axis cs: \aIntercept,\bInversa) circle (2pt) node[above,colorA]{$P$};
+                \draw [-Triangle,colorA] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+                \draw [-Triangle,colorA] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Sección de $f(x) > 1/b$}
+        \label{fig:f-rotada-a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \begin{tikzpicture}
+            % b -----> sqrt(2*pi)=2.50662
+            % b/2 ---> 1.253314
+            % 1/b ---> 0.39894
+            \begin{axis}[
+                    axis lines=middle, % Coloca los ejes en el medio
+                    xlabel=$x$, % Etiqueta del eje x
+                    ylabel={$f(x)$}, % Etiqueta del eje y
+                    % y=5cm,
+                    % x=2.75cm,
+                    xmin=-0.05, xmax=3.5, % Limites del eje x
+                    ymin=-0.15, ymax=1, % Limites del eje y
+                    xtick={0,1,...,3}, % Puntos de referencia en el eje x
+                    ytick={0,0.2,...,0.8}, % Puntos de referencia en el eje y
+                    domain=0:4, % Dominio de la función
+                    samples=200, % Resolución de la curva
+                    smooth % Curva suave
+                ]
+                % ! Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+                \draw[fill=colorE, draw=none, opacity=0.5](0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+                % 
+                % Segunda gaussiana rotada 45 grados
+                \begin{scope}[yshift=-0.09mm,xshift=2.83mm,rotate around={90:(\aIntercept,\bInversa)}] % Rotar alrededor del origen 45 grados
+                    % Curva Gaussiana rotada
+                    \addplot [
+                        fill=green!30, % Color de relleno (30% de verde)
+                        draw=none,
+                        domain=0:\aIntercept,
+                    ]
+                    {2 * (1/sqrt(2*pi)) * exp(-0.5*x^2)} \closedcycle;
+                \end{scope}
+                \draw[fill=white, draw=none] (\aIntercept, \bInversa) rectangle (2.51,0.9);
+                \addplot[colorD, ultra thick,domain=0:4] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+                \draw[fill=none, draw=black,dashed](0, 0) rectangle (\aIntercept, \bInversa);
+                \draw[fill=none, draw=black,dashed](\aIntercept, 0) rectangle (\b, \bInversa);
+                \node[] (labelA) at (axis cs: 0.3,0.1){$F$};
+                \node[right] (labelB) at (axis cs: \aIntercept,0.1){$G$};
+                \node[] (labelC) at (axis cs: \b-0.2,0.3){$H$};
+                \filldraw[fill=colorA,draw=colorA] (axis cs: \aIntercept,\bInversa) circle (2pt) node[above,colorA]{$P$};
+                \draw [-Triangle,colorA] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+                \draw [-Triangle,colorA] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Sección de $f(x) > 1/b$ rotada y trasladada.}
+        \label{fig:f-rotada-b}
+    \end{subfigure}
+    \caption{Transformación de una sección de la función de densidad.}
+    \label{fig:f-rotada}
+\end{figure}
+En ambos casos, la función de densidad sufre una serie de transformaciones, que conservan el área. El punto $P$ corresponde al punto donde la función
+intercepta el rectángulo, su ordenada se  representa en la figura \ref{fig:f-rotada} como $a$.
+\clearpage
+La elección del valor de $b$ es muy importante
+ya que determina la sección de la función que se debe rotar.
+El valor de $b$ usado hasta ahora es de $b=\sqrt{2\pi}$, por lo tanto $a = \sqrt{\ln(4)}$.
+Si $b$ es muy grande, la sección rotada y trasladada interseca la curva, si $b$ es muy pequeña el espacio entre la función y la sección
+rotada, es decir la región entre $G$ y $H$ de la figura \ref{fig:f-rotada-b} sera mayor. Esto implica que el algoritmo recurra a obtener valores de la cola, lo que demanda un mayor costo computacional.
+Es importante que las regiones se mantengan disjuntas.
+% 
+\subsection{Transformación de la función de densidad}
+% 
+Si la función de densidad solo se traslada y rota, como en la figura \ref{fig:f-rotada-b}, el método pierde efectividad
+debido a que se debe recurrir a obtener valores de la cola, lo que puede ser costoso \parencite{Marsaglia_1984}.
+La pequeña zona entre $G$ y $H$ corresponde a valores de la cola, según \parencite{Marsaglia_1984}, lo que facilita la obtención de valores aleatorios correctos.
+Para reducir la probabilidad de generar valores de la cola, conviene hacer una expansion, rotación y traslado de $f(x) > 1/b$.
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        % b -----> sqrt(2*pi)=2.50662
+        % b/2 ---> 1.253314
+        % 1/b ---> 0.39894
+        \begin{axis}[
+                axis lines=middle, % Coloca los ejes en el medio
+                xlabel=$x$, % Etiqueta del eje x
+                ylabel={$f(x)$}, % Etiqueta del eje y
+                y=5cm,
+                x=2.75cm,
+                xmin=-0.05, xmax=3.5, % Limites del eje x
+                ymin=-0.15, ymax=1, % Limites del eje y
+                xtick={0,1,...,3}, % Puntos de referencia en el eje x
+                ytick={0,0.2,...,0.8}, % Puntos de referencia en el eje y
+                domain=0:4, % Dominio de la función
+                samples=200, % Resolución de la curva
+                smooth % Curva suave
+            ]
+            % ! Dibujar el rectángulo de ancho sqrt(2*pi) y altura 1/ancho
+            \draw[fill=colorE, draw=none, opacity=0.5](0, 0) rectangle ({sqrt(2*pi)}, \bInversa);
+            % 
+            % Segunda gaussiana rotada 45 grados
+            \begin{scope}[yshift=-1.15mm,xshift=2.99mm,rotate around={90:(\aIntercept,\bInversa)}] % Rotar alrededor del origen 45 grados
+                % Curva Gaussiana rotada
+                \addplot [
+                    fill=green!30, % Color de relleno (30% de verde)
+                    draw=none,
+                    domain=0:\aIntercept,
+                ]
+                {(2/sqrt(2*pi)) * exp(-0.4428956*(x)^2)} \closedcycle; % ! Estiramiento horizontal
+            \end{scope}
+            % 
+            \draw[fill=white, draw=none] (\aIntercept, \bInversa) rectangle (2.51,0.9);
+            \addplot[colorD, ultra thick,domain=0:4] {2/(sqrt(2*pi)) * exp(-0.5*x^2)};
+            \draw [-Triangle,colorA] (axis cs: \b,0) -- (axis cs: \b,-0.05)node[below]{\scriptsize $b$};
+            \draw [-Triangle,colorA] (axis cs: \aIntercept,0) -- (axis cs: \aIntercept,-0.05)node[below]{\scriptsize $a$};
+            \draw[fill=none, draw=black,dashed](0, 0) rectangle (\aIntercept, \bInversa);
+            \draw[fill=none, draw=black,dashed](\aIntercept, 0) rectangle (\b, \bInversa);
+            \node[] (labelA) at (axis cs: 0.3,0.1){$F$};
+            \node[right] (labelB) at (axis cs: \aIntercept,0.1){$G$};
+            \node[] (labelC) at (axis cs: \b-0.2,0.3){$H$};
+            \filldraw[fill=colorA,draw=colorA] (axis cs: \aIntercept,\bInversa) circle (2pt) node[above,colorA]{$P$};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Transformación de la función de densidad rotada, trasladada y expandida.}
+    \label{fig:f-expandida}
+\end{figure}
+% 
+Después de aplicar
+las operaciones de transformación de $f(x)$, la función que aparece en la región $G$ de la figura \ref{fig:f-expandida} correspode a
+\begin{equation}
+    g(x) = \frac{1}{b} - s\left(f(s(b-x)) - \frac{1}{b}\right)
+\end{equation}
+Donde $s = \dfrac{a}{b-a}$, corresponde al factor de expansión/contracción de la función de densidad en $H$.
+% 
+\subsection{Funcionamiento del generador Monty Python}
+Para la generar variables aleatorias de distribución normal, generamos un punto
+y vamos comparando en que región, según la figura \ref{fig:f-expandida} se encuentra la ordenada.
+
+Podemos resumir el método de la siguiente manera: seleccionar una variable aleatoria tomando un punto $(x,y)$ perteneciente al rectángulo, luego:
+\begin{itemize}
+    \item Si el punto está en la región $F, \, x<a$, retornar $\pm x$.
+    \item Si el punto está en la región $G, \, (y, f( x))$, retornar $\pm x$.
+    \item Si el punto está en la región $H, \, (y, g( x))$, retornar $s(b-x)$.
+    \item Si no, generar $x =- \log(U_1(0,1))/b$, $y =  - \log(U_2(0,1))$
+          hasta que $y+y > x\cdot x$, entonces retornar $\pm(b+x)$.
+\end{itemize}
+\clearpage
+
+\section{Implementación y resultados}
+Se ha hecho una implementación en Python, con diferentes tamaños de muestra
+generando valores según el algoritmo \ref{alg:MontyPython}.
+Para generar valores de la uniforme se utiliza el generador \lstinline{np.random.uniform(0,1)}, y para generar
+la normal $\mathcal{N}(0,1)$ el \lstinline{np.random.default_rng(seed=19680801)}.
+\begin{algorithm}
+    \caption{Monty Python}\label{alg:MontyPython}
+    \begin{algorithmic}
+        \Require {$a,b$}
+        \State {$s \gets \dfrac{a}{b-a}$}
+        \While{\texttt{True}}
+        \State $x \gets U(0,1)b$
+        \Comment{Verificar si esta en $F$}
+        \If {$x< a$}
+        \Return {$x$}
+        \Comment{Se elige aleatoriamente -1 o +1}
+        \EndIf
+        \State $y < U(0,1)/b$
+
+        \Comment{Verificar si esta en $G$}
+        \If {$y< f(x)$}
+        \Return {$x$}
+        \EndIf
+        \Comment{Verificar si esta en $H$ (bajo la gaussiana)}
+        \If {$y< g(x)$}
+        \Return {$s(b-x)$}
+        \EndIf
+        \EndWhile
+        \While {\texttt{True}}
+        \Comment{Caso de la cola ($\abso{x}>b$)}
+        \State $x \gets - \log(U_1(0,1))/b$
+        \State $y \gets - \log(U_2(0,1))$
+        \If {$y+y > x\cdot x$}
+        \Return {$b+x$}
+        \EndIf
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Rendimiento}
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|}\hline
+        Monty Python  & $0.1404 \pm 0.0001 \,\text{segundos}$ \\\hline
+        Box-Muller    & $0.0005 \pm 0.0000 \,\text{segundos}$ \\\hline
+        GRAND         & $2.5674 \pm 0.0113 \,\text{segundos}$ \\\hline
+        Ahrens-Dieter & $0.0754 \pm 0.0001 \,\text{segundos}$ \\\hline
+    \end{tabular}
+    \caption{Tiempos de ejecución (10,000 iteraciones, 3 ejecuciones)}
+\end{table}
+% \begin{figure}[ht!]
+% \centering
+% \includegraphics[width=0.8\textwidth]{Benchmark_Test_10000}
+% \caption{Tiempos de ejecución de cada implementación, para $n=10,000$.}
+% \label{fig-Benchmark-10000}
+% \end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Monty Python_10000_samples}
+    \caption{Comparación del generador Monty Python con densidad de $\mathcal{N}(0,1)$.}
+    \label{fig-mp-normal-10000}
+\end{figure}
+
+\subsection{Comparación con otros métodos}
+Hemos comparado la generación de variables aleatorias, para distinto tamaño con el método
+Box-Muller, GRAND y como distribución teórica hemos tomado la función de densidad normal y el generador de Python
+\lstinline{np.random.default_rng(seed=19680801)}
+con $\mu = 0.0$, y $\sigma = 1.0$. En base a este último generador hacemos la prueba de contraste de Kolmogorov-Smirnov, tomándolo como la frecuencia esperada o teórica.\\
+
+En los resultados, se observa que, para
+$n=10,000$, el método Monty Python se acerca bastante al valor teórico, mientras que Box-Muller y GRAND tienen desviaciones pequeñas pero perceptibles.
+Para $n=100,000$, la mayoría de los métodos tienden a converger más cerca de 0. Esto muestra que, a medida que aumenta el tamaño de muestra, los valores de
+$\mu$ se aproximan mejor a la media teórica, indicando una mayor precisión en la generación de números normales a medida que se incrementa la muestra.\\
+
+Para $n=10,000$, los valores de
+$\sigma$ en los métodos Box-Muller y GRAND son muy cercanos al valor teórico, con ligeras diferencias que son menores al 2\%.
+En $n=100,000$, la mayoría de los métodos alcanzan una desviación estándar muy próxima a 1, lo que indica que, al igual que en la media, la precisión mejora con un tamaño de muestra mayor.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+                                                                                      & $n = 1,000$ & $n = 5,000$ & $n = 10,000$ & $n = 100,000$ \\
+        \hline
+        Teórica                                                                       &
+        \begin{tabular}{@{}c@{}}$\mu = -0.036665$ \\ $\sigma = 1.029961$\end{tabular} &
+        \begin{tabular}{@{}c@{}}$\mu = -0.003365$ \\ $\sigma = 0.992045$\end{tabular} &
+        \begin{tabular}{@{}c@{}}$\mu = 0.001341$ \\ $\sigma = 0.985541$\end{tabular}  &
+        \begin{tabular}{@{}c@{}}$\mu = 0.002883$ \\ $\sigma = 0.998328$\end{tabular}                                                             \\
+        \hline
+        Monty Python                                                                  &
+        \begin{tabular}{@{}c@{}}$\mu = 0.003083$ \\ $\sigma = 1.008259$\end{tabular}  &
+        \begin{tabular}{@{}c@{}}$\mu = 0.021462$ \\ $\sigma = 1.003442$\end{tabular}  &
+        \begin{tabular}{@{}c@{}}$\mu = 0.008656$ \\ $\sigma = 0.996327$\end{tabular}  &
+        \begin{tabular}{@{}c@{}}$\mu = 0.000108$ \\ $\sigma = 1.001325$\end{tabular}                                                             \\
+        \hline
+        Box-Muller                                                                    &
+        \begin{tabular}{@{}c@{}}$\mu = 0.059892$ \\ $\sigma = 0.98565$\end{tabular}   &
+        \begin{tabular}{@{}c@{}}$\mu = -0.000224$ \\ $\sigma = 1.017415$\end{tabular} &
+        \begin{tabular}{@{}c@{}}$\mu = -0.007765$ \\ $\sigma = 1.011492$\end{tabular} &
+        \begin{tabular}{@{}c@{}}$\mu = 0.003527$ \\ $\sigma = 0.997005$\end{tabular}                                                             \\
+        \hline
+        GRAND                                                                         &
+        \begin{tabular}{@{}c@{}}$\mu = -0.016677$ \\ $\sigma = 1.036955$\end{tabular} &
+        \begin{tabular}{@{}c@{}}$\mu = 0.007815$ \\ $\sigma = 1.013873$\end{tabular}  &
+        \begin{tabular}{@{}c@{}}$\mu = -0.00315$ \\ $\sigma = 1.011496$\end{tabular}  &
+        \begin{tabular}{@{}c@{}}$\mu = -0.00287$ \\ $\sigma = 1.003523$\end{tabular}                                                             \\
+        \hline
+    \end{tabular}
+    \caption{Resultados de $\mu$ y $\sigma$ para diferentes valores de $n$ en cada método.}
+\end{table}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Monty Python_10000_samples}
+        \caption{Monty Python}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{numpy.rng.normal_10000_samples}
+        \caption{\lstinline{np.random.default_rng(seed=19680801)}}
+    \end{subfigure}
+    \caption{Generación de variables aleatorias con $n = 10,000$.}
+    \label{fig-mp-normal-1}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Monty Python_5000_samples}
+        \caption{Monty Python}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{numpy.rng.normal_5000_samples}
+        \caption{\lstinline{np.random.default_rng(seed=19680801)}}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{GRAND_normal_5000_samples}
+        \caption{GRAND}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{BoxMuller_5000_samples}
+        \caption{Box-Muller}
+    \end{subfigure}
+    \caption{Generación de variables aleatorias con $n = 5,000$.}
+    \label{fig-comparative-5000}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Monty Python_1000_samples}
+        \caption{Monty Python}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{numpy.rng.normal_1000_samples}
+        \caption{\lstinline{np.random.default_rng(seed=19680801)}}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{GRAND_normal_1000_samples}
+        \caption{GRAND}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{BoxMuller_1000_samples}
+        \caption{Box-Muller}
+    \end{subfigure}
+    \caption{Generación de variables aleatorias con $n = 1,000$.}
+    \label{fig-comparative-1000}
+\end{figure}
+% 500
+A medida que aumenta el tamaño de muestra, los métodos Box-Muller y Monty Python tienden a mostrar una mayor consistencia en sus pruebas de normalidad, lo cual es un buen indicativo de su convergencia hacia la normalidad.
+\clearpage
+\subsection{Bondad de ajuste}
+En ambos, se considera como hipótesis nula que los datos proceden de una distribución normal.
+Además se utilizó la librería \texttt{scipy}, con los métodos \texttt{kstest()} y \texttt{NormalTest()} y se muestran los valores $p-value$ en cada caso.
+\begin{itemize}
+    \item Prueba de Kolmogorov-Smirnov (\texttt{kstest()})\\
+          Esta prueba compara la distribución acumulativa de una muestra con una distribución teórica (en este caso, la normal estándar). Si el valor es alto (cercano a 1), la muestra es consistente con la distribución teórica, mientras que valores bajos sugieren diferencias significativas.
+          En los resultados, vemos que la mayoría de los métodos tienen valores de \texttt{kstest()} altos (por ejemplo, para
+          $n=1000$ los valores de Monty Python, Box-Muller, y GRAND son relativamente altos), indicando que estas muestras están en buena concordancia con la distribución normal teórica.
+    \item Prueba de Normalidad de D'Agostino-Pearson (\texttt{NormalTest()})\\
+          Basada en la prueba \textit{D'Agostino's K-squared},
+          evalúa la normalidad de una muestra basada en asimetría y curtosis. Valores cercanos a 1 sugieren normalidad.
+          En los resultados obtenidos, el método Box-Muller tiene resultados cercanos a 1 en todos los tamaños de muestra, lo que indica una buena normalidad de las muestras generadas. Otros métodos como Monty Python y GRAND también muestran buenos valores en muestras más grandes.
+\end{itemize}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+                                             & $n = 1,000$ & $n = 5,000$ & $n = 10,000$ & $n = 100,000$ \\
+        \hline
+        \texttt{NormalTest()} - Teórica      & 0.938729    & 0.85559     & 0.976657     & 0.716287      \\
+        \texttt{NormalTest()} - Monty Python & 0.518117    & 0.862461    & 0.885458     & 0.432579      \\
+        \texttt{NormalTest()} - Box-Muller   & 0.491592    & 0.904744    & 0.882279     & 0.906122      \\
+        \texttt{NormalTest()} - GRAND        & 0.692819    & 0.747381    & 0.643148     & 0.032034      \\
+        \hline
+        \texttt{kstest()} - Teórica          & 1.0         & 1.0         & 1.0          & 1.0           \\
+        \texttt{kstest()} - Monty Python     & 0.794664    & 0.141964    & 0.164674     & 0.474875      \\
+        \texttt{kstest()} - Box-Muller       & 0.077611    & 0.528005    & 0.111134     & 0.75429       \\
+        \texttt{kstest()} - GRAND            & 0.859545    & 0.14861     & 0.28094      & 0.393223      \\
+        \hline
+    \end{tabular}
+    \caption{Resultados de \texttt{NormalTest()} y \texttt{kstest()} para diferentes valores de $n$ en cada método.}
+\end{table}
+
+% \begin{figure}[ht!]
+% \centering
+% 
+% \caption{*}
+% \label{fig-mp-normal-1}
+% \end{figure}
+
+
+% \begin{figure}[ht!]
+% \centering
+% \begin{subfigure}{0.45\textwidth}
+% 
+% \end{subfigure}
+% \begin{subfigure}{0.45\textwidth}
+% 
+% \end{subfigure}
+% \caption{*}
+% \label{fig-mp-normal-1}
+% \end{figure}
+\subsection{Comparación con el método GRAND}
+El método GRAND: Genera un índice aleatorio siguiendo una distribución geométrica. El índice determinará el rango dentro de la distribución normal donde se escogerá el número.
+Después se realiza un muestreo Par-Impar, donde se genera un valor candidato del rango seleccionado, una secuencia de números aleatorios uniformes y se decide si aceptar o rechazar el candidato. El proceso se repetirá hasta aceptar un valor.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{GRAND}
+    \caption{División de la función de densidad. La columna $c_i$ es seleccionada con probabilidad $2^{-i-1}$
+        y luego se usa para implementar una selección basada en el rechazo de un número aleatorio dentro de ese rango \parencite{Thomas_Random_Generators}.}
+\end{figure}
+\begin{itemize}
+    \item GRAND será más eficiente que el método Monty Python ya que necesita producir menos números aleatorios uniformes.
+    \item Aunque en complejidad son similares, el método GRAND puede tener una mayor complejidad por el uso del método par-impar y la división de la distribución en segmentos.
+    \item GRAND es un método más versátil que el método Monty Python ya que también puede generar números aleatorios de otras distribuciones.
+\end{itemize}
+% \clearpage
+\vspace{2em}
+\subsection{Comparación con el método Ziggurat}
+El método Ziggurat usa serie de rectángulos y una región de cola para aproximar la función de densidad de probabilidad, se elige una de las regiones de forma aleatoria y se genera un numero aleatorio. Si este número está dentro de la función de densidad de probabilidad se acepta, sino se rechaza.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.55\textwidth]{ziggurat}
+    \caption{Diagrama que muestra la distribución gaussiana dividida en regiones rectangular, cuña y cola en el método Ziggurat \parencite{Thomas_Random_Generators}.}
+\end{figure}
+\begin{itemize}
+    \item El método Monty Python es más eficiente para los puntos que caigan dentro de las regiones $F$ o $G$, de lo contrario será más eficiente el método Ziggurat.
+    \item Ziggurat es más sencillo de implementar al utilizar una estructura más regular que el método Monty Python.
+    \item Ambos usan un método similar en el que se realiza un muestreo directo y un muestreo por rechazo.
+\end{itemize}
+
+\subsection{Comparación con el método Ahrens-Dieter Table-Free Method \parencite{Ahrens_TableFree}}
+
+El método sin tablas de Ahrens-Dieter es una técnica para generar números aleatorios gaussianos que transforma números aleatorios independientes de dos distribuciones diferentes -exponencial y Cauchy- en números aleatorios gaussianos. \\
+
+En principio, las distribuciones exponencial y de Cauchy podrían generarse directamente,
+utilizando $- \ln U$ y $\tan(\pi (U - 1/2))$ respectivamente, lo que haría de éste un método de transformación. Sin embargo, la única razón por la que este método es factible es porque los autores desarrollan dos algoritmos basados en el rechazo para muestras de las distribuciones exponencial y de Cauchy. Por esta razón lo hemos clasificado como algoritmo de rechazo.
+
+Tras generarlos, los números aleatorios exponenciales y de Cauchy se combinan mediante una transformación específica para producir dos números aleatorios gaussianos independientes utilizando:
+$ z \leftarrow \sqrt{\dfrac{2x}{1 + y^2}}$
+para multiplicar por el par de variables uniformes generadas previamente, la variable uniforme y la generada por Cauchy.  \\
+
+El método Ahrens-Dieter incorpora técnicas de muestreo de rechazo para garantizar que las muestras generadas se ajustan a las distribuciones deseadas. Esto significa que, aunque el método es teóricamente exacto, puede implicar el descarte de algunas muestras que no cumplen los criterios, lo que puede afectar a la eficacia. Provee una alta calidad, especialmente en las colas, lo que la hace adecuada para aplicaciones que requieren un comportamiento preciso de las colas. Sin embargo, requiere un tratamiento cuidadoso del proceso de muestreo de rechazo, lo que puede añadir complejidad a la aplicación.
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{ahrens_dieter_normal_1000_samples}
+        \caption{$n = 1,000$}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{ahrens_dieter_normal_5000_samples}
+        \caption{$n = 5,000$}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{ahrens_dieter_normal_10000_samples}
+        \caption{$n = 10,000$}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{ahrens_dieter_normal_100000_samples}
+        \caption{$n = 100,000$}
+    \end{subfigure}
+    \caption{Generación de variables aleatorias con la implementación de Ahrens-Dieter.}
+    \label{fig-comparative-5000}
+\end{figure}
+
+\subsection{ Comparación con el método Recursivo (Wallace) \parencite{Wallace_FastGenerator}}
+El método Wallace para generar números aleatorios gaussianos se basa en el principio de que las combinaciones lineales de números aleatorios distribuidos como gaussianos son a su vez distribuidas como gaussianas.
+Este método evita la necesidad de evaluar funciones elementales, que pueden ser costosas desde el punto de vista computacional.\\
+
+El método parte de un conjunto inicial de $N=KL$ números aleatorios independientes distribuidos de forma gaussiana y normalizados para que su valor cuadrático medio sea uno. A continuación, los números se transforman en
+$L$ pasos, en los que $K$ números se tratan como un vector $X$ y se transforman para producir nuevas muestras gaussianas en base a matrices ortogonales (Matriz de Hadamard). En cada paso, se toman $K$ valores antiguos de la reserva “antigua”, se transforman mediante una matriz ortogonal $A$ y los nuevos valores se colocan en la reserva “nueva”.
+Se utiliza un un generador pseudoaleatorio convencional de variantes uniformes para la inicialización, el control de pasadas y el refresco.\\
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.65\textwidth]{wallace_fast_random}
+    \caption{\parencite{Wallace_FastGenerator}}
+\end{figure}
+
+Evidentemente, es deseable que cualquier valor de la reserva acabe contribuyendo a todos los valores de las reservas formadas tras varias pasadas. De este modo, cada paso transpone la matriz de valores, y los $K$ valores hermanos producidos en un paso de transformación del paso se procesarán en $K$
+pasos diferentes del siguiente paso. Para $K = 4$ y $L$ impar, esta transposición es suficiente para garantizar la mezcla final de todos los valores. Añadiendo una permutación al seleccionar el índice de filas, se proporciona una mezcla completa.\\
+
+En lugar de utilizar funciones matemáticas complejas, el método de Wallace genera números aleatorios normales transformando los números aleatorios normales existentes mediante matrices ortogonales. Además, es fácilmente paralelizable y no requiere muestreo de rechazo. No obstante, es recursivo, lo que significa que la generación de nuevos números aleatorios depende de los generados previamente. Esto puede introducir correlaciones entre las muestras generadas,
+lo que puede afectar a la calidad del resultado si no se gestiona adecuadamente.
+
+El generador de Ziggurat, aunque no es tan rápido como el método Wallace, tiene mejores propiedades estadísticas con respecto a la correlación.
+
+\subsection{Ventajas}
+\begin{itemize}
+    \item Sencillo pero eficaz. El método requiere un cálculo mínimo y puede generar variables normales con una media de 1.5 a 1.8 números aleatorios uniformes, dependiendo de la probabilidad de cola.
+    \item Sin necesidad de matrices complejas. A diferencia del método Ziggurat, el método Monty Python no requiere grandes matrices, lo que facilita su aplicación.
+    \item Incorpora el comportamiento de las colas. El método incluye un procedimiento especializado para manejar la cola, haciéndolo más robusto para generar valores extremos.
+\end{itemize}
+% https://www.tandfonline.com/doi/abs/10.1080/00949655.2011.631187
+
+\begin{algorithm}
+    \caption{Continuous Mycorrhiza Optimization Algorithm (CMOA)}
+    \begin{algorithmic}[1]
+        \Require Objective: $\min$ or $\max \, f(x)$, where $x = (x_1, x_2, \dots, x_d)$
+        \Require Parameters: $a, b, c, d, e, f$, and initial populations $x$, $y$
+        \State Initialize a population of $n$ Plants and $MN$ with random solutions
+        \State Find the best solution $fit$ in the initial population
+        \While{$t < maxIter$}
+        \For{$i = 1 \, \textbf{to} \, n$ (for $n$ Plants and $MN$ in the population)}
+        \State Define $rand \in [1, 3]$ to apply Biological Operator
+        \If{$rand = 1$}
+        \State \textbf{Apply Lotka-Volterra (LV) Predator-Prey Model}
+        \[
+            \frac{dx}{dt} = x(a - by), \quad \frac{dy}{dt} = y(-c + dx)
+        \]
+        \ElsIf{$rand = 2$}
+        \State \textbf{Apply Lotka-Volterra (LV) Competitive Model}
+        \[
+            \frac{dx}{dt} = x(a - bx - cy), \quad \frac{dy}{dt} = y(d - ex - fy)
+        \]
+        \Else
+        \State \textbf{Apply Lotka-Volterra (LV) Cooperative Model}
+        \[
+            \frac{dx}{dt} = x(a - bx + cy), \quad \frac{dy}{dt} = y(d + ex - fy)
+        \]
+        \EndIf
+        \State Evaluate new solutions
+        \If{new solutions are better}
+        \State Update them in the population
+        \EndIf
+        \EndFor
+        \State Find the current best $fit$ solution
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}

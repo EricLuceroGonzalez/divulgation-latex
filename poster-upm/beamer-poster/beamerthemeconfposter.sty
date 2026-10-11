@@ -1,0 +1,265 @@
+%==============================================================================
+% Beamer style for the poster template posted at
+% http://www.nathanieljohnston.com/2009/08/latex-poster-template/
+%
+% Created by the Computational Physics and Biophysics Group at Jacobs University
+% https://teamwork.jacobs-university.de:8443/confluence/display/CoPandBiG/LaTeX+Poster
+% Modified by Nathaniel Johnston (nathaniel@nathanieljohnston.com) in August 2009
+% =============================================================================
+
+\ProvidesPackage{beamerthemeconfposter}
+\RequirePackage{tikz}		% for drawing the nice rounded boxes
+\usetikzlibrary{arrows,backgrounds}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{exscale}
+\RequirePackage{textcomp}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{tcolorbox}
+% \usefonttheme{professionalfonts}
+\RequirePackage{helvet}
+\renewcommand\familydefault{\sfdefault}
+\newcommand{\makeruleinbox}{{\usebeamercolor[bg]{block alerted title}\centering\hspace*{-0.7cm}\rule{\inboxrule}{0.5cm}}}
+\RequirePackage{ragged2e}
+
+
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,arrows,backgrounds,shapes.geometric}
+
+% Spacing before and inside list environments to add white space before lists and between items inside lists
+\makeatletter
+\def\@listi{\leftmargin\leftmarginii
+  \topsep 1ex % Spacing before lists
+  \parsep 0\p@ \@plus\p@
+  \itemsep 6pt} % Spacing between items
+\makeatother
+
+\usecaptiontemplate{\small\structure{\insertcaptionname~\insertcaptionnumber: }\insertcaption} % A fix for figure numbering
+
+%-----------------------------------------------------------
+
+\RequirePackage{xcolor}  % Permite definir y usar colores personalizados en el documento.
+\RequirePackage{colortbl}  % Proporciona capacidades de coloreado para texto y tablas.
+
+
+%-----------------------------------------------------------
+% Define the column widths and overall poster size
+% To set effective sepwid, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
+% In this template, the separation width chosen is 0.024 of the paper width and a 4-column layout
+% onecolwid should therefore be (1-(# of columns+1)*sepwid)/# of columns e.g. (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be (2*onecolwid)+sepwid = 0.464
+% Set threecolwid to be (3*onecolwid)+2*sepwid = 0.708
+
+\newlength{\sepwid}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\newlength{\threecolwid}
+\setlength{\paperwidth}{48in} % A0 width: 46.8in
+\setlength{\paperheight}{36in} % A0 height: 33.1in
+\setlength{\sepwid}{0.024\paperwidth} % Separation width (white space) between columns
+\setlength{\onecolwid}{0.22\paperwidth} % Width of one column
+\setlength{\twocolwid}{0.464\paperwidth} % Width of two columns
+\setlength{\threecolwid}{0.708\paperwidth} % Width of three columns
+\setlength{\topmargin}{-0.5in} % Reduce the top margin size
+%-----------------------------------------------------------
+
+\RequirePackage{graphicx}  % Required for including images
+\RequirePackage{booktabs} % Top and bottom rules for tables
+
+% Definir aquí los colores utilizados a lo largo de las presentaciones
+\definecolor{colorA}{RGB}{0, 114, 206}    % PANTONE 285   #0072CE
+\definecolor{colorB}{RGB}{135, 101, 47}   % PANTONE 873   #87652F
+\definecolor{colorC}{RGB}{169, 169, 169}  % PANTONE 877   #A9A9A9
+\definecolor{colorD}{RGB}{239, 51, 64}    % PANTONE 032   #EF3340
+\definecolor{colorE}{RGB}{0, 162, 222}    % PANTONE 2995  #00A2DE
+
+% set the basic colors
+\setbeamercolor{palette primary}   {fg=black,bg=white}
+\setbeamercolor{palette secondary} {fg=black,bg=white}
+\setbeamercolor{palette tertiary}  {bg=colorA,fg=white}
+\setbeamercolor{palette quaternary}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=colorA}
+\setbeamercolor{titlelike}         {bg=green,fg=white}
+\setbeamercolor{frametitle}        {bg=red!10,fg=purple}
+\setbeamercolor{cboxb}{fg=black,bg=colorA}
+\setbeamercolor{cboxr}{fg=black,bg=red}
+
+% set colors for itemize/enumerate
+\setbeamercolor{item}{fg=colorA}
+\setbeamercolor{item projected}{fg=white,bg=colorD}
+
+% set colors for blocks
+\setbeamercolor{block title}{fg=colorA,bg=white}
+\setbeamercolor{block body}{fg=black,bg=white}
+
+% set colors for alerted blocks (blocks with frame)
+\setbeamercolor{block alerted title}{fg=white,bg=colorA}
+\setbeamercolor{block alerted body}{fg=black,bg=colorA!10}
+
+% set the fonts
+\setbeamerfont{section in head/foot}{series=\bfseries}
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamerfont{block alerted title}{series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{frametitle}{size=\Large}
+% \setbeamerfont{block body}{series=\rmfamily}
+
+% set some beamer theme options
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{items}[circle]
+\setbeamertemplate{blocks}[width=0.0]
+\beamertemplatenavigationsymbolsempty
+
+% set bibliography style
+\setbeamertemplate{bibliography item}[text]
+\setbeamercolor{bibliography item}{fg=black,bg=white}
+\setbeamercolor{bibliography entry author}{fg=black,bg=white}
+\setbeamercolor{bibliography item}{fg=black,bg=white}
+
+% define some length variables that are used by the template
+\newlength{\inboxwd}
+\newlength{\iinboxwd}
+\newlength{\inboxrule}
+\makeatletter
+\makeatother
+
+%==============================================================================
+% build the poster title
+%==============================================================================
+
+% Definición de la plantilla del headline
+\setbeamertemplate{headline}{
+  \leavevmode
+  \begin{columns}
+    % Columna para el logo izquierdo
+    \begin{column}{0.15\linewidth}
+      \vskip1cm
+      \centering
+      \includegraphics[width=1.2\linewidth]{LaTeX_logo.png} % Cambia "logo_left.png" por tu archivo de logo izquierdo
+      \vskip1cm
+    \end{column}
+    % Columna para el título, autor e instituto
+    \begin{column}{0.7\linewidth}
+      \vskip1cm
+      \centering
+      \usebeamercolor{title in headline}{\color{colorA}\Huge{\textbf{\inserttitle}}\\[0.5ex]}
+      \usebeamercolor{author in headline}{\color{fg}\Large{\insertauthor}\\[1ex]}
+      \usebeamercolor{institute in headline}{\color{fg}\large{\insertinstitute}\\[1ex]}
+      % \vskip1cm
+    \end{column}
+    % Columna para el logo derecho
+    \begin{column}{0.15\linewidth}
+      \vskip1cm
+      \centering
+      \includegraphics[width=0.5\linewidth]{blog_logo.png} % Cambia "logo_right.png" por tu archivo de logo derecho
+      \vskip1cm
+    \end{column}
+  \end{columns}
+  \vspace{0.25in}
+  \hspace{0.25in}\begin{beamercolorbox}[wd=47in,colsep=0.15cm]{cboxb}\end{beamercolorbox}
+  % \vspace{0.1in}
+}
+
+
+% Block definition
+\setbeamertemplate{block begin}
+{
+\par\vskip\medskipamount
+\begin{beamercolorbox}[colsep*=0ex,dp={2ex},center]{block title}
+  \vskip-0.25cm
+  \usebeamerfont{block title}\large\insertblocktitle
+  \begin{flushleft}
+    \vskip-1cm
+    \begin{tikzpicture}[remember picture,overlay]
+      \shade [inner color=colorA,outer color=white]
+      (0,0) rectangle (\textwidth,0.3cm);
+    \end{tikzpicture}
+  \end{flushleft}
+\end{beamercolorbox}
+{\parskip0pt\par}
+\ifbeamercolorempty[bg]{block title}
+{}
+{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}
+\usebeamerfont{block body}
+\vskip-0.5cm
+\begin{beamercolorbox}[colsep*=0ex,vmode]{block body}
+  \justifying
+  }
+
+  \setbeamertemplate{block end}
+  {
+\end{beamercolorbox}
+\vskip\smallskipamount
+}
+
+% Alert block definition (with frame)
+\setbeamertemplate{block alerted begin}
+{
+\par\vskip\medskipamount
+\begin{beamercolorbox}[sep=0ex,rounded=true,center,dp={2ex}]{block alerted title}
+  \vskip0.01cm
+  \usebeamerfont{block title}\large\insertblocktitle
+\end{beamercolorbox}
+{\parskip0pt\par}
+\usebeamerfont{block body}
+\vskip-0.8cm
+\begin{beamercolorbox}[sep=0.5cm, rounded=true,center]{block alerted title}
+  \setlength{\inboxwd}{\linewidth}
+  \addtolength{\inboxwd}{-1cm}
+  \begin{beamercolorbox}[rounded=true,wd={\inboxwd},center]{block alerted body}
+    \setlength{\iinboxwd}{\inboxwd}
+    \setlength{\inboxrule}{\inboxwd}
+    \addtolength{\iinboxwd}{-0.5cm}
+    \addtolength{\inboxrule}{0.5cm}
+    \begin{center}
+      \begin{minipage}{\iinboxwd}
+        \justifying
+        }
+
+        \setbeamertemplate{block alerted end}
+        {
+      \end{minipage}
+    \end{center}
+  \end{beamercolorbox}
+\end{beamercolorbox}
+\vskip\smallskipamount
+}
+
+\addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
+\addtobeamertemplate{block alerted end}{}{\vspace*{2ex}} % White space under highlighted (alert) blocks
+
+\setlength{\belowcaptionskip}{2ex} % White space under figures
+\setlength\belowdisplayshortskip{2ex} % White space under equations
+
+\newtcolorbox{columnBox}{
+  colframe=colorD, % Color del borde
+  colback=white, % Color de fondo
+  boxrule=3pt, % Grosor del borde
+  arc=0pt, % Esquinas rectas
+  left=0pt, % Sin margen izquierdo
+  right=0pt, % Sin margen derecho
+  top=0pt, % Sin margen superior
+  bottom=0pt % Sin margen inferior
+}
+
+
+\newcommand{\boxi}[2][colorA]{
+  \tcbox[% Opciones de tcolorbox
+    colframe=#1, % Color del borde
+    colback=#1  , % Color de fondo
+    boxsep=2.5mm,
+    boxrule=2.5pt, % Grosor del borde
+    coltext=white,
+    on line,
+    fontupper=\ttfamily, % Aplica fuente monoespaciada
+    arc=2pt, % Radio de las esquinas
+    left=0pt, % Margen izquierdo
+    right=0pt, % Margen derecho
+    top=0pt, % Margen superior
+    bottom=0pt % Margen inferior
+  ]{#2}%
+}

@@ -1,0 +1,266 @@
+% reunion_27_feb.tex
+
+\begin{frame}
+    \begin{itemize}
+        \item \cite{2024_Yi_Zhang}
+        \item \cite{Guo_2024_CCDF}
+        \item \cite{lavandier_selective_2021}
+        \item \cite{mateos_multiobjective_2016}
+    \end{itemize}
+\end{frame}
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \begin{itemize}
+        \item La creciente demanda de tráfico aéreo genera congestión en las Áreas de Maniobra Terminal (TMA).
+        \item Controladores de tráfico aéreo (ATCOs) dependen de decisiones manuales con soporte limitado de automatización.
+        \item Se propone una estrategia de ruteo y programación de aeronaves para minimizar conflictos y optimizar la eficiencia en la zona TMA.
+        \item \red{Problema uni-objetivo}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \textbf{Modelado y Algoritmos:}
+    \begin{itemize}
+        \item Uso de rutas de llegada estándar (STARs) como restricciones.
+        \item Modelo mixto lógico con optimización de separación mínima y orden de aterrizaje.
+        \item Métodos de solución:
+              \begin{itemize}
+                  \item \textbf{Programación Entera Mixta (MILP):} resolución exacta con Gurobi.
+                  \item \textbf{Búsqueda de Caminos Multi-Agente (MAPF):} planificación de rutas sin conflictos con programación por restricciones.
+                  \item \bfb{Metaheurística (HS):} Algoritmo Harmony Search para mejorar eficiencia computacional.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \bfb{Función Objetivo}
+    \begin{itemize}
+        \item \textbf{Minimización del tiempo de aterrizaje del último avión (Makespan).}
+        \item Maximiza el uso de la infraestructura y reduce los tiempos de espera en el aire.
+              \[
+                  J = \min \left\{\max_{f \in F,\, j \in D} \left\{AR^f_j\right\}\right\}
+              \]
+              donde \(AR^f_j\) es el tiempo de llegada de la aeronave \(f\) al punto final \(j\).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \textbf{Restricciones principales:}
+    \begin{itemize}
+        \item \textbf{Asignación de Entrada:} Cada aeronave se asigna a un punto de entrada en TMA.
+        \item \textbf{Conservación de Flujo:} Cada aeronave sigue una trayectoria continua sin desvíos innecesarios.
+        \item \textbf{Limitaciones de Conexión y Espera:}
+              \begin{itemize}
+                  \item Solo se permiten esperas en puntos específicos.
+                  \item Selección de velocidad en cada tramo de la ruta.
+              \end{itemize}
+        \item \textbf{Evitar Conflictos:} Separación mínima de tiempo entre aeronaves en cada punto de la trayectoria.
+        \item \textbf{Prohibición de Adelantamientos:} Una aeronave no puede superar a otra en la misma ruta.
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \bfb{Resultados y Simulaciones}
+    \begin{itemize}
+        \item Se probaron 15 escenarios de diferentes escalas y datos reales de ADS-B en Singapur.
+        \item Reducción del tiempo total de aterrizaje en hasta \bfb{10 minutos} por aeronave.
+        \item Reducción de más de \bfb{80 minutos} en el tiempo de vuelo total.
+        \item MILP y MAPF tienen mejor desempeño en problemas pequeños, mientras que \bfb{HS es más escalable}.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.95\textwidth]{2024_zhang_A_Study}
+        \caption*{\tiny\citeauthor{2024_Yi_Zhang}; \citetitle{2024_Yi_Zhang}, \citeyear{2024_Yi_Zhang}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \bfb{Características de la Solución HS}
+    \begin{itemize}
+        \item Cada solución se compone de:
+              \begin{itemize}
+                  \item \textbf{Ruta (\(X^r_f\))}: Secuencia de waypoints (por ejemplo, 2--5--8--11--15--Runway).
+                  \item \textbf{Holding (\(X^h_f\))}: Tiempo de espera asignado en cada waypoint donde se permite holding.
+                  \item \textbf{Velocidad (\(X^s_f\))}: Selección de nivel de velocidad (0,1,2,3) para cada tramo.
+              \end{itemize}
+        \item La solución se genera de forma aleatoria pero respetando las restricciones duras del problema.
+        \item La evaluación se realiza combinando el costo (makespan) y penalizaciones por violaciones a restricciones.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{2024_Yi_Zhang} }{\citetitle{2024_Yi_Zhang}}
+    \bfb{Ejemplo de Solución generada aleatoriamente para Aeronave despachada desde Waypoint 2}
+    \vspace{0.5em}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{table_2_zhang}
+        \caption*{\parencite{2024_Yi_Zhang}}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item La estrategia propuesta mejora la eficiencia y seguridad en TMA.
+        \item El enfoque híbrido combina exactitud (MILP), rapidez (MAPF) y escalabilidad (HS).
+        \item Futuras mejoras pueden incluir factores meteorológicos y múltiples pistas.
+    \end{itemize}
+\end{frame}
+
+% % ============== ============== ============== ============== ============== ============== ==============
+
+% \section{Paper 2: Cooperative Co-Evolution for Large-Scale Multiobjective ATFM}
+\begin{frame}{\parencite{Guo_2024_CCDF} }{\citetitle{Guo_2024_CCDF}}
+    \begin{itemize}
+        \item \textbf{Objetivo General:}
+              Optimizar el flujo de tráfico aéreo minimizando retrasos y conflictos.
+        \item \textbf{Funciones Objetivo:}
+              \begin{itemize}
+                  \item \(\min TFD\): Minimizar el retraso total de vuelo, definido como la suma de las diferencias entre el tiempo de despegue real y el esperado, y el tiempo de llegada real y el esperado.
+                  \item \(\min TNC\): Minimizar el número total de conflictos entre trayectorias, detectados cuando la distancia entre aeronaves es inferior a un umbral (por ejemplo, 5 millas náuticas).
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+\begin{frame}{\parencite{Guo_2024_CCDF} }{\citetitle{Guo_2024_CCDF}}
+    \begin{itemize}
+        \item \textbf{Restricciones Clave:}
+              \begin{itemize}
+                  \item Cada aeronave debe seleccionar una ruta de entre un conjunto predefinido.
+                  \item Las variables de tiempo (despegue) y velocidad deben mantenerse dentro de rangos permitidos.
+                  \item Restricciones de capacidad:
+                        \begin{itemize}
+                            \item Capacidad de despegue y aterrizaje en aeropuertos.
+                            \item Capacidad máxima en sectores del espacio aéreo.
+                        \end{itemize}
+                  \item Garantizar la separación mínima entre aeronaves en el tiempo y el espacio.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{Guo_2024_CCDF} }{\citetitle{Guo_2024_CCDF}}
+    \begin{itemize}
+        \item \textbf{Metodología:}
+              Se utiliza un enfoque de \textbf{Co-Evolución Cooperativa (CC)} para ATFM a gran escala, que incluye:
+              \begin{itemize}
+                  \item \textbf{Descomposición Fuzzy:} Divide el problema original en subcomponentes de menor dimensión, aprovechando las correlaciones espaciotemporales entre aeronaves.
+                  \item \textbf{Optimización de Subcomponentes:} Cada subproblema se resuelve mediante un metaheurístico (por ejemplo, un algoritmo evolutivo) y se coopera mediante un archivo externo que recoge soluciones no dominadas.
+                  \item \textbf{Asignación Probabilística de Recursos:} Se asignan evaluaciones adicionales a los subcomponentes con mayor contribución, medida mediante el incremento del hipervolumen (HV) de la solución.
+              \end{itemize}
+        \item \textbf{Representación de Individuos:}
+              Cada individuo representa un \textbf{plan de vuelo} de la forma:
+              \[
+                  \langle t_i, r_i, v_i \rangle
+              \]
+              donde:
+              \begin{itemize}
+                  \item \(t_i\): Tiempo de despegue de la aeronave \(i\) (ajustable dentro de un intervalo).
+                  \item \(r_i\): Ruta seleccionada, definida como una secuencia de waypoints.
+                  \item \(v_i\): Perfil de velocidad, en el que cada tramo de la ruta se asigna una velocidad elegida de un conjunto discreto.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{Guo_2024_CCDF} }{\citetitle{Guo_2024_CCDF}}
+    \begin{itemize}
+        \item \textbf{Framework Global:}
+              \begin{itemize}
+                  \item Inicialización de la población y cálculo de los objetivos.
+                  \item Descomposición dinámica del problema basada en un \red{knee point} de las soluciones no dominadas, que sirve de guía para la cooperación.
+              \end{itemize}
+        \item \textbf{Optimización de Subcomponentes:}
+              \begin{itemize}
+                  \item Cada subpoblación evoluciona de forma colaborativa utilizando un algoritmo evolutivo.
+                  \item Las mejoras se miden mediante la contribución al hipervolumen (HV) del conjunto de soluciones.
+              \end{itemize}
+        \item \textbf{Asignación de Recursos:}
+              \begin{itemize}
+                  \item Se calcula una probabilidad de selección para cada subcomponente según su contribución.
+                  \item Se emplea un mecanismo de ruleta para asignar evaluaciones adicionales, permitiendo a subcomponentes estancados tener nuevas oportunidades.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+% % ============== ============== ============== ============== ============== ============== ==============
+%---------------------------------------
+% \section{Paper 1: Multiobjective Simulated Annealing for Collision Avoidance in ATM}
+\begin{frame}{\parencite{mateos_multiobjective_2016} }{\citetitle{mateos_multiobjective_2016}}
+    \begin{itemize}
+        \item \textbf{Objetivo General:}
+              Minimizar múltiples criterios relacionados con la evitación de colisiones.
+        \item \textbf{Funciones Objetivo:}
+              \begin{itemize}
+                  \item Minimizar la magnitud promedio de las maniobras y su dispersión.
+                  \item Minimizar el riesgo de colisión (medido a partir de la proximidad entre cilindros de seguridad).
+                  \item Minimizar el número de maniobras, lo que reduce la carga de trabajo de los controladores.
+                  \item Minimizar retrasos temporales y desviaciones en los puntos de salida.
+              \end{itemize}
+        \item \textbf{Restricciones:}
+              \begin{itemize}
+                  \item \textbf{Seguridad:} Los “cilindros de seguridad” (definidos por distancias mínimas horizontales y verticales) no deben superponerse.
+                  \item Límites en velocidades, altitudes y ángulos de giro (para maniobras de cambio de velocidad, giro y altitud).
+              \end{itemize}
+        \item \textbf{Metodología:}
+              Se utiliza un algoritmo de \textbf{Simulated Annealing} multiobjetivo (AMOSA) que explora el espacio de soluciones mediante una estrategia de enfriamiento.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\parencite{mateos_multiobjective_2016} }{\citetitle{mateos_multiobjective_2016}}
+    \begin{block}{Representación de Individuos}
+        Cada individuo es un vector que, para cada aeronave, contiene:
+        \begin{itemize}
+            \item \textbf{Decisión de maniobra:} Variables binarias \(vc, ac, tc\) que indican si se realiza un cambio de velocidad, altitud o giro, respectivamente.
+            \item \textbf{Magnitud de la maniobra:} Un valor continuo \(\Delta\) en un rango predefinido (por ejemplo, \([-1,1]\)), que representa la intensidad del cambio.
+        \end{itemize}
+    \end{block}
+    \begin{block}{Funciones Objetivo (Ejemplos)}
+        \begin{itemize}
+            \item \(\min f_1 =\) Promedio de magnitud de maniobras \(+\) dispersión entre ellas.
+            \item \(\min f_2 =\) Riesgo de colisión, basado en las intersecciones de los cilindros de seguridad.
+            \item \(\min f_3 =\) Número total de maniobras realizadas (con la restricción \(vc+ac+tc \leq 1\) por aeronave).
+            \item \(\min f_4 =\) Retrasos en tiempos de salida/entrada.
+            \item \(\min f_5 =\) Desviación en el punto de salida respecto al plan original.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%---------------------------------------
+
+\begin{frame}{\parencite{mateos_multiobjective_2016} }{\citetitle{mateos_multiobjective_2016}}
+    \begin{itemize}
+        \item Ambos trabajos enfrentan problemas de optimización en ATM/ATFM con múltiples objetivos y restricciones complejas.
+        \item \textbf{\parencite{mateos_multiobjective_2016}}
+              \begin{itemize}
+                  \item Se centra en la resolución de conflictos mediante maniobras individuales.
+                  \item Representa a cada aeronave mediante un vector de decisiones de maniobra.
+              \end{itemize}
+        \item \textbf{\parencite{Guo_2024_CCDF}:}
+              \begin{itemize}
+                  \item Se enfoca en la optimización integral del flujo aéreo (horarios, rutas, velocidades).
+                  \item Utiliza la descomposición y cooperación entre subcomponentes para manejar problemas a gran escala.
+              \end{itemize}
+        \item Ambos enfoques destacan el uso de metaheurísticas para explorar grandes espacios de búsqueda en problemas NP-hard, garantizando soluciones cercanas al óptimo en contextos reales.
+    \end{itemize}
+\end{frame}
+
+% % ============== ============== ============== ============== ============== ============== ==============
+\begin{frame}{\parencite{lavandier_selective_2021} }{\citetitle{lavandier_selective_2021}}
+
+\end{frame}
+
+
+
+
+\thispagestyle{plain}
+\begin{frame}
+    \tiny
+    \printbibliography
+
+
+\end{frame}
+
+
+

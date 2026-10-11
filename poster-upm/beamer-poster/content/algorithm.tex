@@ -1,0 +1,84 @@
+\begin{tikzpicture}[scale=2.6]
+    % Gráfica 3D
+    \begin{axis}[
+            view={60}{30},
+            % xlabel={$x$},
+            % ylabel={$y$},
+            % zlabel={\( z \)},
+            colormap/viridis,
+            label style={font=\tiny},
+            tick label style={font=\tiny},
+            mesh/interior colormap={blueblack}{color=(colorC) color=(colorA)},
+        ]
+
+        \addplot3[
+            surf,
+            domain=-2:2,
+            domain y=-2:2,
+            samples=30,
+        ] {sin(deg(x^2 + y^2)) / (x^2 + y^2 + 1)};
+
+        % Gráfica de la función en 2D (y = 0)
+        \addplot[
+            domain=-2:2,
+            thick,
+            colorD
+        ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+    \end{axis}
+    \node[] (caption) at (3, -1.65) {\textbf{Figura 1}. Trayectoria sobre el plano $xy$.};
+\end{tikzpicture}
+Gráfica usando \boxi{tikz} y \boxi{pgfplots} con:
+\begin{verbatim}
+    \addplot3[
+            surf,
+            domain=-2:2,
+            domain y=-2:2,
+            samples=30,
+        ] {sin(deg(x^2+y^2))/(x^2+y^2+1)}
+\end{verbatim}
+% \begin{block}{Mathematical Section}
+
+%     Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin. Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+
+%     \begin{equation}
+%         E = mc^{2}
+%         \label{eqn:Einstein}
+%     \end{equation}
+
+%     Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin. Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+
+%     \begin{equation}
+%         \cos^3 \theta =\frac{1}{4}\cos\theta+\frac{3}{4}\cos 3\theta
+%         \label{eq:refname}
+%     \end{equation}
+
+%     Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+%     % Nam quis odio enim, in molestie libero. Vivamus cursus mi at nulla elementum sollicitudin.
+
+%     % \begin{equation}
+%     %     \kappa =\frac{\xi}{E_{\mathrm{max}}} %\mathbb{ZNR}
+%     % \end{equation}
+% \end{block}
+% \begin{tikzpicture}%[scale=3.1]
+%     \begin{axis}[title  = Contributions
+%             at LaTeX-Community.org,
+%             xbar,
+%             y axis line style = { opacity = 0 },
+%             axis x line       = none,
+%             tickwidth         = 0pt,
+%             enlarge y limits  = 0.2,
+%             enlarge x limits  = 0.02,
+%             symbolic y coords = {LaTeX, Tools, Distributions, Editors},
+%             nodes near coords,
+%             ytick=data, % Muestra todas las etiquetas en el eje Y
+%             yticklabel style={text width=3cm, align=right}, % Ajusta el estilo de las etiquetas del eje Y
+%             % legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1}, % Posición de la leyenda
+%         ]
+%         \addplot[fill=colorD,draw=colorD] coordinates { (35727,LaTeX)         (5672,Tools)
+%                 (2193,Distributions)  (11106,Editors) };
+%         \addplot[fill=colorA,draw=colorA] coordinates { (14320,LaTeX)         (1615,Tools)
+%                 (560,Distributions)   (3075,Editors)  };
+%         \legend{Topics, Posts}
+%     \end{axis}
+% \end{tikzpicture}

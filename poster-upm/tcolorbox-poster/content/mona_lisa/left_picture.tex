@@ -1,0 +1,224 @@
+% left_picture.tex
+% \begin{tikzpicture}
+%     \node[] (imageA) at (0,0){\includegraphics[width=1.1\textwidth]{monalisa/web_mona_lisa_fittest_5500_generations-200_pop}};
+%     % \node[] (imageB) at (4.85,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_2500gen_100_pop.png}};
+%     \node[below=1pt of imageA](captionA){\scriptsize Some caption.};
+%     % \node[below=1pt of imageB](captionB){\scriptsize Some caption.};
+%     % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+% \end{tikzpicture}
+
+% \begin{tikzpicture}
+%     \node[] (imageA) at (0,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_2500gen_100_pop.png}};
+%     \node[] (imageB) at (4.85,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_2500gen_100_pop.png}};
+%     \node[below=1pt of imageA](captionA){\scriptsize Some caption.};
+%     \node[below=1pt of imageB](captionB){\scriptsize Some caption.};
+%     % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+% \end{tikzpicture}
+\begin{tikzpicture}[baseline=(current bounding box.north), trim left=-0.5cm,scale=0.75]
+    \def\pointA{(40,50,60)}        % lab(60, 40, 50) rgb(225, 113, 56)
+    \def\pointB{(25, 30,30)}        %  % lab(30, 25, 30) rgb(115, 53, 24)
+    \def\pointC{(40,-50,40)}        % lab(40, 40, -50)rgb(112, 72, 177)
+    % Espacio CIELAB
+    \begin{axis}[
+            % at={(-1cm,0cm)},
+            width=12cm, height=10cm,
+            % axis lines=middle,
+            ylabel near ticks,
+            xlabel near ticks,
+            ylabel style={
+                    yshift=10pt,
+                    rotate=-70
+                },
+            xlabel style={
+                    yshift=10pt,
+                    rotate=-20
+                },
+            xlabel={$a^*$ (green–red)}, ylabel={$b^*$ (blue/yellow)}, zlabel={$L^*$ (Luminisity)},
+            xmin=0, xmax=50,
+            ymin=-50, ymax=50,
+            zmin=0, zmax=60,
+            tick label style={font=\tiny}, % Tamaño de las etiquetas
+            label style={font=\normalsize,gray}, % Tamaño de los nombres de los ejes
+            % xticklabels={-50,-35,-20,...,50},
+            % xtick={-50,-35,-20,...,50},
+            yticklabels={-50,-35,-20,...,50},
+            ytick={-50,-35,-20,...,50},
+            zticklabels={0,20,...,60},
+            ztick={0,20,...,60},
+            % enlargelimits=5.1,
+            % x label style={at={(axis description cs:70.5,-0.1)},anchor=north},
+            view={45}{25},
+            scale only axis, % Asegura que el axis no tenga márgenes adicionales
+            % axis on top % Dibuja el axis sobre otros elementos
+        ]
+        % Puntos de los colores
+        \addplot3[only marks, color=colorTestA, mark=square*,mark options={scale=3.25}] coordinates {\pointA};
+        \addplot3[only marks, color=colorTestB, mark=square*,mark options={scale=3.25}] coordinates {\pointB};
+        \addplot3[only marks, color=colorTestC, mark=square*,mark options={scale=3.25}] coordinates {\pointC};
+        \addplot3[only marks, color=gray, mark=*] coordinates {(40, 50, 0)}node[above right]{\scriptsize $A'$};
+        \addplot3[only marks, color=gray, mark=*] coordinates {(25, 30, 0)}node[above left]{\scriptsize $B'$};
+        \addplot3[only marks, color=gray, mark=*] coordinates {(40,-50,0)}node[above left]{\scriptsize $C'$};
+
+        % Línea de distancia entre ellos
+        \addplot3[dashed] coordinates {\pointA \pointB}node[below right,colorA,pos=0.55]{\small $30.7$};; % 30.7
+        \addplot3[dashed] coordinates {\pointA \pointC}node[above left,colorA,pos=0.5] {\small $54.8$};; % 54.8
+        % % Points dashed on xy plane
+        % \addplot3[thin,dashed,gray] coordinates {(0,50,0) (40,50,0)}; % A
+        % \addplot3[thin,dashed,gray] coordinates {(40,0,0) (40,50,0)}; % A
+        \addplot3[thin,dashed,gray] coordinates {(40,50,0) (40,50,60)}; % A
+        % \addplot3[thin,dashed,gray] coordinates {(0,30,0) (25,30,0)}; % B
+        % \addplot3[thin,dashed,gray] coordinates {(25,0,0) (25,30,0)}; % B
+        \addplot3[thin,dashed,gray] coordinates {(25,30,30) (25,30,0)}; % B
+        % \addplot3[thin,dashed,gray] coordinates {(0,-50,0) (40,-50,0)}; % C
+        % \addplot3[thin,dashed,gray] coordinates {(40,0,0) (40,-50,0)}; % C
+        \addplot3[thin,dashed,gray] coordinates {(40,-50,0) (40,-50,40)}; % C
+        % % \def\pointA{(40,50,60)}        % lab(60, 40, 50) rgb(225, 113, 56)
+        % % \def\pointB{(25, 30,30)}        %  % lab(30, 25, 30) rgb(115, 53, 24)
+        % % \def\pointC{(40,-50,40)}        % lab(40, 40, -50)rgb(112, 72, 177)
+        % % \node[right,colorA] at (axis cs:45,35,50) {$\Delta E_{ab}^*=24.495$};
+
+        % Etiquetas
+        % \node[anchor=south,colorA] at (axis cs:30,50,60) {\small $A$}; % (50, 60, 40) rgb(217, 61, 54)
+        % \node[anchor=north,colorA] at (axis cs:-35,-40,60) {\small $B$}; % (50,0,-40) rgb(54, 123, 187)
+        % \node[anchor=north,colorA] at (axis cs:-50,40,60) {\small $C$};  % (50, -50, 40) rgb(21, 138, 44)
+    \end{axis}
+    % \draw[red, thick] (current bounding box.south west) rectangle (current bounding box.north east);
+    \filldraw[colorTestA] (-1,9.7) rectangle ++(4mm,4mm);
+    \filldraw[colorTestB] (-1,9) rectangle ++(4mm,4mm);
+    \filldraw[colorTestC] (8.4,10.1) rectangle ++(4mm,4mm);
+    \node[right] at (-1.35,10.4){\scriptsize CIELAB coordinates ($L^*,a^*,b^*$)};
+    \node[right] at (-0.8,9.9){\scriptsize $A (60, 40, 50)$};
+    \node[right] at (-0.8,9.2){\scriptsize $B (30, 25, 30)$};
+    \node[right] at (8.7,10.3){\scriptsize $C (40, 40, -50)$};
+
+\end{tikzpicture}
+
+\begin{equation}
+    \scriptsize
+    \Delta E_{94}^* = \sqrt{
+        \left( \frac{\Delta L^*}{k_L S_L} \right)^2 +
+        \left( \frac{\Delta C^*}{k_C S_C} \right)^2 +
+        \left( \frac{\Delta H^*}{k_H S_H} \right)^2
+    }
+    \label{eq:CIE1994}
+\end{equation}
+
+Each individual is compared with the test image comparing pixel by pixel extracting the $L^* a^* b^*$ coordinates:
+
+\begin{center}
+
+    \begin{tikzpicture}[scale=0.6]
+
+        \begin{scope}[
+                xshift=120,yshift=160, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {1} {
+                    \foreach \y in {0,1,2} {
+                            \fill[backgroundColor,fill opacity=0.35] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (1,0) grid (2,3);
+            \node[black] at(1.5,2.5){40};
+            \node[black] at(1.5,1.5){40};
+            \node[black] at(1.5,0.5){-50};
+        \end{scope}
+        \begin{scope}[
+                xshift=120,yshift=70, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {1} {
+                    \foreach \y in {0,1,2} {
+                            \fill[backgroundColor,fill opacity=0.35] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (1,0) grid (2,3);
+            \node[black] at(1.5,2.5){30};
+            \node[black] at(1.5,1.5){25};
+            \node[black] at(1.5,0.5){25};
+        \end{scope}
+        % Definir el plano en perspectiva
+        \begin{scope}[
+                yshift=0, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {0,1,2,3,4} {
+                    \foreach \y in {0,1,2,3,4} {
+                            \fill[backgroundColor,fill opacity=0.5] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+
+            % Dibujar la silueta (ejemplo: una "L") 
+            \foreach \x/\y in {1/1, 1/2, 1/3, 2/1, 3/1} {
+                    \fill[colorTestB] (\x,\y) rectangle (\x+1,\y+1);
+                }
+
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (0,0) grid (5,5);
+            \node[white] at (1.5,3.5){1};
+            \node[white] at(1.5,2.5){2};
+            \node[white] at(1.5,1.5){3};
+            \node[white] at(2.5,1.5){4};
+            \node[white] at(3.5,1.5){5};
+
+        \end{scope}
+
+        % Lineas entre planos
+        % Dibujar líneas conectando puntos entre ambos planos
+        % \draw[step=1cm,red,thin] (0,0) grid (5,5);
+        % \draw[step=1cm,blue,thin] (-4,0) grid (0,5);
+        \draw[colorA, thick,Triangle-] (-1,2.2) -- (-1,5);
+
+        \begin{scope}[
+                yshift=90, every node/.append style={yslant=0.5, xslant=-1},
+                yslant=0.5, xslant=-1
+            ]
+            % Dibujar la malla de píxeles
+            \foreach \x in {0,1,2,3,4} {
+                    \foreach \y in {0,1,2,3,4} {
+                            \fill[backgroundColor,fill opacity=0.5] (\x,\y) rectangle (\x+1,\y+1);
+                        }
+                }
+
+            % Dibujar la silueta (ejemplo: una "L")
+            \foreach \x/\y in {1/1, 1/2, 1/3, 2/1, 3/1} {
+                    \fill[colorTestC] (\x,\y) rectangle (\x+1,\y+1);
+                }
+
+            % Dibujar la cuadrícula con perspectiva
+            \draw[step=1cm,gray,thin] (0,0) grid (5,5);
+            \node[white] at(1.5,3.5){1};
+            \node[white] at(1.5,2.5){2};
+            \node[white] at(1.5,1.5){3};
+            \node[white] at(2.5,1.5){4};
+            \node[white] at(3.5,1.5){5};
+
+        \end{scope}
+
+        \draw[Triangle-,thick,colorA](3.5,4.0)node[right]{%
+            % $\begin{aligned}
+            %         L^* & = 40 \\a^* & = 40 \\b^* & = -50\\
+            %     \end{aligned}
+            % $
+        }
+        to[out=180,in=90] (2.5,2.5);
+        \draw[Triangle-,thick,colorA](3.6,7.2)node[right]{%
+            % $\begin{aligned}
+            %         L^* & = 30 \\a^* & = 25 \\b^* & = 30\\
+            %     \end{aligned}
+            % $
+        }
+        to[out=180,in=90] (2.5,5.5);
+
+        % lab(30, 25, 30) rgb(115, 53, 24)
+        % lab(40, 40, -50)rgb(112, 72, 177)
+
+    \end{tikzpicture}
+\end{center}
+
+% La diferencia de color \(\Delta E_{94}^*\) entre dos colores se calcula mediante la siguiente ecuación:

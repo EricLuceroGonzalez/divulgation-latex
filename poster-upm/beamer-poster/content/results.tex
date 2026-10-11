@@ -1,0 +1,72 @@
+\begin{tikzpicture}[scale=2.45]
+    % Gráfica 2D
+    \begin{axis}[
+            % width=8cm, % Ancho del gráfico
+            % height=7cm, % Alto del gráfico
+            % xlabel={\( x \)},
+            % ylabel={\( z \)},
+            xmin=-2, xmax=2,
+            ymin=-0.5, ymax=1,
+            grid=both,
+            axis lines=left,
+            enlargelimits=true,
+            tick label style={font=\tiny}, % Tamaño de las etiquetas
+            label style={font=\tiny}, % Tamaño de los nombres de los ejes
+            % title={Figura/},
+            % title style={font=\small, yshift=5pt}, % Estilo del título
+        ]
+
+        % Gráfica de la función en 2D (y = 0)
+        \addplot[
+            domain=-2:2,
+            samples=100,
+            smooth,
+            thick,
+            colorD,
+        ] {sin(deg(x^2 + 0^2)) / (x^2 + 0^2 + 1)};
+
+        % Leyenda
+        \addlegendentry{\scriptsize\( z = \frac{\sin(x^2)}{x^2 + 1} \)}
+
+    \end{axis}
+
+    % Título de la gráfica
+    \node[] (caption) at (3, -1.85) {\textbf{Figura 2}. Corte en \( xy \) \( y = 0 \)};
+\end{tikzpicture}
+Gráfica usando \boxi{tikz} y \boxi{pgfplots} con:
+\begin{verbatim}
+    \addplot[
+        domain=-2:2,
+        samples=100,
+        smooth,
+        thick,
+        colorD,
+    ] {sin(deg(x^2+0^2))/(x^2+0^2+1)};
+\end{verbatim}
+
+
+
+% \begin{block}{Results}
+
+%     \begin{figure}
+%         \includegraphics[width=0.6\linewidth]{placeholder.jpg}
+%         \caption{Figure caption}
+%     \end{figure}
+
+%     Nunc tempus venenatis facilisis. Curabitur suscipit consequat eros non porttitor. Sed a massa dolor, id ornare enim:
+
+%     \begin{table}
+%         \vspace{2ex}
+%         \begin{tabular}{l l l}
+%             \toprule
+%             \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2} \\
+%             \midrule
+%             Treatment 1         & 0.0003262           & 0.562               \\
+%             Treatment 2         & 0.0015681           & 0.910               \\
+%             Treatment 3         & 0.0009271           & 0.296               \\
+%             \bottomrule
+%         \end{tabular}
+%         \caption{Table caption}
+%     \end{table}
+
+% \end{block}

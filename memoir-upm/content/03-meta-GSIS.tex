@@ -1,0 +1,12 @@
+% 03-meta-GSIS.tex
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=.75]
+        \coordinate (zero) at (0,0);
+        \filldraw[fill=colorA,draw=colorA] (zero) circle (3pt);
+        % \draw[step=0.5,red,thin] (zero) grid (50,50);
+        \draw[step=1,black,thin] (zero) grid (25,25);
+        \draw[blue,thin] (zero) grid[step=0.25] (25,1);
+    \end{tikzpicture}
+\end{figure}

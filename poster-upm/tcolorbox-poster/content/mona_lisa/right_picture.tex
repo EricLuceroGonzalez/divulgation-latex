@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+    \node[] (imageA) at (0,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_2500gen_100_pop.png}};
+    \node[] (imageB) at (4.85,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_3500gen_100_pop.png}};
+    \node[below=1pt of imageA](captionA){\scriptsize Triangles capture edges.};
+    \node[below=1pt of imageB](captionB){\scriptsize Operators improves details.};
+    % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \node[] (imageA) at (0,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_3000gen_300_pop.png}};
+    \node[] (imageB) at (4.85,0){\includegraphics[width=0.5\textwidth]{monalisa/web_fittest_5500gen_200_pop.png}};
+    \node[below=1pt of imageA](captionA){\scriptsize Captures background colors.};
+    \node[below=1pt of imageB](captionB){\scriptsize At 5,000 generations.};
+    % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+\end{tikzpicture}
+\begin{center}
+    \vspace{-1em}
+    \begin{tikzpicture}[trim left=-0.05cm]
+        \node[] (imageA) at (4,5){\includegraphics[width=0.99\textwidth]{monalisa/web_mona_lisa_fittest_5500_generations-200_pop.png}};
+        \node[below=1pt of imageA](captionA){\scriptsize Some caption.};
+    \end{tikzpicture}
+\end{center}

@@ -1,0 +1,78 @@
+% % methods.tex
+% \begin{enumerate}[partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+%     \item Cada \textbf{individuo} representa una imagen compuesta por triángulos.
+%           \begin{center}
+%               \vspace{-1em}
+%               \begin{tikzpicture}
+%                   \node[] (imageA) at (0,0){\includegraphics[width=0.5\textwidth]{monalisa/fittest_1gen_50pop.png}};
+%                   \node[below=1pt of imageA](captionA){\scriptsize Some caption.};
+%                   % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+%               \end{tikzpicture}
+%               \vspace{-1em}
+%           \end{center}
+%     \item Se evalúa cada imagen mediante la métrica CIE Lab $\Delta CIE1994$ para medir la
+%           \textbf{similitud de color}.\\ Se usa la ecuación \eqref{eq:CIE1994}
+%     \item El AG selecciona (torneo), cruza y muta las mejores soluciones para mejorar la aproximación.
+% \end{enumerate}
+\begin{enumerate}[partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+    \item Each \textbf{individual} represents an image composed of triangles.
+          \begin{center}
+              \vspace{-1em}
+              \begin{tikzpicture}
+                  \node[] (imageA) at (0,0){\includegraphics[width=0.4\textwidth]{monalisa/fittest_1gen_50pop.png}};
+                  \node[below=1pt of imageA](captionA){\small Example of a first individual.};
+                  % \draw[step=1cm,blue,thin] (0,0) grid (6,5);
+              \end{tikzpicture}
+              \vspace{-1em}
+          \end{center}
+    \item Each image is evaluated using the CIE Lab $\Delta CIE1994$ metric to measure
+          \textbf{color similarity} as the mean value.\\ Equation \eqref{eq:CIE1994} is used in each pixel.
+    \item The GA selects (tournament), crosses, and mutates the best solutions to improve the approximation.
+    \item The process is repeated over several generations until an optimal solution is reached.
+    \item A stop condition is applied when fitness is $< 0.01$ for 3 consecutive individuals.
+\end{enumerate}
+
+% Para evaluar las capacidades de \boxi[colorD]{tcolorbox}, se utilizaron las siguientes métricas y metodologías:
+
+% \begin{enumerate}[partopsep=0pt,itemsep=0pt,leftmargin=0.4cm,label=\protect\circled{\arabic*}]
+%     \item \textbf{Tiempo de Elaboración}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.4cm]
+%               \item Se midió el tiempo total requerido para crear un póster desde cero utilizando \boxi[colorD]{tcolorbox}.
+%               \item Se registraron los tiempos de compilación.
+%           \end{itemize}
+
+%     \item \textbf{Facilidad de Uso}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.4cm]
+%               \item Se evaluó la curva de aprendizaje para usuarios de diferentes niveles.
+%           \end{itemize}
+
+%     \item \textbf{Flexibilidad de Diseño}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.4cm]
+%               \item Se exploraron las opciones de personalización disponibles en \boxi[colorD]{tcolorbox}.
+%               \item Se verificó la capacidad de implementar diseños complejos.
+%           \end{itemize}
+
+%     \item \textbf{Calidad del Resultado Final}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.4cm]
+%               \item Un panel de expertos evaluó la calidad visual del póster generado.
+%               \item Se compararon aspectos como la resolución, alineación, consistencia tipográfica.
+%           \end{itemize}
+
+%     \item \textbf{Compatibilidad y Dependencias}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.4cm]
+%               \item Se revisó la compatibilidad de \boxi[colorD]{tcolorbox} con otros paquetes comunes de \LaTeX.
+%               \item Se identificaron las dependencias adicionales requeridas.
+%           \end{itemize}
+%     \item \textbf{Documentación y Soporte}:
+%           \begin{itemize}[topsep=0pt, partopsep=0pt,itemsep=1pt,leftmargin=0.4cm]
+%               \item Se evaluó la calidad de la documentación oficial de \boxi[colorD]{tcolorbox}.
+%               \item Se revisó la disponibilidad de tutoriales, ejemplos y comunidades de soporte en línea.
+%           \end{itemize}
+% \end{enumerate}
+% % \begin{tikzpicture}
+% %     \tikzstyle{textLabel} = [align=center,text width=8.75cm,rounded corners,fill=colorA!20,draw=colorA,line width=0.5 mm,text=colorA,minimum height=1.25cm]
+% %     \node[textLabel] (aText) at (0,0){Se utilizó \texttt{tikz} para crear gráficos y diagramas.};
+% %     \node[textLabel,below=2mm of aText] (bText){Se empleó \texttt{tcolorbox} para\\ estructurar el contenido en cajas.};
+% %     \node[textLabel,below=2mm of bText] (cText){Comparamos los resultados entre \\ \texttt{tikzposter} y \texttt{beamer}.};
+% %     \node[textLabel,below=2mm of cText] (dText){Elaboramos el mismo poster con ambos paquetes.};
+% % \end{tikzpicture}

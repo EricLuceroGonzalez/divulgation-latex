@@ -1,0 +1,71 @@
+\begin{flushleft}
+    {\color{colorC} Presentado por: Eric Lucero Gonzalez \hfill eric.lucero@alumnos.upm.es} \\
+    {\color{colorC} Impartido por: Víctor Maojo \\Aula: A3202 - UPM}
+    \section{Seminario A1: Metodología de la Investigación}
+    Titulo presentado en el seminario:\\
+    {\Large Optimización Multi-objetivo en la Gestión del Tránsito Aéreo en Terminales Aéreas} \\
+\end{flushleft}
+\begin{minipage}{0.48\textwidth}
+    \section{Introducción}
+    El crecimiento exponencial del tráfico aéreo (4.5\% anual, ICAO 2023) ha convertido la gestión de Áreas Terminales (TMA) en un desafío crítico para la seguridad y eficiencia operacional. Este trabajo propone un marco metodológico innovador para optimizar el enrutamiento libre de conflictos y la secuenciación de aterrizajes mediante algoritmos metaheurísticos multiobjetivo, abordando las limitaciones de los métodos tradicionales en escenarios de alta demanda.
+
+    \section{Problema de Air Traffic Flow Management (ATFM)}
+    La congestión en TMAs genera:
+    \begin{itemize}[itemsep=1mm]\small
+        \item \textbf{Riesgos de seguridad}: 23\% de incidentes ocurren en fase de aproximación (Eurocontrol)
+        \item \textbf{Retrasos acumulativos}: Coste promedio de €74 por minuto de retraso (IATA)
+        \item \textbf{Saturación de controladores (ATCO)}: Carga cognitiva en picos de tráfico
+        \item \textbf{Ineficiencias energéticas}: Trayectorias subóptimas aumentan consumo de combustible
+    \end{itemize}
+    \vfill
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+
+    \section{Pregunta de Investigación}
+    \begin{questionBox}
+        {Pregunta Central}{
+            ¿Cómo pueden modelarse y optimizarse simultáneamente los flujos de tráfico en TMAs mediante algoritmos metaheurísticos para minimizar conflictos, retrasos y carga de trabajo de controladores, manteniendo restricciones operativas y de seguridad en escenarios de alta densidad?
+        }
+    \end{questionBox}
+
+    \section{Marco Teórico}
+    Se analizaron 3 enfoques existentes:
+    \begin{itemize}[itemsep=1mm]\small
+        \item Programación matemática (MILP): Precisión vs. escalabilidad
+        \item Algoritmos genéticos: Exploración global pero convergencia lenta
+        \item Optimización por colonias de hormigas: Adaptabilidad a cambios dinámicos
+        \item Other multi-objective metaheuristic approaches.
+    \end{itemize}
+    % La propuesta integra técnicas de descomposición de espacio de búsqueda y aprendizaje automático para guiar la exploración metaheurística.
+    % \section{Hipótesis}
+    % \begin{questionBox}
+    %     {Hipótesis Principal}{
+    %         Un algoritmo híbrido NSGA-III con mecanismos de poda adaptativa reducirá en $\geq 8\%$ los retrasos medios y conflictos potenciales respecto a métodos convencionales (Ant Colony Optimization, CPLEX), manteniendo la carga de trabajo de ATCOs bajo 70\% de capacidad máxima.
+    %     }
+    % \end{questionBox}
+
+    % \section{Metodología Experimental}
+    % \begin{itemize}[itemsep=1mm]\small
+    %     \item \textbf{Datos}: 6 meses de registros radar del TMA Madrid-Barajas (2023)
+    %     \item \textbf{Métrica principal}: \textit{Total Delay Conflict Units} (TDCU)
+    %     \item \textbf{Comparativas}: ACO vs. NSGA-III vs. MILP en 3 escenarios:
+    %           \begin{itemize}
+    %               \item Baja densidad (30-50 operaciones/hora)
+    %               \item Media densidad (50-70 operaciones/hora)
+    %               \item Alta densidad (70-90 operaciones/hora)
+    %           \end{itemize}
+    % \end{itemize}
+
+    % \section{Implicaciones Prácticas}
+    % \begin{itemize}[itemsep=1mm]\small
+    %     \item Rediseño de procedimientos Standard Terminal Arrival Routes (STAR)
+    %     \item Sistema de apoyo a la decisión para ATCOs
+    %     \item Modelo predictivo de congestión en TMAs
+    % \end{itemize}
+
+    % \begin{center}
+    %     \framebox{\parbox{0.9\textwidth}{\centering\small Contribución clave: Integración de optimización multiobjetivo y modelos de aprendizaje para gestión adaptativa de TMAs en tiempo cuasi-real}}
+    % \end{center}
+    % \vspace{9em}
+\end{minipage}

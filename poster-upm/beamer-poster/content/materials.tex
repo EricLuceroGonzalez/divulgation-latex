@@ -1,0 +1,71 @@
+\begin{block}{Resultados}
+    \begin{tikzpicture}
+        \tikzstyle{every node}=[font=\small]
+        \begin{axis} [xbar,
+                bar width = 20pt,
+                height=5cm,
+                width=20cm,
+                xmin = 0,
+                xmax = 3,
+                enlarge y limits={abs=0.8cm},
+                enlarge x limits = {value = 0.05, upper},
+                title={\bfseries Tiempo de creación}{\normalsize},
+                xlabel = {tiempo [horas]},
+                symbolic y coords = {tcolorbox,beamerposter},
+                label style={font=\scriptsize},
+                ytick=data, % Mostrar todas las etiquetas del eje Y
+                tick label style={font=\tiny},
+                legend style={at={(0.5,-0.8)}, anchor=north, legend columns=-1,font=\scriptsize} % Posición de la leyenda
+            ]
+            \addplot[fill=colorD,draw=colorD] coordinates{
+                    (1.0,tcolorbox) (1.0,beamerposter)};
+            \addplot[fill=colorA,draw=colorA] coordinates{
+                    (3.0,tcolorbox) (1.5,beamerposter)};
+            \legend{principiante,avanzado}
+        \end{axis}
+    \end{tikzpicture}
+    \\[0.5em]
+    \normalsize
+    El tiempo de creación de poster, para un principiante puede ser considerablemente mayor en
+    \boxi[colorD]{tcolorbox}, debido a la gran cantidad de detalle y complejidad.\\[0.5em]
+    % Para usuarios avanzados \boxi[colorD]{tcolorbox} es preferido por su nivel de adaptabilidad a cualquier configuración.
+    Compilar el poster con gráficos complejos usando \boxi{tikz} toma de 4.2 s, mientras que 1.2 sin ellos.
+    Sin embargo para \boxi[colorD]{tcolorbox} toma menos tiempo en compilar.
+    Ver sección Tikz \& PGF. \\
+    \begin{tikzpicture}
+        \tikzstyle{every node}=[font=\small]
+        \begin{axis} [xbar,
+                bar width = 50pt,
+                height=10cm,
+                width=20cm,
+                xmin = 0,
+                xmax = 4,
+                enlarge y limits={abs=1.8cm},
+                enlarge x limits = {value = .25, upper},
+                title={\bfseries Tiempo de ejecución}{\large},
+                xlabel = {time[s]},
+                symbolic y coords = {pgf,no-pgf},
+                label style={font=\tiny},
+                ytick=data, % Mostrar todas las etiquetas del eje Y
+                tick label style={font=\scriptsize},
+                legend style={at={(0.5,-0.35)}, anchor=north, legend columns=-1} % Posición de la leyenda
+            ]
+            %     \addplot[fill=colorD,draw=colorD] coordinates{
+            %             (1.30,tcolorbox) (4.21,beamerposter)};
+            %     \addplot[fill=colorA,draw=colorA] coordinates{
+            %             (3.35,tcolorbox) (1.21,beamerposter)};
+            %     \legend{pgf,no pgf}
+            % \end{axis}
+            \addplot[fill=colorD,draw=colorD] coordinates{
+                    (3.7,pgf) (1.31,no-pgf) };
+            \addplot[fill=colorA,draw=colorA] coordinates{
+                    (4.21,pgf) (1.21,no-pgf)};
+            \legend{tcolorbox,beamerposter}
+        \end{axis}
+        \node[text=white, fill=colorA] (a) at (12.25, 2.8){\scriptsize 4.2 s};
+        \node[text=white, fill=colorD] (b) at (12.25, 0.9){\scriptsize 3.7 s};
+        \node[text=white, fill=colorA] (c) at (3, 7.6){\scriptsize 1.2 s};
+        \node[text=white, fill=colorD] (d) at (3, 5.7){\scriptsize 1.3 s};
+    \end{tikzpicture}
+    \boxi{beamerposter} tiene menos dependencias y es más fácil de integrar con paquetes básicos de \LaTeX.
+\end{block}
