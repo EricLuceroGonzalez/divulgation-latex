@@ -1,0 +1,56 @@
+## --- Archivos auxiliares de LaTeX ---
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.soc
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+## --- Archivos de paquetes específicos (acro, glossaries, etc.) ---
+*.acn
+*.acr
+*.alg
+*.loa
+*.loe
+*.lof
+*.lot
+*.maf
+*.mtc*
+*.slg
+*.syg
+*.syi
+
+## --- Temporales de editores ---
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.vscode/
+.idea/
+
+## --- PDFs generados (opcional) ---
+# Descomenta la siguiente línea si NO quieres subir los PDFs compilados al repositorio:
+# *.pdf
