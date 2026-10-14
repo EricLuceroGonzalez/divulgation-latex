@@ -1,0 +1,61 @@
+\begin{center}
+  \Large
+  \color{colorA}
+  \textbf{Módulo 1:  Identificación de tema y pregunta clave}
+\end{center}
+
+\begin{boxA}{Enunciado}
+  Aplica el flujo del módulo para
+  \begin{enumerate}
+    \item Elegir un tema de investigación propio,
+    \item Formular una pregunta
+      clave clara y viable, y
+    \item Documentar el uso de IA (prompts, iteraciones, validación).
+  \end{enumerate}
+\end{boxA}
+
+\section{Tema}
+La optimización de horarios de controladores de tráfico aéreo mediante la metaheurística de Algoritmos genéticos de llaves aleatorias sesgadas (BRKGA), formulado como un problema de optimización multiobjetivo. Este es un problema combinatorio con gran cantidad de restricciones cuya resolución ayuda a la equidad en la carga de trabajo de controladores y el cumplimiento de normativas laborales. El alcance aproximado es a nivel local en el espacio aéreo español, pero indirectamente tiene un alcance global al ser España un nodo importante de conectividad para vuelos transatlánticos.
+\section{Prompts utilizados}
+
+\begin{promptbox}{Prompt 1}
+  Actua como asistente de investigacion.
+  **Contexto**: quiero explorar el tema “metaheurísticas basadas en algoritmos genéticos de claves aleatorias sesgadas (BRKGA) aplicadas a la planificación de turnos de controladores de tránsito aéreo (ATCO)” para un público académico (tesis doctoral en IA / investigación operativa) con objetivo académico-aplicado.
+  **Tarea**: propón (1) 5 subtemas actuales, (2) 3 vacíos en la literatura, (3) 10 keywords en inglés útiles para Scopus/Scholar, /WebofScience/Scopus, (4) 1-3 preguntas clave bien formuladas.
+  **Restricciones**: lenguaje claro; no inventes citas ni autores; si no estás seguro de que algo exista en la literatura, indícalo; no repitas elementos.
+  **Formato**: listas con títulos en MAYÚSCULAS y 1-2 líneas por ítem.
+  **Criterios**: preguntas verificables y factibles, acotadas en ámbito (sector/espacio aéreo/IA/Optimización/Operations research), variable (método/objetivo) y tiempo/datos.
+  \label{prompt1}
+\end{promptbox}
+
+\section{Iteraciones y decisiones}
+% Resume en 5-8 líneas qué cambiaste entre iteraciones y por qué
+% (criterios de calidad, límites, formato).
+Se exploró el tema BRKGA aplicado a la planificación de ATCO y obtener subtemas, vacíos, keywords y preguntas candidatas. Una vez detectados los vacíos se pidió un
+\section{Pregunta clave candidata}
+% Redacta 1 pregunta de investigación clara, enfocada y factible (1-2
+% líneas).
+% ¿mejora un BRKGA con decodificador específico la cobertura, el equilibrio de carga, el cumplimiento de descansos y el tiempo de cómputo frente al recocido simulado o a MIP?
+¿Mejora un BRKGA con decodificador específico para la asignación controlador-sector la calidad de solución (cobertura, equilibrio de carga y cumplimiento de descansos) y el tiempo de cómputo frente al recocido simulado, los algoritmos genéticos estándar y VNS?
+Ámbito: instancias de Madrid Ruta 1 en un ciclo de turnos.
+\section{Verificación breve}
+% Explica en 3-6 líneas cómo validaste la pregunta (comprobación rápida en
+% fuentes/gestor, existencia de literatura suficiente, novedad razonable)
+Confirmé con el LLM (Claude) con el prompt original y las claves de búsqueda de su respuesta, con esto verifiqué la literatura en WoS y Scopus para identificar el nicho y la pregunta.
+\section{Riesgos y ética}
+% Confirma, en 2-4 líneas, que no incluyes datos sensibles ni violas
+% licencias y que mantendrás trazabilidad de consultas.
+El riesgo principal es que sea matemáticamente inviable que esta metaheurística no se pueda aplicar a problemas con formulación matricial en sus individuos.
+
+% \section{Bitácora de prompts}
+
+% \begin{table}[ht!]
+%   \centering
+%   \begin{adjustbox}{max width=\textwidth}
+%     \begin{tabular}{ccC{2cm}C{2cm}C{2cm}C{2cm}C{2cm}}
+%       Fecha & Versión & Objetivo & Prompt & Cambios vs. anterior & Observ. & URL/ID \\ \toprule
+%       14/Oct&&Pregunta de inv.&prompt1&--&Primer prompt& \\
+%       &&&&&& \\
+%     \end{tabular}
+%   \end{adjustbox}
+% \end{table}
