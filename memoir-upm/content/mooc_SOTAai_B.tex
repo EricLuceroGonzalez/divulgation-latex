@@ -18,47 +18,120 @@
     \bottomrule
   \end{tabular}
 \end{table}
+\clearpage
 
-\begin{table}[ht!]
-  \centering
-  \def\arraystretch{1.8}
-  \caption{Tabla de sinónimos.}
-  \begin{tabularx}{\textwidth}{W{1.4}W{1.0}W{0.6}}
-    \toprule
-    \bfseries Concepto & \bfseries Variantes / Acrónimos & Notas \\ \hline
-    Algoritmos metaheurísticos poblacionales & BRKGA, GA & \\
-    Algoritmos genéticos de llaves aleatorias sesgadas & Biased random-key genetic algorithm / BRKGA & \\
-    Timetabling & & \\
-    Scheduling & & \\
-    Personnel rostering &Staff rostering & \\
-    Workforce scheduling metaheuristic& & \\
-    Air traffic controller scheduling & ATCO scheduling & \\
-    controller-to-sector assignment & ATCO assign & \\
-    Multi-objective shift scheduling& & \\
-    Fatigue-aware scheduling& & \\
-    % & & \\
-    % & & \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
+\newgeometry{margin=1.5cm}
+\pagestyle{UPM_memoir_landscape}
+\begin{landscape}
 
-% \href{run:Users/ericlucero/Documents/Academic/Courses_Seminars/MOOCS_UPM/SOTAai/M2_Guia_Operativa.pdf}{pdf}
-\href{file:///Users/ericlucero/Documents/Academic/Courses_Seminars/MOOCS_UPM/SOTAai/M2_Guia_Operativa.pdf}{pdf}
-\begin{table}[ht!]
-  \centering
-  \def\arraystretch{1.8}
-  \caption{Tabla de resultados.}
-  \begin{tabularx}{\textwidth}{|W{0.65}|W{0.35}|W{1.0}|W{1.0}|W{1.35}|W{1.65}|}
-    \hline
-    \bfseries Fuente & \bfseries Año& \bfseries DOI& \bfseries Título& \bfseries Abstract& \bfseries Cadena de búsqueda \\ \hline
-    Scopus& 2026& & & & \\
-    Scopus& & & & & \\
-    PubMed & & & & & \\
-    PubMed & & & & & \\
-    ArXiV & & & & & \\
-    ArXiV & & & & & \\
-    CrossRef & & & & & \\
-    % & & \\
-    \hline
-  \end{tabularx}
-\end{table}
+  \begin{table}[ht!]
+    \centering
+    \def\arraystretch{2.2}
+    \caption{Tabla de sinónimos.}
+    \begin{tabularx}{\linewidth}{W{0.45}W{2.55}W{0.5}W{0.5}}
+      \toprule
+      \rowcolor{Yellow}
+      \bfseries Concepto & \bfseries Variantes  &  Acrónimos & Notas \\ \hline
+      Técnica &
+      ``Algoritmos genéticos de llaves aleatorias sesgadas'';
+      ``Algoritmos genéticos'';
+      ``Biased random-key genetic algorithm*''
+      ``biased random-key genetic algorithm*'',
+      ``biased random key genetic algorithm*'',
+      ``random-key genetic algorithm*'',
+      ``evolutionary algorithm*'',
+      ``metaheuristic*''
+      & BRKGA, RKGA, GA & \\
+      Tipo de problema & ``Timetabling'';
+      ``shift planning'';
+      ``scheduling'';
+      ``staff rostering'';
+      ``personnel rostering'';
+      ``shift scheduling'';
+      ``crew scheduling'';
+      ``personnel scheduling'';
+      ``Workforce scheduling'';
+      & & \\
+      Dominio &
+      ``Air traffic controller scheduling'';
+      ``Air traffic controller assign'';
+      ``air traffic control*'';
+      ``air traffic management'';
+      ``controller-to-sector'';
+      ``air traffic controller*'';
+      & ATCO; atco; atc, ATM & \\
+      Criterio específico &
+      ``Fatigue'';
+      ``Workload'';
+      ``shift rotation'';
+      && \\
+      Formulación &
+      ``multi-objective'',
+      ``multiobjective'',
+      ``many-objective'',
+      ``constrained optimization''
+      & MOO; MOP& \\
+      Truncamiento & schedule, scheduling, schedul*; roster, rostering; timetabl*  & & \\
+      Exclusión & Review; heuristic methods; Book chapter; pre-print & & \\
+      % % & & & \
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+  \clearpage
+
+  \def\AndOperator{\colorea{colorD}{$\texttt{AND}$}}
+  \def\OrOperator{\colorea{GithubGreen}{$\texttt{OR}$}}
+  \newcommand{\BaseOperator}[1]{\colorea{colorA}{$\texttt{#1}$}}
+  \begin{table}[ht!]
+    \centering
+    \def\arraystretch{1.8}
+    \caption{Cadenas por fuente.}
+    \begin{tabularx}{\linewidth}{|W{0.25}|W{1.75}|}
+      \hline
+      \rowcolor{colorA!50}
+      \bfseries Fuente & \bfseries Año\\ \hline
+      Scopus & .\BaseOperator{TITLE-ABS-KEY} (
+        (``BRKGA'' \OrOperator ``biased random-key genetic algorithm*'' \OrOperator ``random-key genetic algorithm*'')
+        \AndOperator
+        (``scheduling'' \OrOperator ``rostering'' \OrOperator ``timetabling'' \OrOperator ``workforce'' \OrOperator ``crew'')
+        \AndOperator
+        (``air traffic'' \OrOperator ``ATCO'' \OrOperator ``ATC'' \OrOperator ``multi-objective'' \OrOperator ``multiobjective'' \OrOperator ``fatigue'')
+      )
+      \AndOperator \BaseOperator{PUBYEAR} > 2019 \\ \hline
+      PubMed  &  (``BRKGA''\BaseOperator{[tiab]} \OrOperator ``genetic algorithm''\BaseOperator{[tiab]} \OrOperator ``metaheuristic''\BaseOperator{[tiab]})
+      \AndOperator (``workforce scheduling''\BaseOperator{[tiab]} \OrOperator ``staff rostering''\BaseOperator{[tiab]} \OrOperator ``shift work''\BaseOperator{[tiab]})
+      \AndOperator (``fatigue''\BaseOperator{[tiab]} \OrOperator ``air traffic''\BaseOperator{[tiab]} \OrOperator ``workload''\BaseOperator{[tiab]})\\\hline
+      arXiV   & (\BaseOperator{ti:}``BRKGA'' \OrOperator
+      \BaseOperator{abs:}``BRKGA'' \OrOperator \BaseOperator{abs:}``biased random-key'')
+      \AndOperator (\BaseOperator{abs:}``scheduling'' \OrOperator \BaseOperator{abs:}``rostering'' \OrOperator \BaseOperator{abs:}``timetabling'') \\\hline
+      Crossref & ``biased random-key genetic algorithm'' ``workforce scheduling'' \OrOperator ``air traffic control''\\
+      % & & \\
+      \hline
+    \end{tabularx}
+  \end{table}
+  \begin{table}[ht!]
+    \centering
+    \def\arraystretch{1.8}
+    \caption{Tabla de resultados.}
+    \begin{tabularx}{\linewidth}{|W{0.10}|W{0.5}|W{0.30}|W{1.0}|W{1.0}|W{1.45}|W{1.65}|}
+      \hline
+      \rowcolor{Yellow!50}
+      \#& \bfseries Fuente & \bfseries Año& \bfseries DOI& \bfseries Título& \bfseries Abstract& \bfseries Cadena de búsqueda \\ \hline
+      \rowcolor{GithubGreen!30}
+      1& Scopus & & \href{}{doi} & & & \\
+      \rowcolor{colorA!30}
+      2& PubMed & & \href{}{doi} & & & \\
+      \rowcolor{colorD!30}
+      3& ArXiV & & \href{}{doi} & & & \\
+      \rowcolor{colorD!30}
+      4& ArXiV & & \href{}{doi} & & & \\
+      \rowcolor{colorC!30}
+      5& CrossRef & & \href{}{doi} & & & \\
+      6& --- & & \href{}{doi}& & & \\
+      6& --- & & \href{}{doi}& & & \\
+      6& --- & & \href{}{doi}& & & \\
+      6& --- & & \href{}{doi}& & & \\
+      \hline
+    \end{tabularx}
+  \end{table}
+\end{landscape}
