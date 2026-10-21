@@ -1,9 +1,15 @@
 % mooc_SOTAai_B.tex
 \begin{center}
   \Large
-  \color{colorA}
-  \textbf{Módulo 2:\\ Generación de listado inicial de palabras clave}
+  {\color{colorA}
+  \textbf{Módulo 2:\\ Generación de listado inicial de palabras clave}}
 \end{center}
+\begin{flushleft}
+  {\small \colorea{colorD}{
+      Fecha: Octubre - 2026\\
+    Version: 1.0}
+  }
+\end{flushleft}
 
 \begin{table}[ht!]
   \centering
@@ -28,21 +34,20 @@
     \centering
     \def\arraystretch{2.2}
     \caption{Tabla de sinónimos.}
-    \begin{tabularx}{\linewidth}{W{0.45}W{2.55}W{0.5}W{0.5}}
+    \begin{tabularx}{\linewidth}{W{0.45}W{1.95}W{0.4}W{1.2}}
       \toprule
       \rowcolor{Yellow}
       \bfseries Concepto & \bfseries Variantes  &  Acrónimos & Notas \\ \hline
-      Técnica &
+      \bfseries Técnica &
       ``Algoritmos genéticos de llaves aleatorias sesgadas'';
       ``Algoritmos genéticos'';
-      ``Biased random-key genetic algorithm*''
-      ``biased random-key genetic algorithm*'',
-      ``biased random key genetic algorithm*'',
-      ``random-key genetic algorithm*'',
-      ``evolutionary algorithm*'',
+      ``Biased random-key genetic algorithm''
       ``metaheuristic*''
-      & BRKGA, RKGA, GA & \\
-      Tipo de problema & ``Timetabling'';
+      & BRKGA; RKGA; GA &
+      %Notas
+      Muy poco de BRKGA junto a lo demás. Gran variedad de temas, es preciso acotar con buenas cadenas. \colorea{colorD}{Nada de BRKGA + timetabling}.
+      \\
+      \bfseries Tipo de problema & ``Timetabling'';
       ``shift planning'';
       ``scheduling'';
       ``staff rostering'';
@@ -51,46 +56,74 @@
       ``crew scheduling'';
       ``personnel scheduling'';
       ``Workforce scheduling'';
-      & & \\
-      Dominio &
+      ``nurse'';
+      ``roster'';
+      ``rostering'';
+      & & % Notas
+      El término scheduling solo puede llegar a generar mucho ruido si no se acotan los otros temas. \colorea{GithubGreen}{Se agregó \textit{nurse}.}\\
+      \bfseries Dominio &
       ``Air traffic controller scheduling'';
       ``Air traffic controller assign'';
-      ``air traffic control*'';
+      ``air traffic control'';
       ``air traffic management'';
       ``controller-to-sector'';
-      ``air traffic controller*'';
-      & ATCO; atco; atc, ATM & \\
-      Criterio específico &
+      ``air traffic controller'';
+      & ATCO; atco; atc; ATM
+      & % Notas
+      Poco se encuentra incluyendo los controladores, sin embargo es crucial.
+      \\
+      \bfseries Criterio específico &
       ``Fatigue'';
       ``Workload'';
       ``shift rotation'';
-      && \\
-      Formulación &
-      ``multi-objective'',
-      ``multiobjective'',
-      ``many-objective'',
+      & & % Notas
+      Importante para encontrar novedad
+      \\
+      \bfseries Formulación &
+      ``multi-objective'';
+      ``multiobjective'';
+      ``many-objective'';
       ``constrained optimization''
-      & MOO; MOP& \\
-      Truncamiento & schedule, scheduling, schedul*; roster, rostering; timetabl*  & & \\
-      Exclusión & Review; heuristic methods; Book chapter; pre-print & & \\
+      & MOO; MOP
+      & % Notas
+      \\
+      \bfseries Truncamiento &
+      ``Biased random-key genetic algorithm*''
+      ``biased random key genetic algorithm*'';
+      ``biased random-key genetic algorithm*'';
+      ``random-key genetic algorithm*'';
+      ``evolutionary algorithm*'';
+      ``timetabl*''
+      ``schedul*'';
+      ``air traffic control*'';
+      & &% Notas
+      ArXiv no permite el truncamiento.
+      \\
+      \bfseries Exclusión &
+      schedule; scheduling;
+      flow-shop;
+      flow-shop scheduling
+      Review; heuristic methods; Book chapter; pre-print, $>2020$
+      & & % Notas
+      Incluir reviews para investigar mas a fondo. Excluir por lo general.
+      Importante saber que \textit{scheduling} es muy general. Genera ruido.
+      \\
       % % & & & \
       \bottomrule
     \end{tabularx}
   \end{table}
+
   \clearpage
 
-  \def\AndOperator{\colorea{colorD}{$\texttt{AND}$}}
-  \def\OrOperator{\colorea{GithubGreen}{$\texttt{OR}$}}
-  \newcommand{\BaseOperator}[1]{\colorea{colorA}{$\texttt{#1}$}}
   \begin{table}[ht!]
     \centering
-    \def\arraystretch{1.8}
+    \def\arraystretch{1.5}
     \caption{Cadenas por fuente.}
-    \begin{tabularx}{\linewidth}{|W{0.25}|W{1.75}|}
+    \begin{tabularx}{\linewidth}{|W{0.15}|W{1.85}|}
       \hline
       \rowcolor{colorA!50}
       \bfseries Fuente & \bfseries Año\\ \hline
-      Scopus & .\BaseOperator{TITLE-ABS-KEY} (
+      Scopus & \BaseOperator{TITLE-ABS-KEY} (
         (``BRKGA'' \OrOperator ``biased random-key genetic algorithm*'' \OrOperator ``random-key genetic algorithm*'')
         \AndOperator
         (``scheduling'' \OrOperator ``rostering'' \OrOperator ``timetabling'' \OrOperator ``workforce'' \OrOperator ``crew'')
@@ -98,40 +131,95 @@
         (``air traffic'' \OrOperator ``ATCO'' \OrOperator ``ATC'' \OrOperator ``multi-objective'' \OrOperator ``multiobjective'' \OrOperator ``fatigue'')
       )
       \AndOperator \BaseOperator{PUBYEAR} > 2019 \\ \hline
-      PubMed  &  (``BRKGA''\BaseOperator{[tiab]} \OrOperator ``genetic algorithm''\BaseOperator{[tiab]} \OrOperator ``metaheuristic''\BaseOperator{[tiab]})
+      Scopus &
+      %Scopus
+      (((\BaseOperator{ALL}(BRKGA) \OrOperator \BaseOperator{ALL}("biased random-key genetic algorithm*") \OrOperator \BaseOperator{ALL}("random-key genetic algorithm*")) \AndOperator (\BaseOperator{ALL}(scheduling) \OrOperator \BaseOperator{ALL}(rostering) \OrOperator \BaseOperator{ALL}(timetabling) \OrOperator \BaseOperator{ALL}(workforce) \OrOperator \BaseOperator{ALL}(crew) \OrOperator \BaseOperator{ALL}(shift)) \AndOperator (\BaseOperator{ALL}("air traffic") \OrOperator \BaseOperator{ALL}(ATCO) \OrOperator \BaseOperator{ALL}(ATC) \OrOperator \BaseOperator{ALL}(shift) \OrOperator \BaseOperator{ALL}(multi-objective) \OrOperator \BaseOperator{ALL}(multiobjective) \OrOperator \BaseOperator{ALL}(fatigue))) \AndOperator \BaseOperator{NOT TITLE}(editorial)) \AndOperator \BaseOperator{PUBYEAR} > 2019
+      \\\hline
+      Scopus &
+      (((\BaseOperator{ALL}(metaheuristic*) \OrOperator \BaseOperator{ALL}(Metaheuristic) \OrOperator \BaseOperator{ALL}(heuristic) \OrOperator \BaseOperator{ALL}("genetic algorithm*") \OrOperator \BaseOperator{ALL}(BRKGA) \OrOperator \BaseOperator{ALL}("biased-random key")) \AndOperator (\BaseOperator{ALL}(Timetabling) \OrOperator \BaseOperator{ALL}("staff rostering") \OrOperator \BaseOperator{ALL}("personnel rostering") \OrOperator \BaseOperator{ALL}("shift scheduling") \OrOperator \BaseOperator{ALL}("crew scheduling") \OrOperator \BaseOperator{ALL}("personnel scheduling") \OrOperator \BaseOperator{ALL}("Workforce scheduling")) \AndOperator (\BaseOperator{ALL}("air traffic") \OrOperator \BaseOperator{ALL}(ATCO) \OrOperator \BaseOperator{ALL}(ATC) \OrOperator \BaseOperator{ALL}(shift) \OrOperator \BaseOperator{ALL}(workload) \OrOperator \BaseOperator{ALL}(fatigue) \OrOperator \BaseOperator{ALL}("shift rotation"))) \AndOperator \BaseOperator{NOT TITLE}(editorial)) \AndOperator \BaseOperator{PUBYEAR} > 2019
+      \\\hline
+      PubMed &
+      % Pubmed
+      (((BRKGA\BaseOperator{[tiab]} \OrOperator "biased random-key genetic algorithm*"\BaseOperator{[tiab]} \OrOperator "random-key genetic algorithm*"\BaseOperator{[tiab]}) \AndOperator (scheduling\BaseOperator{[tiab]} \OrOperator rostering\BaseOperator{[tiab]} \OrOperator timetabling\BaseOperator{[tiab]} \OrOperator workforce\BaseOperator{[tiab]} \OrOperator crew\BaseOperator{[tiab]} \OrOperator shift\BaseOperator{[tiab]}) \AndOperator ("air traffic"\BaseOperator{[all]} \OrOperator ATCO\BaseOperator{[all]} \OrOperator ATC\BaseOperator{[all]} \OrOperator shift\BaseOperator{[all]} \OrOperator multi-objective\BaseOperator{[all]} \OrOperator multiobjective\BaseOperator{[all]} \OrOperator fatigue\BaseOperator{[all]})) NOT editorial[ti])
+      \\\hline
+      PubMed  &
+      (``BRKGA''\BaseOperator{[tiab]} \OrOperator ``genetic algorithm''\BaseOperator{[tiab]} \OrOperator ``metaheuristic''\BaseOperator{[tiab]})
       \AndOperator (``workforce scheduling''\BaseOperator{[tiab]} \OrOperator ``staff rostering''\BaseOperator{[tiab]} \OrOperator ``shift work''\BaseOperator{[tiab]})
       \AndOperator (``fatigue''\BaseOperator{[tiab]} \OrOperator ``air traffic''\BaseOperator{[tiab]} \OrOperator ``workload''\BaseOperator{[tiab]})\\\hline
-      arXiV   & (\BaseOperator{ti:}``BRKGA'' \OrOperator
-      \BaseOperator{abs:}``BRKGA'' \OrOperator \BaseOperator{abs:}``biased random-key'')
-      \AndOperator (\BaseOperator{abs:}``scheduling'' \OrOperator \BaseOperator{abs:}``rostering'' \OrOperator \BaseOperator{abs:}``timetabling'') \\\hline
-      Crossref & ``biased random-key genetic algorithm'' ``workforce scheduling'' \OrOperator ``air traffic control''\\
-      % & & \\
-      \hline
+      PubMed &
+      (((BRKGA\BaseOperator{[all]} \OrOperator "biased random-key genetic algorithm*"\BaseOperator{[all]} \OrOperator "random-key genetic algorithm*"\BaseOperator{[all]} \OrOperator "genetic algorithm*"\BaseOperator{[all]}) \AndOperator (scheduling\BaseOperator{[all]} \OrOperator rostering\BaseOperator{[all]} \OrOperator timetabling\BaseOperator{[all]} \OrOperator workforce\BaseOperator{[all]} \OrOperator crew\BaseOperator{[all]} \OrOperator shift\BaseOperator{[all]}) \AndOperator ("air traffic"\BaseOperator{[all]} \OrOperator ATCO\BaseOperator{[all]} \OrOperator ATC\BaseOperator{[all]} \OrOperator shift\BaseOperator{[all]} \OrOperator multi-objective\BaseOperator{[all]} \OrOperator multiobjective\BaseOperator{[all]} \OrOperator fatigue\BaseOperator{[all]})) NOT editorial[ti])
+      \\\hline
     \end{tabularx}
   \end{table}
+
+  \begin{table}[ht!]
+    \centering
+    \def\arraystretch{1.5}
+    \caption{Cadenas por fuente.}
+    \begin{tabularx}{\linewidth}{|W{0.15}|W{1.85}|}
+      \hline
+      \rowcolor{colorA!50}
+      \bfseries Fuente & \bfseries Año\\ \hline
+      arXiV   &
+      (\BaseOperator{ti:}``BRKGA'' \OrOperator
+      \BaseOperator{abs:}``BRKGA'' \OrOperator \BaseOperator{abs:}``biased random-key'')
+      \AndOperator (\BaseOperator{abs:}``scheduling'' \OrOperator \BaseOperator{abs:}``rostering'' \OrOperator \BaseOperator{abs:}``timetabling'') \\\hline
+      ArXiV &
+      % Arxiv
+      (((((\BaseOperator{ti:}BRKGA \OrOperator abs:BRKGA) \OrOperator (\BaseOperator{ti:}"biased random-key genetic algorithm" \OrOperator abs:"biased random-key genetic algorithm") \OrOperator (\BaseOperator{ti:}"random-key genetic algorithm" \OrOperator abs:"random-key genetic algorithm")) \AndOperator ((\BaseOperator{ti:}scheduling \OrOperator abs:scheduling) \OrOperator (\BaseOperator{ti:}rostering \OrOperator abs:rostering) \OrOperator (\BaseOperator{ti:}timetabling \OrOperator abs:timetabling) \OrOperator (\BaseOperator{ti:}workforce \OrOperator abs:workforce) \OrOperator (\BaseOperator{ti:}crew \OrOperator abs:crew) \OrOperator (\BaseOperator{ti:}shift \OrOperator abs:shift)) \AndOperator (\BaseOperator{all:}"air traffic" \OrOperator \BaseOperator{all:}ATCO \OrOperator \BaseOperator{all:}ATC \OrOperator \BaseOperator{all:}shift \OrOperator \BaseOperator{all:}multi-objective \OrOperator \BaseOperator{all:}multiobjective \OrOperator \BaseOperator{all:}fatigue)) ANDNOT \BaseOperator{ti:}editorial)) \AndOperator submittedDate:[202001010000 TO 210012312359]
+      \\\hline
+      ArXiV &
+      ((((\BaseOperator{all:}BRKGA \OrOperator \BaseOperator{all:}"biased random-key genetic algorithm" \OrOperator \BaseOperator{all:}"random-key genetic algorithm" \OrOperator \BaseOperator{all:}"genetic algorithm") \AndOperator (\BaseOperator{all:}scheduling \OrOperator \BaseOperator{all:}rostering \OrOperator \BaseOperator{all:}timetabling \OrOperator \BaseOperator{all:}workforce \OrOperator \BaseOperator{all:}crew \OrOperator \BaseOperator{all:}shift) \AndOperator (\BaseOperator{all:}"air traffic" \OrOperator \BaseOperator{all:}ATCO \OrOperator \BaseOperator{all:}ATC \OrOperator \BaseOperator{all:}shift \OrOperator \BaseOperator{all:}multi-objective \OrOperator \BaseOperator{all:}multiobjective \OrOperator \BaseOperator{all:}fatigue)) ANDNOT \BaseOperator{ti:}editorial)) \AndOperator submittedDate:[202001010000 TO 210012312359]
+      \\\hline
+      Crossref &
+      % Crossref
+      BRKGA biased random-key genetic algorithm random-key genetic algorithm scheduling rostering timetabling workforce crew shift air traffic ATCO ATC multi-objective multiobjective fatigue
+      \\ \hline
+      Crossref &
+      ``biased random-key genetic algorithm'' ``workforce scheduling'' \OrOperator ``air traffic control''
+      \\\hline
+    \end{tabularx}
+  \end{table}
+
+  \clearpage
+
   \begin{table}[ht!]
     \centering
     \def\arraystretch{1.8}
-    \caption{Tabla de resultados.}
-    \begin{tabularx}{\linewidth}{|W{0.10}|W{0.5}|W{0.30}|W{1.0}|W{1.0}|W{1.45}|W{1.65}|}
-      \hline
-      \rowcolor{Yellow!50}
-      \#& \bfseries Fuente & \bfseries Año& \bfseries DOI& \bfseries Título& \bfseries Abstract& \bfseries Cadena de búsqueda \\ \hline
-      \rowcolor{GithubGreen!30}
-      1& Scopus & & \href{}{doi} & & & \\
-      \rowcolor{colorA!30}
-      2& PubMed & & \href{}{doi} & & & \\
-      \rowcolor{colorD!30}
-      3& ArXiV & & \href{}{doi} & & & \\
-      \rowcolor{colorD!30}
-      4& ArXiV & & \href{}{doi} & & & \\
-      \rowcolor{colorC!30}
-      5& CrossRef & & \href{}{doi} & & & \\
-      6& --- & & \href{}{doi}& & & \\
-      6& --- & & \href{}{doi}& & & \\
-      6& --- & & \href{}{doi}& & & \\
-      6& --- & & \href{}{doi}& & & \\
-      \hline
+    \caption{Reflexión del proceso.}
+    \begin{tabularx}{\linewidth}{W{0.60}W{1.20}W{1.20}}
+      \toprule
+      &\bfseries Cadena/Término & \bfseries Comentario\\ \hline
+      % \fnd\bfseries Mejores cadenas
+      \multirow{2}{*}{\fnd\bfseries Mejores cadenas}
+      &
+      (\BaseOperator{TITLE-ABS-KEY} BRKGA \OrOperator "biased random-key genetic algorithm*" \OrOperator "random-key genetic algorithm*")
+      \AndOperator
+      \BaseOperator{TITLE-ABS-KEY}(scheduling \OrOperator rostering \OrOperator timetabling \OrOperator workforce \OrOperator crew \OrOperator shift)
+      \AndOperator \BaseOperator{ALL}(air traffic \OrOperator ATCO \OrOperator ATC \OrOperator shift \OrOperator multi-objective \OrOperator multiobjective \OrOperator \BaseOperator{ALL} fatigue)
+      \AndOperator \BaseOperator{NOT TITLE}(editorial)
+      \AndOperator \BaseOperator{PUBYEAR} > 2020
+      &
+      %Comentario
+      Scopus tiene la gran mayoría de publicaciones en este tema($\approx$ 10 a 1),
+      por lo tanto el filtrado debe ser muy específico. En el caso de esta cadena, se busca la técnica específica en el campo de aplicación específico, sin excluir reviews. Con un margen de tiempo bastante amplio.\\
+      &
+      %Dejar este
+      (((\BaseOperator{ALL}(metaheuristic*) \OrOperator \BaseOperator{ALL}(Metaheuristic) \OrOperator \BaseOperator{ALL}(heuristic) \OrOperator \BaseOperator{ALL}("genetic algorithm*") \OrOperator \BaseOperator{ALL}(BRKGA) \OrOperator \BaseOperator{ALL}("biased-random key")) \AndOperator (\BaseOperator{ALL}(Timetabling) \OrOperator \BaseOperator{ALL}("staff rostering") \OrOperator \BaseOperator{ALL}("personnel rostering") \OrOperator \BaseOperator{ALL}("shift scheduling") \OrOperator \BaseOperator{ALL}("crew scheduling") \OrOperator \BaseOperator{ALL}("personnel scheduling") \OrOperator \BaseOperator{ALL}("Workforce scheduling")) \AndOperator (\BaseOperator{ALL}("air traffic") \OrOperator \BaseOperator{ALL}(ATCO) \OrOperator \BaseOperator{ALL}(ATC) \OrOperator \BaseOperator{ALL}(shift) \OrOperator \BaseOperator{ALL}(workload) \OrOperator \BaseOperator{ALL}(fatigue) \OrOperator \BaseOperator{ALL}("shift rotation"))) \AndOperator \BaseOperator{NOT TITLE}(editorial)) \AndOperator \BaseOperator{PUBYEAR} > 2019
+      &
+      Esta cadena es muy general, a pesar de tener más filtros, trae casi dos mil resultados al incluir \BaseOperator{ALL}
+      \\ \hline
+      \multirow{2}{*}{\addd\bfseries Término añadido}
+      & personnel scheduling &
+      El scheduling por lo general se aplicada para asignación de procesos o máquinas. Por lo tanto el ruido que generan las publicaciones en este tema hay que limitarlo con el scheduling de personal u horarios de trabajo.\\
+      & nurse &
+      Hay mucha literatura con los horarios de las enfermeras y enfermeros. El nurse scheduling es de los pocos temas parecidos que se pueden encontrar.
+      \\\hline
+      \multirow{2}{*}{\fltr\bfseries Filtros agregados}&
+      flow-shop & La literatura está llena de este tema y sus variantes.\\
+      & Book chapter & Generalmente no se tiene acceso, o son muy generales.\\
+      \bottomrule
     \end{tabularx}
   \end{table}
+
 \end{landscape}

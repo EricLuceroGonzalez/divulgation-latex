@@ -16,11 +16,21 @@
 \usepackage{metadata_bib}
 \usepackage{geometry}
 \usepackage{pdflscape}
+\usepackage{fontawesome5}
+
 % \usepackage{etoolbox}
 % \patchcmd{\thebibliography}{\chapter*}{\section*}{}{}
 \usepackage{eurosym}
 \usepackage[final]{pdfpages}
 \usepackage{adjustbox}
+
+\def\fltr{\colorea{colorA}{\faIcon{filter}}}
+\def\addd{\colorea{GithubGreen}{\faIcon{plus-circle}}}
+\def\fnd{\colorea{colorD}{\faIcon{search}}}
+
+\def\AndOperator{\colorea{colorD}{$\texttt{AND}$}}
+\def\OrOperator{\colorea{GithubGreen}{$\texttt{OR}$}}
+\newcommand{\BaseOperator}[1]{\leavevmode\colorea{colorA}{$\texttt{#1}$}}
 \begin{document}
 % \pagestyle{plain}
 \pagestyle{UPM_memoir}
